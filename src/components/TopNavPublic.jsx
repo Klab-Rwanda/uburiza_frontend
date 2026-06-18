@@ -39,8 +39,8 @@ export default function TopNavPublic({ setView }) {
           <button onClick={toggleTheme} className="p-2 rounded-full text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" title="Toggle Dark Mode">
             {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
           </button>
-          <button className="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors ml-2" onClick={() => setView('Dashboard')}>Login</button>
-          <button className="text-sm font-medium bg-emerald-800 dark:bg-emerald-600 text-white px-5 py-2 rounded-lg hover:bg-emerald-900 dark:hover:bg-emerald-700 transition-colors shadow-sm" onClick={() => setView('Dashboard')}>
+          <button className="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors ml-2" onClick={() => setView('Login')}>Login</button>
+          <button className="text-sm font-medium bg-emerald-800 dark:bg-emerald-600 text-white px-5 py-2 rounded-lg hover:bg-emerald-900 dark:hover:bg-emerald-700 transition-colors shadow-sm" onClick={() => setView('Signup')}>
             Join Free
           </button>
         </div>

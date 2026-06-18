@@ -10,6 +10,8 @@ import LandingPage from './views/LandingPage';
 import CourseCatalog from './views/CourseCatalog';
 import CourseOverview from './views/CourseOverview';
 import CourseMaterial from './views/CourseMaterial';
+import Login from './views/Login';
+import Signup from './views/Signup';
 import { AppProvider } from './context/AppContext';
 import { AnimatePresence, motion } from 'framer-motion';
 
@@ -36,12 +38,16 @@ function AppContent() {
         return <CourseOverview view={view} setView={setView} />;
       case 'CourseMaterial':
         return <CourseMaterial view={view} setView={setView} />;
+      case 'Login':
+        return <Login setView={setView} />;
+      case 'Signup':
+        return <Signup setView={setView} />;
       default:
         return <LandingPage setView={setView} />;
     }
   };
 
-  const isFullPageView = ['LandingPage', 'CourseCatalog', 'CourseOverview', 'CourseMaterial'].includes(view);
+  const isFullPageView = ['LandingPage', 'CourseCatalog', 'CourseOverview', 'CourseMaterial', 'Login', 'Signup'].includes(view);
 
   const pageVariants = {
     initial: { opacity: 0, y: 20 },

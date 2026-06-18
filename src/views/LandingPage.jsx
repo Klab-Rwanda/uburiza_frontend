@@ -223,7 +223,7 @@ export default function LandingPage({ setView }) {
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4 mb-10 relative z-10">
               <button 
-                onClick={() => setView('Dashboard')}
+                onClick={() => setView('Signup')}
                 className="w-full sm:w-auto bg-white text-emerald-600 px-8 py-4 rounded-lg font-bold hover:bg-gray-50 transition-colors shadow-lg"
               >
                 JOIN 50K+ AFRICAN LEARNERS
