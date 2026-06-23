@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Sidebar from './components/Sidebar';
 import TopNav from './components/TopNav';
 import LearnerDashboard from './views/LearnerDashboard';
@@ -17,7 +17,27 @@ import { AppProvider } from './context/AppContext';
 import { AnimatePresence, motion } from 'framer-motion';
 
 function AppContent() {
-  const [view, setView] = useState('LandingPage'); // Start on LandingPage by default
+  const [view, setViewInternal] = useState(() => {
+    const hash = window.location.hash.replace('#', '');
+    return hash || 'LandingPage';
+  });
+
+  const setView = (newView) => {
+    if (window.location.hash !== `#${newView}`) {
+      window.location.hash = newView;
+    }
+  };
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.replace('#', '');
+      setViewInternal(hash || 'LandingPage');
+    };
+    window.addEventListener('hashchange', handleHashChange);
+    // Trigger once on mount in case there's an initial hash
+    handleHashChange();
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
 
   const renderView = () => {
     switch(view) {
