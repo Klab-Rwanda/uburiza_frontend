@@ -2,6 +2,7 @@ import React from 'react';
 import TopNavPublic from '../components/TopNavPublic';
 import Footer from '../components/Footer';
 import { Play, TrendingUp, Code, Lightbulb, TrendingUp as Marketing, MonitorSmartphone, Star, ArrowRight, CheckCircle2 } from 'lucide-react';
+import agriTechImg from '../assets/sustainable_agritech.png';
 
 export default function LandingPage({ setView }) {
   return (
@@ -16,12 +17,12 @@ export default function LandingPage({ setView }) {
               <span className="w-8 h-[2px] bg-emerald-600"></span>
               <span>Empowering African Tech Leaders</span>
             </div>
-            <h1 className="text-5xl md:text-7xl font-bold text-gray-900 leading-tight mb-6">
+            <h1 className="text-5xl md:text-7xl font-bold text-emerald-900 leading-tight mb-6">
               Master Digital <br/>
               Skills. <span className="text-emerald-500">Lead</span> <br/>
               <span className="text-emerald-500">the Future.</span>
             </h1>
-            <p className="text-gray-600 text-lg mb-10 max-w-md">
+            <p className="text-emerald-600 text-lg mb-10 max-w-md">
               Unlock your potential with premium, African-led digital education. From AI to Entrepreneurship, we build the leaders of tomorrow.
             </p>
             <div className="flex items-center space-x-4 mb-10">
@@ -43,8 +44,8 @@ export default function LandingPage({ setView }) {
                   <img key={i} src={`https://i.pravatar.cc/150?img=${i+10}`} alt="Student" className="w-10 h-10 rounded-full border-2 border-white object-cover" />
                 ))}
               </div>
-              <div className="text-sm text-gray-600">
-                <span className="font-bold text-gray-900">Joined by 50,000+</span> ambitious learners
+              <div className="text-sm text-emerald-600">
+                <span className="font-bold text-emerald-900">Joined by 50,000+</span> ambitious learners
               </div>
             </div>
           </div>
@@ -60,34 +61,34 @@ export default function LandingPage({ setView }) {
                 <TrendingUp className="w-6 h-6" />
               </div>
               <div>
-                <p className="text-xs text-gray-500 font-medium uppercase tracking-wider">Salary Growth</p>
-                <p className="text-xl font-bold text-gray-900">+85% Avg. Increase</p>
+                <p className="text-xs text-emerald-500 font-medium uppercase tracking-wider">Salary Growth</p>
+                <p className="text-xl font-bold text-emerald-900">+85% Avg. Increase</p>
               </div>
             </div>
           </div>
         </section>
 
         {/* Logos Section */}
-        <section className="border-t border-b border-gray-100 py-10 bg-gray-50/50">
+        <section className="border-t border-b border-emerald-100 py-10 bg-emerald-50/50">
           <div className="max-w-7xl mx-auto px-8">
-            <p className="text-center text-xs font-bold text-gray-400 tracking-widest uppercase mb-8">
+            <p className="text-center text-xs font-bold text-emerald-400 tracking-widest uppercase mb-8">
               Trusted by Africa's Leading Innovators
             </p>
             <div className="flex flex-wrap justify-center items-center gap-12 md:gap-24 opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
               {/* Using generic tech logo placeholders */}
-              <div className="text-xl font-black text-gray-800">Flutterwave</div>
-              <div className="text-xl font-black text-gray-800">Paystack</div>
-              <div className="text-xl font-black text-gray-800">Andela</div>
-              <div className="text-xl font-black text-gray-800">M-PESA</div>
-              <div className="text-xl font-black text-gray-800">Jumia</div>
+              <div className="text-xl font-black text-emerald-800">Flutterwave</div>
+              <div className="text-xl font-black text-emerald-800">Paystack</div>
+              <div className="text-xl font-black text-emerald-800">Andela</div>
+              <div className="text-xl font-black text-emerald-800">M-PESA</div>
+              <div className="text-xl font-black text-emerald-800">Jumia</div>
             </div>
           </div>
         </section>
 
         {/* Popular Learning Paths */}
         <section className="py-24 px-8 md:px-16 max-w-7xl mx-auto text-center">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">Popular Learning Paths</h2>
-          <p className="text-gray-500 max-w-2xl mx-auto mb-16">
+          <h2 className="text-3xl font-bold text-emerald-900 mb-4">Popular Learning Paths</h2>
+          <p className="text-emerald-500 max-w-2xl mx-auto mb-16">
             Tailored curriculums designed for the unique challenges and opportunities of the African digital economy.
           </p>
           
@@ -98,24 +99,24 @@ export default function LandingPage({ setView }) {
               { title: 'Digital Marketing', courses: '15 Courses', icon: Marketing, color: 'text-purple-600', bg: 'bg-purple-50' },
               { title: 'Digital Literacy', courses: '6 Courses', icon: MonitorSmartphone, color: 'text-orange-600', bg: 'bg-orange-50' }
             ].map((path, idx) => (
-              <div key={idx} className="bg-gray-50 rounded-2xl p-8 hover:shadow-lg transition-all cursor-pointer group border border-gray-100">
+              <div key={idx} className="bg-emerald-50 rounded-2xl p-8 hover:shadow-lg transition-all cursor-pointer group border border-emerald-100">
                 <div className={`w-14 h-14 rounded-xl ${path.bg} ${path.color} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>
                   <path.icon className="w-7 h-7" />
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">{path.title}</h3>
-                <p className="text-gray-500 font-medium">{path.courses}</p>
+                <h3 className="text-xl font-bold text-emerald-900 mb-2">{path.title}</h3>
+                <p className="text-emerald-500 font-medium">{path.courses}</p>
               </div>
             ))}
           </div>
         </section>
 
         {/* Featured Courses */}
-        <section className="py-24 px-8 md:px-16 bg-gray-50">
+        <section className="py-24 px-8 md:px-16 bg-emerald-50">
           <div className="max-w-7xl mx-auto">
             <div className="flex justify-between items-end mb-12">
               <div>
-                <h2 className="text-3xl font-bold text-gray-900 mb-4">Featured Courses</h2>
-                <p className="text-gray-500 max-w-xl">
+                <h2 className="text-3xl font-bold text-emerald-900 mb-4">Featured Courses</h2>
+                <p className="text-emerald-500 max-w-xl">
                   Start learning with our most popular programs, led by industry experts across the continent.
                 </p>
               </div>
@@ -131,10 +132,10 @@ export default function LandingPage({ setView }) {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {[
                 { title: 'FinTech Fundamentals for Africa', author: 'Kwame Osei', rating: '4.8', learners: '1.2k', img: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80', tag: 'TRENDING' },
-                { title: 'Sustainable Agri-Tech Solutions', author: 'Amina Hassan', rating: '4.9', learners: '850', img: 'https://images.unsplash.com/photo-1592982537447-6f2a6a0c5c1b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80', tag: 'NEW' },
+                { title: 'Sustainable Agri-Tech Solutions', author: 'Amina Hassan', rating: '4.9', learners: '850', img: agriTechImg, tag: 'NEW' },
                 { title: 'Mastering Mobile UX Design', author: 'David Kalu', rating: '4.7', learners: '2.1k', img: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80', tag: 'ADVANCED' }
               ].map((course, idx) => (
-                <div key={idx} className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-gray-100 flex flex-col cursor-pointer" onClick={() => setView('CourseOverview')}>
+                <div key={idx} className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-emerald-100 flex flex-col cursor-pointer" onClick={() => setView('CourseOverview')}>
                   <div className="relative h-48">
                     <img src={course.img} alt={course.title} className="w-full h-full object-cover" />
                     <div className="absolute top-4 left-4 bg-emerald-500 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
@@ -142,19 +143,19 @@ export default function LandingPage({ setView }) {
                     </div>
                   </div>
                   <div className="p-6 flex-1 flex flex-col">
-                    <div className="flex items-center space-x-4 text-sm text-gray-500 mb-3">
+                    <div className="flex items-center space-x-4 text-sm text-emerald-500 mb-3">
                       <div className="flex items-center space-x-1">
                         <Star className="w-4 h-4 text-amber-400 fill-amber-400" />
-                        <span className="font-medium text-gray-700">{course.rating}</span>
+                        <span className="font-medium text-emerald-700">{course.rating}</span>
                       </div>
                       <span>•</span>
                       <span>{course.learners} learners</span>
                     </div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-4 line-clamp-2">{course.title}</h3>
+                    <h3 className="text-xl font-bold text-emerald-900 mb-4 line-clamp-2">{course.title}</h3>
                     <div className="mt-auto flex items-center justify-between">
                       <div className="flex items-center space-x-3">
                         <img src={`https://i.pravatar.cc/150?img=${idx + 20}`} alt={course.author} className="w-8 h-8 rounded-full" />
-                        <span className="text-sm font-medium text-gray-700">{course.author}</span>
+                        <span className="text-sm font-medium text-emerald-700">{course.author}</span>
                       </div>
                       <button className="text-emerald-600 border border-emerald-200 px-4 py-2 rounded-lg text-sm font-semibold hover:bg-emerald-50 transition-colors">
                         Details
@@ -204,8 +205,8 @@ export default function LandingPage({ setView }) {
           </h2>
           <div className="flex flex-col items-center">
             <img src="https://i.pravatar.cc/150?img=32" alt="Fatima Diop" className="w-16 h-16 rounded-full border-4 border-white shadow-lg mb-4" />
-            <h4 className="font-bold text-gray-900 text-lg">Fatima Diop</h4>
-            <p className="text-gray-500">Founder, GreenTech Kenya</p>
+            <h4 className="font-bold text-emerald-900 text-lg">Fatima Diop</h4>
+            <p className="text-emerald-500">Founder, GreenTech Kenya</p>
           </div>
         </section>
 
@@ -224,7 +225,7 @@ export default function LandingPage({ setView }) {
             <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4 mb-10 relative z-10">
               <button 
                 onClick={() => setView('Signup')}
-                className="w-full sm:w-auto bg-white text-emerald-600 px-8 py-4 rounded-lg font-bold hover:bg-gray-50 transition-colors shadow-lg"
+                className="w-full sm:w-auto bg-white text-emerald-600 px-8 py-4 rounded-lg font-bold hover:bg-emerald-50 transition-colors shadow-lg"
               >
                 JOIN 50K+ AFRICAN LEARNERS
               </button>

@@ -12,6 +12,7 @@ import CourseOverview from './views/CourseOverview';
 import CourseMaterial from './views/CourseMaterial';
 import Login from './views/Login';
 import Signup from './views/Signup';
+import SettingsView from './views/SettingsView';
 import { AppProvider } from './context/AppContext';
 import { AnimatePresence, motion } from 'framer-motion';
 
@@ -30,6 +31,8 @@ function AppContent() {
         return <OperationalAnalytics setView={setView} />;
       case 'AdminForms':
         return <AdminManagementForms setView={setView} />;
+      case 'Settings':
+        return <SettingsView setView={setView} />;
       case 'LandingPage':
         return <LandingPage setView={setView} />;
       case 'CourseCatalog':
@@ -57,7 +60,7 @@ function AppContent() {
 
   if (isFullPageView) {
     return (
-      <div className="font-sans min-h-screen dark:bg-gray-900 transition-colors duration-300">
+      <div className="font-sans min-h-screen transition-colors duration-300">
         <AnimatePresence mode="wait">
           <motion.div
             key={view}
@@ -75,10 +78,10 @@ function AppContent() {
   }
 
   return (
-    <div className="container-custom flex font-sans overflow-hidden bg-gray-50 dark:bg-gray-900 h-screen transition-colors duration-300">
-      <Sidebar view={view} setView={setView} />
-      <div className="flex-1 flex flex-col h-screen overflow-hidden relative">
-        <TopNav view={view} setView={setView} />
+    <div className="flex flex-col font-sans overflow-hidden bg-emerald-50 h-screen transition-colors duration-300">
+      <TopNav view={view} setView={setView} />
+      <div className="flex flex-1 overflow-hidden relative">
+        <Sidebar view={view} setView={setView} />
         <main className="flex-1 overflow-y-auto">
           <AnimatePresence mode="wait">
             <motion.div

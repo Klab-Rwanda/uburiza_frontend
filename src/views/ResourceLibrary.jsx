@@ -22,49 +22,49 @@ export default function ResourceLibrary() {
             <div className="inline-block bg-emerald-50 text-emerald-800 text-xs font-semibold px-3 py-1 rounded-full mb-4">
               Knowledge Hub
             </div>
-            <h1 className="text-4xl font-bold text-gray-900 mb-2">
+            <h1 className="text-4xl font-bold text-emerald-900 mb-2">
               Resource <span className="text-emerald-700">Library</span>
             </h1>
-            <p className="text-gray-600 max-w-xl">
+            <p className="text-emerald-600 max-w-xl">
               Access curated toolkits, guides, and templates designed to accelerate your growth in the African digital economy.
             </p>
           </div>
           <div className="relative mt-4 lg:mt-0">
-            <Search className="w-5 h-5 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
+            <Search className="w-5 h-5 text-emerald-400 absolute left-3 top-1/2 -translate-y-1/2" />
             <input 
               type="text" 
               placeholder="Search resources, topics, or file types..." 
-              className="pl-10 pr-4 py-3 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 w-80 shadow-sm"
+              className="pl-10 pr-4 py-3 border border-emerald-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 w-80 shadow-sm"
             />
           </div>
         </div>
 
         {/* Filters */}
-        <div className="flex items-center justify-between border-b border-gray-200 pb-4">
+        <div className="flex items-center justify-between border-b border-emerald-200 pb-4">
           <div className="flex items-center space-x-2 overflow-x-auto pb-2">
-            <button className="flex items-center justify-center p-2 rounded-lg border border-gray-200 text-gray-500 hover:bg-gray-50">
+            <button className="flex items-center justify-center p-2 rounded-lg border border-emerald-200 text-emerald-500 hover:bg-emerald-50">
               <Filter className="w-4 h-4" />
             </button>
             <button className="bg-emerald-800 text-white px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap">
               All Resources
             </button>
-            <button className="text-gray-600 border border-gray-200 px-4 py-2 rounded-full text-sm font-medium hover:bg-gray-50 whitespace-nowrap">
+            <button className="text-emerald-600 border border-emerald-200 px-4 py-2 rounded-full text-sm font-medium hover:bg-emerald-50 whitespace-nowrap">
               Case Studies
             </button>
-            <button className="text-gray-600 border border-gray-200 px-4 py-2 rounded-full text-sm font-medium hover:bg-gray-50 whitespace-nowrap">
+            <button className="text-emerald-600 border border-emerald-200 px-4 py-2 rounded-full text-sm font-medium hover:bg-emerald-50 whitespace-nowrap">
               Video Toolkits
             </button>
-            <button className="text-gray-600 border border-gray-200 px-4 py-2 rounded-full text-sm font-medium hover:bg-gray-50 whitespace-nowrap">
+            <button className="text-emerald-600 border border-emerald-200 px-4 py-2 rounded-full text-sm font-medium hover:bg-emerald-50 whitespace-nowrap">
               Worksheets
             </button>
-            <button className="text-gray-600 border border-gray-200 px-4 py-2 rounded-full text-sm font-medium hover:bg-gray-50 whitespace-nowrap">
+            <button className="text-emerald-600 border border-emerald-200 px-4 py-2 rounded-full text-sm font-medium hover:bg-emerald-50 whitespace-nowrap">
               Templates
             </button>
-            <button className="text-gray-600 border border-gray-200 px-4 py-2 rounded-full text-sm font-medium hover:bg-gray-50 whitespace-nowrap">
+            <button className="text-emerald-600 border border-emerald-200 px-4 py-2 rounded-full text-sm font-medium hover:bg-emerald-50 whitespace-nowrap">
               Cheat Sheets
             </button>
           </div>
-          <div className="flex items-center space-x-2 text-sm text-gray-600 ml-4">
+          <div className="flex items-center space-x-2 text-sm text-emerald-600 ml-4">
             <span>Sort by:</span>
             <select className="font-semibold bg-transparent focus:outline-none border-none">
               <option>Newest First</option>
@@ -74,7 +74,7 @@ export default function ResourceLibrary() {
 
         {/* Results Info */}
         <div className="flex justify-between items-center text-sm">
-          <p className="font-semibold text-gray-900">Showing 8 results <span className="text-gray-400 font-normal">- All Categories</span></p>
+          <p className="font-semibold text-emerald-900">Showing 8 results <span className="text-emerald-400 font-normal">- All Categories</span></p>
           <button className="text-emerald-700 font-semibold flex items-center hover:underline">
             <span className="mr-1">Edit</span> Request a Resource
           </button>
@@ -83,7 +83,7 @@ export default function ResourceLibrary() {
         {/* Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {resources.map(resource => (
-            <div key={resource.id} className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition-all group flex flex-col h-full">
+            <div key={resource.id} className="bg-white border border-emerald-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition-all group flex flex-col h-full">
               <div className="flex justify-between items-start mb-4">
                 <div className={`p-3 rounded-xl ${resource.bgIcon} ${resource.iconColor}`}>
                   {getIcon(resource.type)}
@@ -93,24 +93,24 @@ export default function ResourceLibrary() {
                 </div>
               </div>
               
-              <h3 className="font-bold text-gray-900 mb-2">{resource.title}</h3>
-              <p className="text-sm text-gray-500 mb-6 flex-grow line-clamp-3">{resource.desc}</p>
+              <h3 className="font-bold text-emerald-900 mb-2">{resource.title}</h3>
+              <p className="text-sm text-emerald-500 mb-6 flex-grow line-clamp-3">{resource.desc}</p>
               
               <div className="space-y-1 mb-6">
-                <div className="flex items-center text-xs text-gray-500">
-                  <span className="w-4 h-4 mr-2 border border-gray-300 rounded inline-block"></span>
+                <div className="flex items-center text-xs text-emerald-500">
+                  <span className="w-4 h-4 mr-2 border border-emerald-300 rounded inline-block"></span>
                   {resource.category}
                 </div>
-                <div className="flex items-center text-xs text-gray-500">
+                <div className="flex items-center text-xs text-emerald-500">
                   <ClockIcon className="w-4 h-4 mr-2" />
                   Updated {resource.updated}
                 </div>
               </div>
 
-              <div className="border-t border-gray-100 pt-4 flex justify-between items-center mt-auto">
+              <div className="border-t border-emerald-100 pt-4 flex justify-between items-center mt-auto">
                 <div>
-                  <p className="text-[10px] text-gray-400 font-bold uppercase tracking-wider">SIZE</p>
-                  <p className="text-sm font-semibold text-gray-900">{resource.size}</p>
+                  <p className="text-[10px] text-emerald-400 font-bold uppercase tracking-wider">SIZE</p>
+                  <p className="text-sm font-semibold text-emerald-900">{resource.size}</p>
                 </div>
                 <button className="bg-[#1e4c31] hover:bg-emerald-800 text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center transition-colors">
                   <Download className="w-4 h-4 mr-1.5" /> Get File
@@ -121,13 +121,13 @@ export default function ResourceLibrary() {
         </div>
 
         {/* Cannot find */}
-        <div className="bg-white border border-gray-200 border-dashed rounded-2xl p-10 flex flex-col items-center justify-center text-center my-8">
+        <div className="bg-white border border-emerald-200 border-dashed rounded-2xl p-10 flex flex-col items-center justify-center text-center my-8">
           <div className="bg-emerald-50 p-3 rounded-full mb-4">
             <BookIcon className="w-6 h-6 text-emerald-600" />
           </div>
-          <h3 className="text-lg font-bold text-gray-900 mb-2">Can't find what you're looking for?</h3>
-          <p className="text-gray-500 mb-6 max-w-md">Our team regularly updates the library based on learner feedback.</p>
-          <button className="text-gray-700 border border-gray-300 px-6 py-2.5 rounded-lg text-sm font-semibold flex items-center hover:bg-gray-50 transition-colors">
+          <h3 className="text-lg font-bold text-emerald-900 mb-2">Can't find what you're looking for?</h3>
+          <p className="text-emerald-500 mb-6 max-w-md">Our team regularly updates the library based on learner feedback.</p>
+          <button className="text-emerald-700 border border-emerald-300 px-6 py-2.5 rounded-lg text-sm font-semibold flex items-center hover:bg-emerald-50 transition-colors">
             Browse Full Catalog <ArrowRight className="w-4 h-4 ml-2" />
           </button>
         </div>
@@ -156,21 +156,21 @@ export default function ResourceLibrary() {
         </div>
 
         {/* Footer */}
-        <footer className="bg-white border-t border-gray-200 py-12 px-8">
+        <footer className="bg-white border-t border-emerald-200 py-12 px-8">
           <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
             <div className="md:col-span-1">
               <div className="flex items-center space-x-2 text-emerald-800 font-bold text-xl mb-4">
                 <Activity className="w-6 h-6" />
                 <span>Uburiza Learn</span>
               </div>
-              <p className="text-sm text-gray-500">
+              <p className="text-sm text-emerald-500">
                 Empowering the next generation of African digital leaders through premium, accessible education.
               </p>
             </div>
             
             <div>
-              <h4 className="font-bold text-gray-900 mb-4">Platform</h4>
-              <ul className="space-y-3 text-sm text-gray-600">
+              <h4 className="font-bold text-emerald-900 mb-4">Platform</h4>
+              <ul className="space-y-3 text-sm text-emerald-600">
                 <li><a href="#" className="hover:text-emerald-700">Course Catalog</a></li>
                 <li><a href="#" className="hover:text-emerald-700">Resource Library</a></li>
                 <li><a href="#" className="hover:text-emerald-700">Success Stories</a></li>
@@ -179,8 +179,8 @@ export default function ResourceLibrary() {
             </div>
 
             <div>
-              <h4 className="font-bold text-gray-900 mb-4">Community</h4>
-              <ul className="space-y-3 text-sm text-gray-600">
+              <h4 className="font-bold text-emerald-900 mb-4">Community</h4>
+              <ul className="space-y-3 text-sm text-emerald-600">
                 <li><a href="#" className="hover:text-emerald-700">Africa Tech Network</a></li>
                 <li><a href="#" className="hover:text-emerald-700">Student Mentorship</a></li>
                 <li><a href="#" className="hover:text-emerald-700">Partnerships</a></li>
@@ -189,16 +189,16 @@ export default function ResourceLibrary() {
             </div>
 
             <div>
-              <h4 className="font-bold text-gray-900 mb-4">Stay Inspired</h4>
-              <p className="text-sm text-gray-500 mb-4">Join our newsletter for the latest tech skills and opportunities.</p>
+              <h4 className="font-bold text-emerald-900 mb-4">Stay Inspired</h4>
+              <p className="text-sm text-emerald-500 mb-4">Join our newsletter for the latest tech skills and opportunities.</p>
               <div className="flex">
-                <input type="email" placeholder="Email address" className="border border-gray-300 rounded-l-lg px-4 py-2 w-full text-sm focus:outline-none focus:ring-1 focus:ring-emerald-500" />
+                <input type="email" placeholder="Email address" className="border border-emerald-300 rounded-l-lg px-4 py-2 w-full text-sm focus:outline-none focus:ring-1 focus:ring-emerald-500" />
                 <button className="bg-[#1e4c31] text-white px-4 py-2 rounded-r-lg font-medium">Join</button>
               </div>
             </div>
           </div>
           
-          <div className="max-w-7xl mx-auto mt-12 pt-8 border-t border-gray-100 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
+          <div className="max-w-7xl mx-auto mt-12 pt-8 border-t border-emerald-100 flex flex-col md:flex-row justify-between items-center text-sm text-emerald-500">
             <p>Built for the future of Africa. © 2024 Uburiza Learn.</p>
           </div>
         </footer>

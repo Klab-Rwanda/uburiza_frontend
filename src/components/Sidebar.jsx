@@ -19,11 +19,8 @@ export default function Sidebar({ view, setView }) {
   const items = isAdmin ? adminItems : learnerItems;
 
   return (
-    <div className="w-64 bg-white border-r border-gray-200 flex flex-col justify-between h-screen sticky top-0">
+    <div className="w-64 bg-white border-r border-emerald-200 flex flex-col justify-between h-full overflow-y-auto">
       <div className="p-6">
-        <div className="mb-8 pl-2">
-          {/* Using text for logo if image is not provided, matching brand */}
-        </div>
         <nav className="space-y-2">
           {items.map((item) => {
             const isActive = view === item.id;
@@ -34,10 +31,10 @@ export default function Sidebar({ view, setView }) {
                 className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${
                   isActive 
                     ? 'bg-emerald-50 text-emerald-800 font-medium' 
-                    : 'text-gray-600 hover:bg-gray-50'
+                    : 'text-emerald-600 hover:bg-emerald-50'
                 }`}
               >
-                <item.icon className={`w-5 h-5 ${isActive ? 'text-emerald-700' : 'text-gray-400'}`} />
+                <item.icon className={`w-5 h-5 ${isActive ? 'text-emerald-700' : 'text-emerald-400'}`} />
                 <span>{item.name}</span>
               </button>
             )
@@ -45,12 +42,12 @@ export default function Sidebar({ view, setView }) {
         </nav>
       </div>
 
-      <div className="p-6 border-t border-gray-200 space-y-2">
-        <button className="w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors">
-          <Settings className="w-5 h-5 text-gray-400" />
+      <div className="p-6 border-t border-emerald-200 space-y-2">
+        <button onClick={() => setView('Settings')} className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${view === 'Settings' ? 'bg-emerald-50 text-emerald-800 font-medium' : 'text-emerald-600 hover:bg-emerald-50'}`}>
+          <Settings className={`w-5 h-5 ${view === 'Settings' ? 'text-emerald-700' : 'text-emerald-400'}`} />
           <span>Settings</span>
         </button>
-        <button className="w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-red-600 hover:bg-red-50 transition-colors">
+        <button onClick={() => setView('LandingPage')} className="w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-red-600 hover:bg-red-50 transition-colors">
           <LogOut className="w-5 h-5 text-red-500" />
           <span>Log Out</span>
         </button>

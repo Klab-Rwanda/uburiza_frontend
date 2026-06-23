@@ -92,23 +92,23 @@ export default function CourseCatalog({ setView }) {
           <div className="inline-block border border-emerald-200 text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full text-xs font-bold tracking-wider mb-4">
             1,420 ACTIVE COURSES
           </div>
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">
+          <h1 className="text-4xl font-bold text-emerald-900 mb-4">
             Discover Your Next <span className="text-emerald-600">Digital Skill</span>
           </h1>
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <p className="text-gray-500 max-w-2xl">
+            <p className="text-emerald-500 max-w-2xl">
               Browse our selection of premium courses curated specifically for the African tech ecosystem.
             </p>
-            <div className="flex items-center space-x-2 bg-gray-50 p-1 rounded-lg border border-gray-200">
+            <div className="flex items-center space-x-2 bg-emerald-50 p-1 rounded-lg border border-emerald-200">
               <button 
-                className={`px-4 py-2 text-sm font-medium rounded-md flex items-center space-x-2 ${viewMode === 'grid' ? 'bg-white shadow-sm text-gray-900' : 'text-gray-500'}`}
+                className={`px-4 py-2 text-sm font-medium rounded-md flex items-center space-x-2 ${viewMode === 'grid' ? 'bg-white shadow-sm text-emerald-900' : 'text-emerald-500'}`}
                 onClick={() => setViewMode('grid')}
               >
                 <Grid className="w-4 h-4" />
                 <span>Grid View</span>
               </button>
               <button 
-                className={`px-4 py-2 text-sm font-medium rounded-md flex items-center space-x-2 ${viewMode === 'list' ? 'bg-white shadow-sm text-gray-900' : 'text-gray-500'}`}
+                className={`px-4 py-2 text-sm font-medium rounded-md flex items-center space-x-2 ${viewMode === 'list' ? 'bg-white shadow-sm text-emerald-900' : 'text-emerald-500'}`}
                 onClick={() => setViewMode('list')}
               >
                 <List className="w-4 h-4" />
@@ -122,49 +122,49 @@ export default function CourseCatalog({ setView }) {
           {/* Sidebar */}
           <div className="w-full lg:w-64 flex-shrink-0 space-y-8">
             <div>
-              <h3 className="text-sm font-bold text-gray-900 mb-3">Search</h3>
+              <h3 className="text-sm font-bold text-emerald-900 mb-3">Search</h3>
               <div className="relative">
-                <Search className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                <Search className="w-4 h-4 text-emerald-400 absolute left-3 top-1/2 -translate-y-1/2" />
                 <input 
                   type="text" 
                   placeholder="Search keywords..." 
-                  className="w-full pl-9 pr-4 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                  className="w-full pl-9 pr-4 py-2.5 border border-emerald-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
                 />
               </div>
             </div>
 
             <div>
-              <h3 className="text-sm font-bold text-gray-900 mb-3">Skill Level</h3>
+              <h3 className="text-sm font-bold text-emerald-900 mb-3">Skill Level</h3>
               <div className="space-y-3">
                 {['Beginner', 'Intermediate', 'Expert'].map(level => (
                   <label key={level} className="flex items-center space-x-3 cursor-pointer group">
-                    <div className="w-4 h-4 border border-gray-300 rounded flex items-center justify-center group-hover:border-emerald-500">
+                    <div className="w-4 h-4 border border-emerald-300 rounded flex items-center justify-center group-hover:border-emerald-500">
                       {/* Check icon would go here if checked */}
                     </div>
-                    <span className="text-sm text-gray-600">{level}</span>
+                    <span className="text-sm text-emerald-600">{level}</span>
                   </label>
                 ))}
               </div>
             </div>
 
             <div>
-              <h3 className="text-sm font-bold text-gray-900 mb-3">Price Range</h3>
+              <h3 className="text-sm font-bold text-emerald-900 mb-3">Price Range</h3>
               <div className="space-y-3">
                 {['Free Courses', 'Premium Courses', 'On Sale'].map(price => (
                   <label key={price} className="flex items-center space-x-3 cursor-pointer group">
-                    <div className="w-4 h-4 border border-gray-300 rounded flex items-center justify-center group-hover:border-emerald-500">
+                    <div className="w-4 h-4 border border-emerald-300 rounded flex items-center justify-center group-hover:border-emerald-500">
                     </div>
-                    <span className="text-sm text-gray-600">{price}</span>
+                    <span className="text-sm text-emerald-600">{price}</span>
                   </label>
                 ))}
               </div>
             </div>
 
             <div>
-              <h3 className="text-sm font-bold text-gray-900 mb-3">Popular Topics</h3>
+              <h3 className="text-sm font-bold text-emerald-900 mb-3">Popular Topics</h3>
               <div className="flex flex-wrap gap-2">
                 {['AI', 'Fintech', 'AgriTech', 'Cloud', 'Data Science', 'SaaS', 'Marketing'].map(topic => (
-                  <span key={topic} className="px-3 py-1.5 border border-gray-200 rounded-full text-xs text-gray-600 cursor-pointer hover:border-emerald-500 hover:text-emerald-600">
+                  <span key={topic} className="px-3 py-1.5 border border-emerald-200 rounded-full text-xs text-emerald-600 cursor-pointer hover:border-emerald-500 hover:text-emerald-600">
                     {topic}
                   </span>
                 ))}
@@ -194,7 +194,7 @@ export default function CourseCatalog({ setView }) {
                 <span>All Courses</span>
               </button>
               {['Design', 'Development', 'Marketing', 'Business'].map(cat => (
-                <button key={cat} className="px-4 py-2 bg-white border border-gray-200 text-gray-600 hover:border-emerald-500 hover:text-emerald-600 rounded-lg text-sm font-medium flex items-center space-x-2 transition-colors">
+                <button key={cat} className="px-4 py-2 bg-white border border-emerald-200 text-emerald-600 hover:border-emerald-500 hover:text-emerald-600 rounded-lg text-sm font-medium flex items-center space-x-2 transition-colors">
                   <span>{cat}</span>
                 </button>
               ))}
@@ -205,18 +205,18 @@ export default function CourseCatalog({ setView }) {
               {isLoading ? (
                 /* Skeleton Loaders */
                 Array.from({ length: 6 }).map((_, idx) => (
-                  <div key={idx} className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl overflow-hidden flex flex-col h-[400px]">
-                    <div className="h-48 bg-gray-200 dark:bg-gray-700 animate-pulse"></div>
+                  <div key={idx} className="bg-white border border-emerald-200 rounded-2xl overflow-hidden flex flex-col h-[400px]">
+                    <div className="h-48 bg-emerald-200 animate-pulse"></div>
                     <div className="p-5 flex-1 flex flex-col space-y-4">
-                      <div className="w-24 h-4 bg-gray-200 dark:bg-gray-700 rounded animate-pulse"></div>
-                      <div className="w-full h-6 bg-gray-200 dark:bg-gray-700 rounded animate-pulse"></div>
-                      <div className="w-3/4 h-6 bg-gray-200 dark:bg-gray-700 rounded animate-pulse mb-4"></div>
+                      <div className="w-24 h-4 bg-emerald-200 rounded animate-pulse"></div>
+                      <div className="w-full h-6 bg-emerald-200 rounded animate-pulse"></div>
+                      <div className="w-3/4 h-6 bg-emerald-200 rounded animate-pulse mb-4"></div>
                       
                       <div className="flex items-center space-x-3 mt-4">
-                        <div className="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-700 animate-pulse"></div>
+                        <div className="w-10 h-10 rounded-full bg-emerald-200 animate-pulse"></div>
                         <div className="space-y-2">
-                          <div className="w-24 h-3 bg-gray-200 dark:bg-gray-700 rounded animate-pulse"></div>
-                          <div className="w-32 h-3 bg-gray-200 dark:bg-gray-700 rounded animate-pulse"></div>
+                          <div className="w-24 h-3 bg-emerald-200 rounded animate-pulse"></div>
+                          <div className="w-32 h-3 bg-emerald-200 rounded animate-pulse"></div>
                         </div>
                       </div>
                     </div>
@@ -229,7 +229,7 @@ export default function CourseCatalog({ setView }) {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: idx * 0.1, duration: 0.4 }}
-                    className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl overflow-hidden hover:shadow-xl transition-all flex flex-col group cursor-pointer" 
+                    className="bg-white border border-emerald-200 rounded-2xl overflow-hidden hover:shadow-xl transition-all flex flex-col group cursor-pointer" 
                     onClick={() => setView('CourseOverview')}
                   >
                     <div className="relative h-48 overflow-hidden">
@@ -237,7 +237,7 @@ export default function CourseCatalog({ setView }) {
                       <div className="absolute top-3 left-3 flex space-x-2">
                         {course.tags.map(tag => (
                           <span key={tag.text} className={`text-xs font-bold px-2 py-1 rounded-md ${
-                            tag.type === 'dark' ? 'bg-gray-900/80 text-white' : 
+                            tag.type === 'dark' ? 'bg-emerald-900/80 text-white' : 
                             tag.type === 'green' ? 'bg-emerald-500 text-white' : 'bg-purple-500 text-white'
                           }`}>
                             {tag.text}
@@ -247,18 +247,18 @@ export default function CourseCatalog({ setView }) {
                     </div>
                     
                     <div className="p-5 flex-1 flex flex-col">
-                      <div className="text-xs font-bold text-emerald-600 dark:text-emerald-400 tracking-wider mb-2 uppercase">{course.category}</div>
-                      <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4 line-clamp-2">{course.title}</h3>
+                      <div className="text-xs font-bold text-emerald-600 tracking-wider mb-2 uppercase">{course.category}</div>
+                      <h3 className="text-lg font-bold text-emerald-900 mb-4 line-clamp-2">{course.title}</h3>
                       
                       <div className="flex items-center space-x-3 mb-6">
-                        <img src={`https://i.pravatar.cc/150?img=${idx + 30}`} alt={course.author} className="w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-700" />
+                        <img src={`https://i.pravatar.cc/150?img=${idx + 30}`} alt={course.author} className="w-10 h-10 rounded-full bg-emerald-100" />
                         <div>
-                          <div className="text-sm font-semibold text-gray-900 dark:text-gray-100">{course.author}</div>
-                          <div className="text-xs text-gray-500 dark:text-gray-400">{course.role}</div>
+                          <div className="text-sm font-semibold text-emerald-900">{course.author}</div>
+                          <div className="text-xs text-emerald-500">{course.role}</div>
                         </div>
                       </div>
                       
-                      <div className="mt-auto pt-4 border-t border-gray-100 dark:border-gray-700 flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
+                      <div className="mt-auto pt-4 border-t border-emerald-100 flex items-center justify-between text-sm text-emerald-500">
                         <div className="flex items-center space-x-4">
                           <div className="flex items-center space-x-1">
                             <Users className="w-4 h-4" />
@@ -274,9 +274,9 @@ export default function CourseCatalog({ setView }) {
                       <div className="mt-4 flex items-center justify-between">
                         <div className="flex items-center space-x-1">
                           <Star className="w-4 h-4 text-amber-400 fill-amber-400" />
-                          <span className="font-bold text-gray-900 dark:text-white">{course.rating}</span>
+                          <span className="font-bold text-emerald-900">{course.rating}</span>
                         </div>
-                        <button className="text-emerald-600 dark:text-emerald-400 font-semibold flex items-center space-x-1 group-hover:text-emerald-700 dark:group-hover:text-emerald-300">
+                        <button className="text-emerald-600 font-semibold flex items-center space-x-1 group-hover:text-emerald-700">
                           <span>Preview</span>
                           <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                         </button>
@@ -288,9 +288,9 @@ export default function CourseCatalog({ setView }) {
             </div>
 
             {/* Load More */}
-            <div className="mt-12 text-center border-t border-gray-100 pt-12">
-              <p className="text-sm text-gray-500 mb-4">Showing 6 of 1,420 courses</p>
-              <button className="inline-flex items-center space-x-2 border border-gray-300 text-gray-700 px-6 py-3 rounded-lg font-medium hover:bg-gray-50 transition-colors">
+            <div className="mt-12 text-center border-t border-emerald-100 pt-12">
+              <p className="text-sm text-emerald-500 mb-4">Showing 6 of 1,420 courses</p>
+              <button className="inline-flex items-center space-x-2 border border-emerald-300 text-emerald-700 px-6 py-3 rounded-lg font-medium hover:bg-emerald-50 transition-colors">
                 <span>Show More Courses</span>
                 <ChevronDown className="w-4 h-4" />
               </button>
