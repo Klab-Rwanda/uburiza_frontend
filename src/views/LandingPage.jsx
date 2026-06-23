@@ -6,23 +6,23 @@ import agriTechImg from '../assets/sustainable_agritech.png';
 
 export default function LandingPage({ setView }) {
   return (
-    <div className="bg-white min-h-screen flex flex-col font-sans">
+    <div className="bg-slate-50 min-h-screen flex flex-col font-sans">
       <TopNavPublic setView={setView} />
       
       <main className="flex-1">
         {/* Hero Section */}
         <section className="px-8 md:px-16 py-16 md:py-24 max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-12">
           <div className="flex-1">
-            <div className="flex items-center space-x-2 text-emerald-600 font-medium mb-6">
-              <span className="w-8 h-[2px] bg-emerald-600"></span>
+            <div className="flex items-center space-x-2 text-black font-medium mb-6">
+              <span className="w-8 h-[2px] bg-black"></span>
               <span>Empowering African Tech Leaders</span>
             </div>
-            <h1 className="text-5xl md:text-7xl font-bold text-emerald-900 leading-tight mb-6">
+            <h1 className="text-5xl md:text-7xl font-bold text-black leading-tight mb-6">
               Master Digital <br/>
-              Skills. <span className="text-emerald-500">Lead</span> <br/>
-              <span className="text-emerald-500">the Future.</span>
+              Skills. <span className="text-black">Lead</span> <br/>
+              <span className="text-black">the Future.</span>
             </h1>
-            <p className="text-emerald-600 text-lg mb-10 max-w-md">
+            <p className="text-black text-lg mb-10 max-w-md">
               Unlock your potential with premium, African-led digital education. From AI to Entrepreneurship, we build the leaders of tomorrow.
             </p>
             <div className="flex items-center space-x-4 mb-10">
@@ -32,7 +32,7 @@ export default function LandingPage({ setView }) {
               >
                 Explore Courses
               </button>
-              <button className="flex items-center space-x-2 text-emerald-800 font-semibold px-6 py-4 rounded-lg border border-emerald-200 hover:bg-emerald-50 transition-colors">
+              <button className="flex items-center space-x-2 text-black font-semibold px-6 py-4 rounded-lg border border-emerald-200 hover:bg-emerald-50 transition-colors">
                 <Play className="w-5 h-5" />
                 <span>How it works</span>
               </button>
@@ -44,8 +44,8 @@ export default function LandingPage({ setView }) {
                   <img key={i} src={`https://i.pravatar.cc/150?img=${i+10}`} alt="Student" className="w-10 h-10 rounded-full border-2 border-white object-cover" />
                 ))}
               </div>
-              <div className="text-sm text-emerald-600">
-                <span className="font-bold text-emerald-900">Joined by 50,000+</span> ambitious learners
+              <div className="text-sm text-black">
+                <span className="font-bold text-black">Joined by 50,000+</span> ambitious learners
               </div>
             </div>
           </div>
@@ -57,12 +57,12 @@ export default function LandingPage({ setView }) {
             </div>
             
             <div className="absolute -bottom-8 -left-8 bg-white p-4 rounded-xl shadow-xl flex items-center space-x-4 animate-bounce-slow">
-              <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-600">
+              <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center text-black">
                 <TrendingUp className="w-6 h-6" />
               </div>
               <div>
-                <p className="text-xs text-emerald-500 font-medium uppercase tracking-wider">Salary Growth</p>
-                <p className="text-xl font-bold text-emerald-900">+85% Avg. Increase</p>
+                <p className="text-xs text-black font-medium uppercase tracking-wider">Salary Growth</p>
+                <p className="text-xl font-bold text-black">+85% Avg. Increase</p>
               </div>
             </div>
           </div>
@@ -71,30 +71,30 @@ export default function LandingPage({ setView }) {
         {/* Logos Section */}
         <section className="border-t border-b border-emerald-100 py-10 bg-emerald-50/50">
           <div className="max-w-7xl mx-auto px-8">
-            <p className="text-center text-xs font-bold text-emerald-400 tracking-widest uppercase mb-8">
+            <p className="text-center text-xs font-bold text-black tracking-widest uppercase mb-8">
               Trusted by Africa's Leading Innovators
             </p>
             <div className="flex flex-wrap justify-center items-center gap-12 md:gap-24 opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
               {/* Using generic tech logo placeholders */}
-              <div className="text-xl font-black text-emerald-800">Flutterwave</div>
-              <div className="text-xl font-black text-emerald-800">Paystack</div>
-              <div className="text-xl font-black text-emerald-800">Andela</div>
-              <div className="text-xl font-black text-emerald-800">M-PESA</div>
-              <div className="text-xl font-black text-emerald-800">Jumia</div>
+              <div className="text-xl font-black text-black">Flutterwave</div>
+              <div className="text-xl font-black text-black">Paystack</div>
+              <div className="text-xl font-black text-black">Andela</div>
+              <div className="text-xl font-black text-black">M-PESA</div>
+              <div className="text-xl font-black text-black">Jumia</div>
             </div>
           </div>
         </section>
 
         {/* Popular Learning Paths */}
         <section className="py-24 px-8 md:px-16 max-w-7xl mx-auto text-center">
-          <h2 className="text-3xl font-bold text-emerald-900 mb-4">Popular Learning Paths</h2>
-          <p className="text-emerald-500 max-w-2xl mx-auto mb-16">
+          <h2 className="text-3xl font-bold text-black mb-4">Popular Learning Paths</h2>
+          <p className="text-black max-w-2xl mx-auto mb-16">
             Tailored curriculums designed for the unique challenges and opportunities of the African digital economy.
           </p>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-left">
             {[
-              { title: 'AI & Data Science', courses: '12 Courses', icon: Code, color: 'text-emerald-600', bg: 'bg-emerald-50' },
+              { title: 'AI & Data Science', courses: '12 Courses', icon: Code, color: 'text-black', bg: 'bg-emerald-50' },
               { title: 'Entrepreneurship', courses: '8 Courses', icon: Lightbulb, color: 'text-blue-600', bg: 'bg-blue-50' },
               { title: 'Digital Marketing', courses: '15 Courses', icon: Marketing, color: 'text-purple-600', bg: 'bg-purple-50' },
               { title: 'Digital Literacy', courses: '6 Courses', icon: MonitorSmartphone, color: 'text-orange-600', bg: 'bg-orange-50' }
@@ -103,8 +103,8 @@ export default function LandingPage({ setView }) {
                 <div className={`w-14 h-14 rounded-xl ${path.bg} ${path.color} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>
                   <path.icon className="w-7 h-7" />
                 </div>
-                <h3 className="text-xl font-bold text-emerald-900 mb-2">{path.title}</h3>
-                <p className="text-emerald-500 font-medium">{path.courses}</p>
+                <h3 className="text-xl font-bold text-black mb-2">{path.title}</h3>
+                <p className="text-black font-medium">{path.courses}</p>
               </div>
             ))}
           </div>
@@ -115,14 +115,14 @@ export default function LandingPage({ setView }) {
           <div className="max-w-7xl mx-auto">
             <div className="flex justify-between items-end mb-12">
               <div>
-                <h2 className="text-3xl font-bold text-emerald-900 mb-4">Featured Courses</h2>
-                <p className="text-emerald-500 max-w-xl">
+                <h2 className="text-3xl font-bold text-black mb-4">Featured Courses</h2>
+                <p className="text-black max-w-xl">
                   Start learning with our most popular programs, led by industry experts across the continent.
                 </p>
               </div>
               <button 
                 onClick={() => setView('CourseCatalog')}
-                className="hidden md:flex items-center space-x-2 text-emerald-600 font-semibold hover:text-emerald-700 transition-colors"
+                className="hidden md:flex items-center space-x-2 text-black font-semibold hover:text-gray-700 transition-colors"
               >
                 <span>View all courses</span>
                 <ArrowRight className="w-4 h-4" />
@@ -143,21 +143,21 @@ export default function LandingPage({ setView }) {
                     </div>
                   </div>
                   <div className="p-6 flex-1 flex flex-col">
-                    <div className="flex items-center space-x-4 text-sm text-emerald-500 mb-3">
+                    <div className="flex items-center space-x-4 text-sm text-black mb-3">
                       <div className="flex items-center space-x-1">
                         <Star className="w-4 h-4 text-amber-400 fill-amber-400" />
-                        <span className="font-medium text-emerald-700">{course.rating}</span>
+                        <span className="font-medium text-black">{course.rating}</span>
                       </div>
                       <span>•</span>
                       <span>{course.learners} learners</span>
                     </div>
-                    <h3 className="text-xl font-bold text-emerald-900 mb-4 line-clamp-2">{course.title}</h3>
+                    <h3 className="text-xl font-bold text-black mb-4 line-clamp-2">{course.title}</h3>
                     <div className="mt-auto flex items-center justify-between">
                       <div className="flex items-center space-x-3">
                         <img src={`https://i.pravatar.cc/150?img=${idx + 20}`} alt={course.author} className="w-8 h-8 rounded-full" />
-                        <span className="text-sm font-medium text-emerald-700">{course.author}</span>
+                        <span className="text-sm font-medium text-black">{course.author}</span>
                       </div>
-                      <button className="text-emerald-600 border border-emerald-200 px-4 py-2 rounded-lg text-sm font-semibold hover:bg-emerald-50 transition-colors">
+                      <button className="text-black border border-emerald-200 px-4 py-2 rounded-lg text-sm font-semibold hover:bg-emerald-50 transition-colors">
                         Details
                       </button>
                     </div>
@@ -169,7 +169,7 @@ export default function LandingPage({ setView }) {
             <div className="mt-8 text-center md:hidden">
               <button 
                 onClick={() => setView('CourseCatalog')}
-                className="inline-flex items-center space-x-2 text-emerald-600 font-semibold hover:text-emerald-700 transition-colors"
+                className="inline-flex items-center space-x-2 text-black font-semibold hover:text-gray-700 transition-colors"
               >
                 <span>View all courses</span>
                 <ArrowRight className="w-4 h-4" />
@@ -198,15 +198,15 @@ export default function LandingPage({ setView }) {
         {/* Testimonial Section */}
         <section className="py-24 px-8 md:px-16 max-w-4xl mx-auto text-center">
           <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-8">
-            <span className="text-3xl text-emerald-600 font-serif">"</span>
+            <span className="text-3xl text-black font-serif">"</span>
           </div>
-          <h2 className="text-2xl md:text-4xl font-bold text-emerald-900 leading-tight mb-10">
+          <h2 className="text-2xl md:text-4xl font-bold text-black leading-tight mb-10">
             "Uburiza Learn didn't just teach me how to code; it gave me the confidence to launch my own startup in Nairobi. The curriculum is perfectly suited for our market."
           </h2>
           <div className="flex flex-col items-center">
             <img src="https://i.pravatar.cc/150?img=32" alt="Fatima Diop" className="w-16 h-16 rounded-full border-4 border-white shadow-lg mb-4" />
-            <h4 className="font-bold text-emerald-900 text-lg">Fatima Diop</h4>
-            <p className="text-emerald-500">Founder, GreenTech Kenya</p>
+            <h4 className="font-bold text-black text-lg">Fatima Diop</h4>
+            <p className="text-black">Founder, GreenTech Kenya</p>
           </div>
         </section>
 
@@ -219,13 +219,13 @@ export default function LandingPage({ setView }) {
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 relative z-10">
               Ready to start your digital journey?
             </h2>
-            <p className="text-emerald-50 text-lg mb-10 max-w-2xl mx-auto relative z-10">
+            <p className="text-black text-lg mb-10 max-w-2xl mx-auto relative z-10">
               Join thousands of African learners building the future of Africa today. No credit card required to start.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4 mb-10 relative z-10">
               <button 
                 onClick={() => setView('Signup')}
-                className="w-full sm:w-auto bg-white text-emerald-600 px-8 py-4 rounded-lg font-bold hover:bg-emerald-50 transition-colors shadow-lg"
+                className="w-full sm:w-auto bg-white text-black px-8 py-4 rounded-lg font-bold hover:bg-emerald-50 transition-colors shadow-lg"
               >
                 JOIN 50K+ AFRICAN LEARNERS
               </button>
@@ -237,7 +237,7 @@ export default function LandingPage({ setView }) {
               </button>
             </div>
             
-            <div className="flex flex-wrap justify-center gap-6 text-sm text-emerald-50 relative z-10">
+            <div className="flex flex-wrap justify-center gap-6 text-sm text-black relative z-10">
               <div className="flex items-center space-x-2">
                 <CheckCircle2 className="w-4 h-4" />
                 <span>Expert Instructors</span>

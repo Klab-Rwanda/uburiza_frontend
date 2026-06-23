@@ -12,7 +12,7 @@ export default function SettingsView() {
 
   return (
     <div className="p-8 max-w-4xl mx-auto w-full">
-      <h1 className="text-3xl font-bold text-emerald-900 mb-8">Settings</h1>
+      <h1 className="text-3xl font-bold text-black mb-8">Settings</h1>
       
       <div className="bg-white rounded-2xl shadow-sm border border-emerald-100 flex flex-col md:flex-row overflow-hidden">
         {/* Settings Sidebar */}
@@ -24,11 +24,11 @@ export default function SettingsView() {
                 onClick={() => setActiveTab(tab.id)}
                 className={`flex items-center space-x-3 px-4 py-3 rounded-lg w-full transition-colors whitespace-nowrap ${
                   activeTab === tab.id 
-                    ? 'bg-emerald-100 text-emerald-800 font-semibold' 
-                    : 'text-emerald-600 hover:bg-emerald-50'
+                    ? 'bg-emerald-100 text-black font-semibold' 
+                    : 'text-black hover:bg-emerald-50'
                 }`}
               >
-                <tab.icon className={`w-5 h-5 ${activeTab === tab.id ? 'text-emerald-700' : 'text-emerald-400'}`} />
+                <tab.icon className={`w-5 h-5 ${activeTab === tab.id ? 'text-black' : 'text-black'}`} />
                 <span>{tab.name}</span>
               </button>
             ))}
@@ -39,35 +39,35 @@ export default function SettingsView() {
         <div className="flex-1 p-8">
           {activeTab === 'profile' && (
             <div className="space-y-6">
-              <h2 className="text-xl font-bold text-emerald-900 mb-6 border-b border-emerald-100 pb-4">Profile Information</h2>
+              <h2 className="text-xl font-bold text-black mb-6 border-b border-emerald-100 pb-4">Profile Information</h2>
               
               <div className="flex items-center space-x-6 mb-8">
                 <img src="https://i.pravatar.cc/150?img=11" alt="Avatar" className="w-24 h-24 rounded-full border-4 border-emerald-50" />
                 <div>
-                  <button className="bg-emerald-100 text-emerald-700 px-4 py-2 rounded-lg font-medium hover:bg-emerald-200 transition-colors text-sm mb-2">Change Picture</button>
-                  <p className="text-xs text-emerald-500">JPG, GIF or PNG. Max size of 800K</p>
+                  <button className="bg-emerald-100 text-black px-4 py-2 rounded-lg font-medium hover:bg-emerald-200 transition-colors text-sm mb-2">Change Picture</button>
+                  <p className="text-xs text-black">JPG, GIF or PNG. Max size of 800K</p>
                 </div>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-medium text-emerald-700 mb-2">First Name</label>
+                  <label className="block text-sm font-medium text-black mb-2">First Name</label>
                   <input type="text" defaultValue="Abebe" className="w-full border border-emerald-200 rounded-lg px-4 py-2 focus:ring-2 focus:ring-emerald-500 focus:outline-none" />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-emerald-700 mb-2">Last Name</label>
+                  <label className="block text-sm font-medium text-black mb-2">Last Name</label>
                   <input type="text" defaultValue="Bikila" className="w-full border border-emerald-200 rounded-lg px-4 py-2 focus:ring-2 focus:ring-emerald-500 focus:outline-none" />
                 </div>
                 <div className="md:col-span-2">
-                  <label className="block text-sm font-medium text-emerald-700 mb-2">Bio</label>
+                  <label className="block text-sm font-medium text-black mb-2">Bio</label>
                   <textarea rows="4" defaultValue="Passionate learner exploring tech and sustainability." className="w-full border border-emerald-200 rounded-lg px-4 py-2 focus:ring-2 focus:ring-emerald-500 focus:outline-none"></textarea>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-emerald-700 mb-2">Location</label>
+                  <label className="block text-sm font-medium text-black mb-2">Location</label>
                   <input type="text" defaultValue="Addis Ababa, Ethiopia" className="w-full border border-emerald-200 rounded-lg px-4 py-2 focus:ring-2 focus:ring-emerald-500 focus:outline-none" />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-emerald-700 mb-2">Current Role</label>
+                  <label className="block text-sm font-medium text-black mb-2">Current Role</label>
                   <input type="text" defaultValue="Software Developer" className="w-full border border-emerald-200 rounded-lg px-4 py-2 focus:ring-2 focus:ring-emerald-500 focus:outline-none" />
                 </div>
               </div>
@@ -76,26 +76,26 @@ export default function SettingsView() {
 
           {activeTab === 'account' && (
             <div className="space-y-6">
-              <h2 className="text-xl font-bold text-emerald-900 mb-6 border-b border-emerald-100 pb-4">Account Security</h2>
+              <h2 className="text-xl font-bold text-black mb-6 border-b border-emerald-100 pb-4">Account Security</h2>
               
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-emerald-700 mb-2">Email Address</label>
+                  <label className="block text-sm font-medium text-black mb-2">Email Address</label>
                   <input type="email" defaultValue="abebe.b@example.com" className="w-full max-w-md border border-emerald-200 rounded-lg px-4 py-2 focus:ring-2 focus:ring-emerald-500 focus:outline-none" />
                 </div>
                 <div className="pt-4">
-                  <label className="block text-sm font-medium text-emerald-700 mb-2">Current Password</label>
+                  <label className="block text-sm font-medium text-black mb-2">Current Password</label>
                   <input type="password" placeholder="••••••••" className="w-full max-w-md border border-emerald-200 rounded-lg px-4 py-2 focus:ring-2 focus:ring-emerald-500 focus:outline-none" />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-emerald-700 mb-2">New Password</label>
+                  <label className="block text-sm font-medium text-black mb-2">New Password</label>
                   <input type="password" placeholder="Leave blank to keep same" className="w-full max-w-md border border-emerald-200 rounded-lg px-4 py-2 focus:ring-2 focus:ring-emerald-500 focus:outline-none" />
                 </div>
               </div>
               
-              <h2 className="text-xl font-bold text-emerald-900 mt-10 mb-6 border-b border-emerald-100 pb-4">Preferences</h2>
+              <h2 className="text-xl font-bold text-black mt-10 mb-6 border-b border-emerald-100 pb-4">Preferences</h2>
               <div>
-                <label className="block text-sm font-medium text-emerald-700 mb-2">Language</label>
+                <label className="block text-sm font-medium text-black mb-2">Language</label>
                 <select className="w-full max-w-md border border-emerald-200 rounded-lg px-4 py-2 focus:ring-2 focus:ring-emerald-500 focus:outline-none bg-white">
                   <option>English (US)</option>
                   <option>French</option>
@@ -108,7 +108,7 @@ export default function SettingsView() {
 
           {activeTab === 'notifications' && (
             <div className="space-y-6">
-              <h2 className="text-xl font-bold text-emerald-900 mb-6 border-b border-emerald-100 pb-4">Notification Preferences</h2>
+              <h2 className="text-xl font-bold text-black mb-6 border-b border-emerald-100 pb-4">Notification Preferences</h2>
               
               <div className="space-y-6">
                 {[
@@ -119,8 +119,8 @@ export default function SettingsView() {
                 ].map((item, i) => (
                   <div key={i} className="flex items-start justify-between">
                     <div>
-                      <h3 className="font-semibold text-emerald-900">{item.title}</h3>
-                      <p className="text-sm text-emerald-600 mt-1">{item.desc}</p>
+                      <h3 className="font-semibold text-black">{item.title}</h3>
+                      <p className="text-sm text-black mt-1">{item.desc}</p>
                     </div>
                     <label className="relative inline-flex items-center cursor-pointer ml-4 flex-shrink-0">
                       <input type="checkbox" className="sr-only peer" defaultChecked={i !== 1} />

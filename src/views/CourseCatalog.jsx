@@ -83,32 +83,32 @@ export default function CourseCatalog({ setView }) {
   ];
 
   return (
-    <div className="bg-white min-h-screen flex flex-col font-sans">
+    <div className="bg-slate-50 min-h-screen flex flex-col font-sans">
       <TopNavPublic setView={setView} />
       
       <main className="flex-1 max-w-7xl mx-auto px-8 py-12 w-full">
         {/* Header */}
         <div className="mb-10">
-          <div className="inline-block border border-emerald-200 text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full text-xs font-bold tracking-wider mb-4">
+          <div className="inline-block border border-emerald-200 text-black bg-emerald-50 px-3 py-1 rounded-full text-xs font-bold tracking-wider mb-4">
             1,420 ACTIVE COURSES
           </div>
-          <h1 className="text-4xl font-bold text-emerald-900 mb-4">
-            Discover Your Next <span className="text-emerald-600">Digital Skill</span>
+          <h1 className="text-4xl font-bold text-black mb-4">
+            Discover Your Next <span className="text-black">Digital Skill</span>
           </h1>
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <p className="text-emerald-500 max-w-2xl">
+            <p className="text-black max-w-2xl">
               Browse our selection of premium courses curated specifically for the African tech ecosystem.
             </p>
             <div className="flex items-center space-x-2 bg-emerald-50 p-1 rounded-lg border border-emerald-200">
               <button 
-                className={`px-4 py-2 text-sm font-medium rounded-md flex items-center space-x-2 ${viewMode === 'grid' ? 'bg-white shadow-sm text-emerald-900' : 'text-emerald-500'}`}
+                className={`px-4 py-2 text-sm font-medium rounded-md flex items-center space-x-2 ${viewMode === 'grid' ? 'bg-white shadow-sm text-black' : 'text-black'}`}
                 onClick={() => setViewMode('grid')}
               >
                 <Grid className="w-4 h-4" />
                 <span>Grid View</span>
               </button>
               <button 
-                className={`px-4 py-2 text-sm font-medium rounded-md flex items-center space-x-2 ${viewMode === 'list' ? 'bg-white shadow-sm text-emerald-900' : 'text-emerald-500'}`}
+                className={`px-4 py-2 text-sm font-medium rounded-md flex items-center space-x-2 ${viewMode === 'list' ? 'bg-white shadow-sm text-black' : 'text-black'}`}
                 onClick={() => setViewMode('list')}
               >
                 <List className="w-4 h-4" />
@@ -122,9 +122,9 @@ export default function CourseCatalog({ setView }) {
           {/* Sidebar */}
           <div className="w-full lg:w-64 flex-shrink-0 space-y-8">
             <div>
-              <h3 className="text-sm font-bold text-emerald-900 mb-3">Search</h3>
+              <h3 className="text-sm font-bold text-black mb-3">Search</h3>
               <div className="relative">
-                <Search className="w-4 h-4 text-emerald-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                <Search className="w-4 h-4 text-black absolute left-3 top-1/2 -translate-y-1/2" />
                 <input 
                   type="text" 
                   placeholder="Search keywords..." 
@@ -134,37 +134,37 @@ export default function CourseCatalog({ setView }) {
             </div>
 
             <div>
-              <h3 className="text-sm font-bold text-emerald-900 mb-3">Skill Level</h3>
+              <h3 className="text-sm font-bold text-black mb-3">Skill Level</h3>
               <div className="space-y-3">
                 {['Beginner', 'Intermediate', 'Expert'].map(level => (
                   <label key={level} className="flex items-center space-x-3 cursor-pointer group">
                     <div className="w-4 h-4 border border-emerald-300 rounded flex items-center justify-center group-hover:border-emerald-500">
                       {/* Check icon would go here if checked */}
                     </div>
-                    <span className="text-sm text-emerald-600">{level}</span>
+                    <span className="text-sm text-black">{level}</span>
                   </label>
                 ))}
               </div>
             </div>
 
             <div>
-              <h3 className="text-sm font-bold text-emerald-900 mb-3">Price Range</h3>
+              <h3 className="text-sm font-bold text-black mb-3">Price Range</h3>
               <div className="space-y-3">
                 {['Free Courses', 'Premium Courses', 'On Sale'].map(price => (
                   <label key={price} className="flex items-center space-x-3 cursor-pointer group">
                     <div className="w-4 h-4 border border-emerald-300 rounded flex items-center justify-center group-hover:border-emerald-500">
                     </div>
-                    <span className="text-sm text-emerald-600">{price}</span>
+                    <span className="text-sm text-black">{price}</span>
                   </label>
                 ))}
               </div>
             </div>
 
             <div>
-              <h3 className="text-sm font-bold text-emerald-900 mb-3">Popular Topics</h3>
+              <h3 className="text-sm font-bold text-black mb-3">Popular Topics</h3>
               <div className="flex flex-wrap gap-2">
                 {['AI', 'Fintech', 'AgriTech', 'Cloud', 'Data Science', 'SaaS', 'Marketing'].map(topic => (
-                  <span key={topic} className="px-3 py-1.5 border border-emerald-200 rounded-full text-xs text-emerald-600 cursor-pointer hover:border-emerald-500 hover:text-emerald-600">
+                  <span key={topic} className="px-3 py-1.5 border border-emerald-200 rounded-full text-xs text-black cursor-pointer hover:border-emerald-500 hover:text-gray-700">
                     {topic}
                   </span>
                 ))}
@@ -174,8 +174,8 @@ export default function CourseCatalog({ setView }) {
             {/* Promo Box */}
             <div className="bg-emerald-50 rounded-xl p-6 border border-emerald-100 relative overflow-hidden">
               <div className="absolute top-0 right-0 -mr-6 -mt-6 w-24 h-24 bg-emerald-100 rounded-full blur-xl opacity-50"></div>
-              <h4 className="font-bold text-emerald-900 mb-2">Get Unlimited Access</h4>
-              <p className="text-xs text-emerald-700 mb-4 line-clamp-2">Unlock all 200+ courses with a premium subscription.</p>
+              <h4 className="font-bold text-black mb-2">Get Unlimited Access</h4>
+              <p className="text-xs text-black mb-4 line-clamp-2">Unlock all 200+ courses with a premium subscription.</p>
               <button 
                 className="w-full bg-emerald-800 text-white py-2 rounded-lg text-sm font-semibold hover:bg-emerald-900 transition-colors"
                 onClick={() => setView('CourseOverview')}
@@ -194,7 +194,7 @@ export default function CourseCatalog({ setView }) {
                 <span>All Courses</span>
               </button>
               {['Design', 'Development', 'Marketing', 'Business'].map(cat => (
-                <button key={cat} className="px-4 py-2 bg-white border border-emerald-200 text-emerald-600 hover:border-emerald-500 hover:text-emerald-600 rounded-lg text-sm font-medium flex items-center space-x-2 transition-colors">
+                <button key={cat} className="px-4 py-2 bg-white border border-emerald-200 text-black hover:border-emerald-500 hover:text-gray-700 rounded-lg text-sm font-medium flex items-center space-x-2 transition-colors">
                   <span>{cat}</span>
                 </button>
               ))}
@@ -247,18 +247,18 @@ export default function CourseCatalog({ setView }) {
                     </div>
                     
                     <div className="p-5 flex-1 flex flex-col">
-                      <div className="text-xs font-bold text-emerald-600 tracking-wider mb-2 uppercase">{course.category}</div>
-                      <h3 className="text-lg font-bold text-emerald-900 mb-4 line-clamp-2">{course.title}</h3>
+                      <div className="text-xs font-bold text-black tracking-wider mb-2 uppercase">{course.category}</div>
+                      <h3 className="text-lg font-bold text-black mb-4 line-clamp-2">{course.title}</h3>
                       
                       <div className="flex items-center space-x-3 mb-6">
                         <img src={`https://i.pravatar.cc/150?img=${idx + 30}`} alt={course.author} className="w-10 h-10 rounded-full bg-emerald-100" />
                         <div>
-                          <div className="text-sm font-semibold text-emerald-900">{course.author}</div>
-                          <div className="text-xs text-emerald-500">{course.role}</div>
+                          <div className="text-sm font-semibold text-black">{course.author}</div>
+                          <div className="text-xs text-black">{course.role}</div>
                         </div>
                       </div>
                       
-                      <div className="mt-auto pt-4 border-t border-emerald-100 flex items-center justify-between text-sm text-emerald-500">
+                      <div className="mt-auto pt-4 border-t border-emerald-100 flex items-center justify-between text-sm text-black">
                         <div className="flex items-center space-x-4">
                           <div className="flex items-center space-x-1">
                             <Users className="w-4 h-4" />
@@ -274,9 +274,9 @@ export default function CourseCatalog({ setView }) {
                       <div className="mt-4 flex items-center justify-between">
                         <div className="flex items-center space-x-1">
                           <Star className="w-4 h-4 text-amber-400 fill-amber-400" />
-                          <span className="font-bold text-emerald-900">{course.rating}</span>
+                          <span className="font-bold text-black">{course.rating}</span>
                         </div>
-                        <button className="text-emerald-600 font-semibold flex items-center space-x-1 group-hover:text-emerald-700">
+                        <button className="text-black font-semibold flex items-center space-x-1 group-hover:text-gray-700">
                           <span>Preview</span>
                           <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                         </button>
@@ -289,8 +289,8 @@ export default function CourseCatalog({ setView }) {
 
             {/* Load More */}
             <div className="mt-12 text-center border-t border-emerald-100 pt-12">
-              <p className="text-sm text-emerald-500 mb-4">Showing 6 of 1,420 courses</p>
-              <button className="inline-flex items-center space-x-2 border border-emerald-300 text-emerald-700 px-6 py-3 rounded-lg font-medium hover:bg-emerald-50 transition-colors">
+              <p className="text-sm text-black mb-4">Showing 6 of 1,420 courses</p>
+              <button className="inline-flex items-center space-x-2 border border-emerald-300 text-black px-6 py-3 rounded-lg font-medium hover:bg-emerald-50 transition-colors">
                 <span>Show More Courses</span>
                 <ChevronDown className="w-4 h-4" />
               </button>
@@ -301,15 +301,15 @@ export default function CourseCatalog({ setView }) {
         {/* Bottom Banner */}
         <div className="mt-20 bg-emerald-50 rounded-3xl p-10 flex flex-col md:flex-row items-center justify-between border border-emerald-100 relative overflow-hidden">
           <div className="relative z-10 mb-8 md:mb-0 max-w-xl">
-            <h2 className="text-2xl font-bold text-emerald-950 mb-3">Join 50k+ African Learners</h2>
-            <p className="text-emerald-800 mb-6">Empower yourself with world-class education designed for the future of work in Africa.</p>
+            <h2 className="text-2xl font-bold text-black mb-3">Join 50k+ African Learners</h2>
+            <p className="text-black mb-6">Empower yourself with world-class education designed for the future of work in Africa.</p>
             <div className="flex flex-wrap gap-4">
-              <div className="flex items-center space-x-2 bg-white px-4 py-2 rounded-full border border-emerald-200 text-sm font-medium text-emerald-800">
-                <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+              <div className="flex items-center space-x-2 bg-white px-4 py-2 rounded-full border border-emerald-200 text-sm font-medium text-black">
+                <CheckCircle2 className="w-4 h-4 text-black" />
                 <span>Verified Certificates</span>
               </div>
-              <div className="flex items-center space-x-2 bg-white px-4 py-2 rounded-full border border-emerald-200 text-sm font-medium text-emerald-800">
-                <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+              <div className="flex items-center space-x-2 bg-white px-4 py-2 rounded-full border border-emerald-200 text-sm font-medium text-black">
+                <CheckCircle2 className="w-4 h-4 text-black" />
                 <span>Expert Instructors</span>
               </div>
             </div>

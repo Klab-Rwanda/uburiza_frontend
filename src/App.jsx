@@ -98,7 +98,7 @@ function AppContent() {
   }
 
   return (
-    <div className="flex flex-col font-sans overflow-hidden bg-emerald-50 h-screen transition-colors duration-300">
+    <div className="flex flex-col font-sans overflow-hidden bg-slate-50 h-screen transition-colors duration-300">
       <TopNav view={view} setView={setView} />
       <div className="flex flex-1 overflow-hidden relative">
         <Sidebar view={view} setView={setView} />

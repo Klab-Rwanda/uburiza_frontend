@@ -30,11 +30,11 @@ export default function Sidebar({ view, setView }) {
                 onClick={() => setView(item.id)}
                 className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${
                   isActive 
-                    ? 'bg-emerald-50 text-emerald-800 font-medium' 
-                    : 'text-emerald-600 hover:bg-emerald-50'
+                    ? 'bg-emerald-50 text-black font-medium' 
+                    : 'text-black hover:bg-emerald-50'
                 }`}
               >
-                <item.icon className={`w-5 h-5 ${isActive ? 'text-emerald-700' : 'text-emerald-400'}`} />
+                <item.icon className={`w-5 h-5 ${isActive ? 'text-black' : 'text-black'}`} />
                 <span>{item.name}</span>
               </button>
             )
@@ -43,8 +43,8 @@ export default function Sidebar({ view, setView }) {
       </div>
 
       <div className="p-6 border-t border-emerald-200 space-y-2">
-        <button onClick={() => setView('Settings')} className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${view === 'Settings' ? 'bg-emerald-50 text-emerald-800 font-medium' : 'text-emerald-600 hover:bg-emerald-50'}`}>
-          <Settings className={`w-5 h-5 ${view === 'Settings' ? 'text-emerald-700' : 'text-emerald-400'}`} />
+        <button onClick={() => setView('Settings')} className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${view === 'Settings' ? 'bg-emerald-50 text-black font-medium' : 'text-black hover:bg-emerald-50'}`}>
+          <Settings className={`w-5 h-5 ${view === 'Settings' ? 'text-black' : 'text-black'}`} />
           <span>Settings</span>
         </button>
         <button onClick={() => setView('LandingPage')} className="w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-red-600 hover:bg-red-50 transition-colors">

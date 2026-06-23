@@ -9,13 +9,13 @@ export default function LearnerDashboard({ setView }) {
       {/* Hero Section */}
       <div className="bg-gradient-to-r from-emerald-50 to-emerald-100 rounded-3xl p-8 flex justify-between items-center relative overflow-hidden">
         <div className="z-10 space-y-4">
-          <div className="inline-block bg-emerald-200 text-emerald-800 text-xs font-semibold px-3 py-1 rounded-full">
+          <div className="inline-block bg-emerald-200 text-black text-xs font-semibold px-3 py-1 rounded-full">
             Growth Mindset
           </div>
-          <h1 className="text-4xl font-bold text-emerald-900">
+          <h1 className="text-4xl font-bold text-black">
             Welcome back, Abebe! <span className="text-3xl">👋</span>
           </h1>
-          <p className="text-emerald-600 max-w-md">
+          <p className="text-black max-w-md">
             You've completed 75% of your weekly goal. Keep it up to stay ahead of the curve!
           </p>
           <div className="flex space-x-4 pt-2">
@@ -23,7 +23,7 @@ export default function LearnerDashboard({ setView }) {
               <Play className="w-4 h-4 mr-2" fill="currentColor" />
               Resume: UI/UX Design for Africa
             </button>
-            <button className="bg-white border border-emerald-300 hover:bg-emerald-50 text-emerald-700 px-6 py-2.5 rounded-lg font-medium transition-colors">
+            <button className="bg-white border border-emerald-300 hover:bg-emerald-50 text-black px-6 py-2.5 rounded-lg font-medium transition-colors">
               Explore More
             </button>
           </div>
@@ -33,20 +33,20 @@ export default function LearnerDashboard({ setView }) {
         <div className="flex space-x-4 z-10">
           <div className="bg-white p-4 rounded-2xl shadow-sm border border-emerald-100 flex items-center space-x-4 min-w-[160px]">
             <div className="bg-emerald-50 p-3 rounded-xl">
-              <TrendingUp className="w-6 h-6 text-emerald-600" />
+              <TrendingUp className="w-6 h-6 text-black" />
             </div>
             <div>
-              <p className="text-xs text-emerald-500 font-medium">Current Streak</p>
-              <p className="text-xl font-bold text-emerald-900">12 Days</p>
+              <p className="text-xs text-black font-medium">Current Streak</p>
+              <p className="text-xl font-bold text-black">12 Days</p>
             </div>
           </div>
           <div className="bg-white p-4 rounded-2xl shadow-sm border border-emerald-100 flex items-center space-x-4 min-w-[160px]">
             <div className="bg-emerald-50 p-3 rounded-xl">
-              <Zap className="w-6 h-6 text-emerald-600" />
+              <Zap className="w-6 h-6 text-black" />
             </div>
             <div>
-              <p className="text-xs text-emerald-500 font-medium">Points Earned</p>
-              <p className="text-xl font-bold text-emerald-900">2,450</p>
+              <p className="text-xs text-black font-medium">Points Earned</p>
+              <p className="text-xl font-bold text-black">2,450</p>
             </div>
           </div>
         </div>
@@ -64,10 +64,10 @@ export default function LearnerDashboard({ setView }) {
           {/* In Progress */}
           <section>
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-bold text-emerald-900 flex items-center">
+              <h2 className="text-xl font-bold text-black flex items-center">
                 <BookIcon className="w-5 h-5 mr-2" /> In Progress
               </h2>
-              <button className="text-emerald-700 text-sm font-medium hover:underline">View all catalog</button>
+              <button className="text-black text-sm font-medium hover:underline">View all catalog</button>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -75,26 +75,26 @@ export default function LearnerDashboard({ setView }) {
                 <div key={course.id} className="bg-white border border-emerald-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow group cursor-pointer">
                   <div className="relative h-48 bg-emerald-100">
                     <img src={course.image} alt={course.title} className="w-full h-full object-cover" />
-                    <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-sm text-xs font-semibold px-2 py-1 rounded-md text-emerald-800">
+                    <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-sm text-xs font-semibold px-2 py-1 rounded-md text-black">
                       {course.lessons} Lessons
                     </div>
                   </div>
                   <div className="p-5">
-                    <h3 className="font-bold text-lg text-emerald-900 mb-1">{course.title}</h3>
-                    <div className="flex items-center text-sm text-emerald-500 mb-5">
+                    <h3 className="font-bold text-lg text-black mb-1">{course.title}</h3>
+                    <div className="flex items-center text-sm text-black mb-5">
                       <img src={course.authorAvatar} alt={course.author} className="w-5 h-5 rounded-full mr-2" />
                       {course.author}
                     </div>
                     
                     <div className="mb-2 flex justify-between text-xs font-semibold">
-                      <span className="text-emerald-500">PROGRESS</span>
-                      <span className="text-emerald-600">{course.progress}%</span>
+                      <span className="text-black">PROGRESS</span>
+                      <span className="text-black">{course.progress}%</span>
                     </div>
                     <div className="w-full bg-emerald-100 rounded-full h-2 mb-4 overflow-hidden">
                       <div className="bg-emerald-600 h-2 rounded-full" style={{ width: `${course.progress}%` }}></div>
                     </div>
                     
-                    <div className="border-t border-emerald-100 pt-3 flex justify-between items-center group-hover:text-emerald-700 transition-colors">
+                    <div className="border-t border-emerald-100 pt-3 flex justify-between items-center group-hover:text-gray-700 transition-colors">
                       <span className="text-sm font-semibold">Continue Learning</span>
                       <ChevronRight className="w-4 h-4" />
                     </div>
@@ -108,10 +108,10 @@ export default function LearnerDashboard({ setView }) {
           <section className="bg-white border border-emerald-200 rounded-2xl p-6 shadow-sm">
             <div className="flex justify-between items-start mb-6">
               <div>
-                <h2 className="text-xl font-bold text-emerald-900">Learning Activity</h2>
-                <p className="text-sm text-emerald-500">Your study time over the last 7 days</p>
+                <h2 className="text-xl font-bold text-black">Learning Activity</h2>
+                <p className="text-sm text-black">Your study time over the last 7 days</p>
               </div>
-              <div className="bg-emerald-50 text-emerald-700 text-xs font-semibold px-3 py-1 rounded-full border border-emerald-100">
+              <div className="bg-emerald-50 text-black text-xs font-semibold px-3 py-1 rounded-full border border-emerald-100">
                 +12% from last week
               </div>
             </div>
@@ -140,7 +140,7 @@ export default function LearnerDashboard({ setView }) {
           
           {/* Up Next */}
           <div className="bg-white border border-emerald-200 rounded-2xl p-6 shadow-sm">
-            <h2 className="text-xl font-bold text-emerald-900 mb-6 flex items-center">
+            <h2 className="text-xl font-bold text-black mb-6 flex items-center">
               <Clock className="w-5 h-5 mr-2" /> Up Next
             </h2>
             <div className="space-y-6 relative before:absolute before:inset-0 before:ml-2 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-slate-300 before:to-transparent">
@@ -152,16 +152,16 @@ export default function LearnerDashboard({ setView }) {
                     'bg-white ring-emerald-500 border-emerald-500'
                   }`} />
                   <div>
-                    <h4 className="font-semibold text-emerald-900 text-sm">{event.title}</h4>
-                    <p className="text-xs text-emerald-500 mb-1">{event.course}</p>
-                    <p className={`text-xs font-semibold flex items-center ${event.type === 'quiz' ? 'text-emerald-600' : 'text-emerald-600'}`}>
+                    <h4 className="font-semibold text-black text-sm">{event.title}</h4>
+                    <p className="text-xs text-black mb-1">{event.course}</p>
+                    <p className={`text-xs font-semibold flex items-center ${event.type === 'quiz' ? 'text-black' : 'text-black'}`}>
                       <Clock className="w-3 h-3 mr-1" /> {event.time}
                     </p>
                   </div>
                 </div>
               ))}
             </div>
-            <button className="w-full mt-6 py-2 text-sm font-semibold text-emerald-700 bg-white border border-emerald-300 rounded-lg hover:bg-emerald-50 transition-colors">
+            <button className="w-full mt-6 py-2 text-sm font-semibold text-black bg-white border border-emerald-300 rounded-lg hover:bg-emerald-50 transition-colors">
               View Full Calendar
             </button>
           </div>
@@ -198,7 +198,7 @@ export default function LearnerDashboard({ setView }) {
 
           {/* Your Mentors */}
           <div className="bg-white border border-emerald-200 rounded-2xl p-6 shadow-sm">
-            <h2 className="text-lg font-bold text-emerald-900 mb-4">Your Mentors</h2>
+            <h2 className="text-lg font-bold text-black mb-4">Your Mentors</h2>
             <div className="space-y-4">
               {mentors.map(mentor => (
                 <div key={mentor.id} className="flex items-center justify-between group cursor-pointer hover:bg-emerald-50 p-2 -mx-2 rounded-lg transition-colors">
@@ -208,11 +208,11 @@ export default function LearnerDashboard({ setView }) {
                       <div className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-yellow-400 border-2 border-white rounded-full"></div>
                     </div>
                     <div>
-                      <p className="font-semibold text-sm text-emerald-900">{mentor.name}</p>
-                      <p className="text-xs text-emerald-500">{mentor.role}</p>
+                      <p className="font-semibold text-sm text-black">{mentor.name}</p>
+                      <p className="text-xs text-black">{mentor.role}</p>
                     </div>
                   </div>
-                  <ChevronRight className="w-4 h-4 text-emerald-400 group-hover:text-emerald-600" />
+                  <ChevronRight className="w-4 h-4 text-black group-hover:text-gray-700" />
                 </div>
               ))}
             </div>

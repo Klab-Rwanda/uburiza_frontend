@@ -72,7 +72,7 @@ export default function CourseMaterial({ view, setView }) {
   );
 
   return (
-    <div className="bg-white min-h-screen flex flex-col font-sans h-screen overflow-hidden transition-colors duration-300">
+    <div className="bg-slate-50 min-h-screen flex flex-col font-sans h-screen overflow-hidden transition-colors duration-300">
       <TopNav view={view} setView={setView} />
       
       <div className="flex flex-1 overflow-hidden relative">
@@ -82,8 +82,8 @@ export default function CourseMaterial({ view, setView }) {
           
           <div className="p-6 border-b border-emerald-200">
             <div className="flex justify-between items-center mb-2">
-              <span className="text-xs font-bold text-emerald-500 tracking-wider uppercase">Course Progress</span>
-              <span className="text-sm font-bold text-emerald-600">35%</span>
+              <span className="text-xs font-bold text-black tracking-wider uppercase">Course Progress</span>
+              <span className="text-sm font-bold text-black">35%</span>
             </div>
             <div className="w-full bg-emerald-200 h-2 rounded-full overflow-hidden">
               <div className="bg-emerald-500 h-full w-[35%] rounded-full"></div>
@@ -97,8 +97,8 @@ export default function CourseMaterial({ view, setView }) {
                   className="w-full flex items-center justify-between px-6 py-3 hover:bg-emerald-100 transition-colors"
                   onClick={() => setActiveModule(activeModule === idx ? null : idx)}
                 >
-                  <span className="font-bold text-emerald-900 text-sm">{mod.title}</span>
-                  {activeModule === idx ? <ChevronUp className="w-4 h-4 text-emerald-500" /> : <ChevronDown className="w-4 h-4 text-emerald-500" />}
+                  <span className="font-bold text-black text-sm">{mod.title}</span>
+                  {activeModule === idx ? <ChevronUp className="w-4 h-4 text-black" /> : <ChevronDown className="w-4 h-4 text-black" />}
                 </button>
                 
                 {activeModule === idx && mod.items.length > 0 && (
@@ -106,7 +106,7 @@ export default function CourseMaterial({ view, setView }) {
                     {mod.items.map((item, iIdx) => (
                       <button 
                         key={iIdx}
-                        className={`w-full flex items-center space-x-3 px-6 py-2.5 text-left text-sm ${item.active ? 'bg-emerald-800/50 text-white' : 'text-emerald-600 hover:bg-emerald-100'}`}
+                        className={`w-full flex items-center space-x-3 px-6 py-2.5 text-left text-sm ${item.active ? 'bg-emerald-800/50 text-white' : 'text-black hover:bg-emerald-100'}`}
                       >
                         {item.active ? (
                           <PlayCircle className="w-4 h-4 text-emerald-300" />
@@ -123,7 +123,7 @@ export default function CourseMaterial({ view, setView }) {
           </div>
 
           <div className="p-4 border-t border-emerald-200">
-            <button className="w-full flex items-center justify-center space-x-2 py-3 px-4 border border-emerald-500 text-emerald-600 rounded-lg hover:bg-emerald-50/20 transition-colors font-medium">
+            <button className="w-full flex items-center justify-center space-x-2 py-3 px-4 border border-emerald-500 text-black rounded-lg hover:bg-emerald-50/20 transition-colors font-medium">
               <Headphones className="w-5 h-5" />
               <span>Enable Audio Mode</span>
             </button>
@@ -135,12 +135,12 @@ export default function CourseMaterial({ view, setView }) {
           <div className="p-8 max-w-5xl mx-auto w-full">
             
             {/* Breadcrumb */}
-            <div className="flex items-center space-x-2 text-sm text-emerald-500 mb-6">
-              <span className="hover:text-emerald-600 cursor-pointer" onClick={() => setView('CourseCatalog')}>Course Catalog</span>
+            <div className="flex items-center space-x-2 text-sm text-black mb-6">
+              <span className="hover:text-gray-700 cursor-pointer" onClick={() => setView('CourseCatalog')}>Course Catalog</span>
               <ChevronRight className="w-4 h-4" />
-              <span className="hover:text-emerald-600 cursor-pointer" onClick={() => setView('CourseOverview')}>Digital Leadership</span>
+              <span className="hover:text-gray-700 cursor-pointer" onClick={() => setView('CourseOverview')}>Digital Leadership</span>
               <ChevronRight className="w-4 h-4" />
-              <span className="text-emerald-900 font-medium">Identifying Target Markets</span>
+              <span className="text-black font-medium">Identifying Target Markets</span>
             </div>
 
             {/* Video Player Container */}
@@ -170,7 +170,7 @@ export default function CourseMaterial({ view, setView }) {
                     <span className="text-sm font-medium">{formatTime(videoTime)} / 42:00</span>
                   </div>
                   <div className="flex items-center space-x-4">
-                    <button onClick={addBookmark} title="Take Note at this Timestamp"><Bookmark className="w-5 h-5 hover:text-emerald-400" /></button>
+                    <button onClick={addBookmark} title="Take Note at this Timestamp"><Bookmark className="w-5 h-5 hover:text-gray-700" /></button>
                     <button><Settings className="w-5 h-5" /></button>
                     <button><Maximize className="w-5 h-5" /></button>
                   </div>
@@ -179,7 +179,7 @@ export default function CourseMaterial({ view, setView }) {
             </div>
             
             <div className="flex justify-end mb-6">
-               <button onClick={addBookmark} className="text-sm font-medium text-emerald-600 flex items-center space-x-1 hover:text-emerald-700">
+               <button onClick={addBookmark} className="text-sm font-medium text-black flex items-center space-x-1 hover:text-gray-700">
                   <Bookmark className="w-4 h-4" />
                   <span>Take Note at {formatTime(videoTime)}</span>
                </button>
@@ -188,12 +188,12 @@ export default function CourseMaterial({ view, setView }) {
             {/* Lesson Info */}
             <div className="flex flex-col lg:flex-row justify-between items-start gap-6 mb-8">
               <div>
-                <div className="inline-block border border-emerald-200 text-emerald-700 bg-emerald-50/30 px-3 py-1 rounded-full text-xs font-bold mb-3">
+                <div className="inline-block border border-emerald-200 text-black bg-emerald-50/30 px-3 py-1 rounded-full text-xs font-bold mb-3">
                   Module 2: Market Analysis
                 </div>
-                <h1 className="text-3xl font-bold text-emerald-900 mb-2">Identifying Target Markets in African Tech</h1>
-                <div className="flex items-center space-x-2 text-emerald-600 text-sm">
-                  <span>By <span className="font-bold text-emerald-800 cursor-pointer">Dr. Kwame Osei</span></span>
+                <h1 className="text-3xl font-bold text-black mb-2">Identifying Target Markets in African Tech</h1>
+                <div className="flex items-center space-x-2 text-black text-sm">
+                  <span>By <span className="font-bold text-black cursor-pointer">Dr. Kwame Osei</span></span>
                   <span>•</span>
                   <span>42 mins</span>
                 </div>
@@ -202,7 +202,7 @@ export default function CourseMaterial({ view, setView }) {
               <div className="flex items-center space-x-3">
                 <button 
                   onClick={() => setShowDrawer(true)}
-                  className="flex items-center space-x-2 border border-emerald-300 text-emerald-700 px-4 py-2 rounded-lg hover:bg-emerald-50 transition-colors text-sm font-medium"
+                  className="flex items-center space-x-2 border border-emerald-300 text-black px-4 py-2 rounded-lg hover:bg-emerald-50 transition-colors text-sm font-medium"
                 >
                   <MessageSquare className="w-4 h-4" />
                   <span>Join Discussion</span>
@@ -224,7 +224,7 @@ export default function CourseMaterial({ view, setView }) {
                   <button 
                     key={tab}
                     onClick={() => setActiveTab(tab)}
-                    className={`pb-4 text-sm font-medium relative ${activeTab === tab ? 'text-emerald-700' : 'text-emerald-500 hover:text-emerald-800'}`}
+                    className={`pb-4 text-sm font-medium relative ${activeTab === tab ? 'text-black' : 'text-black hover:text-gray-700'}`}
                   >
                     {tab}
                     {activeTab === tab && <motion.div layoutId="activetab" className="absolute bottom-0 left-0 right-0 h-0.5 bg-emerald-600 rounded-t-full"></motion.div>}
@@ -237,8 +237,8 @@ export default function CourseMaterial({ view, setView }) {
             <div className="py-8">
               {activeTab === 'Overview' && (
                 <motion.div initial={{opacity:0}} animate={{opacity:1}}>
-                  <h3 className="text-xl font-bold text-emerald-900 mb-4">About this lesson</h3>
-                  <p className="text-emerald-600 leading-relaxed max-w-3xl">
+                  <h3 className="text-xl font-bold text-black mb-4">About this lesson</h3>
+                  <p className="text-black leading-relaxed max-w-3xl">
                     In this lesson, we dive deep into the unique characteristics of African tech markets. We'll explore how to segment audiences based on connectivity, device usage, and cultural nuances rather than just traditional demographics. 
                     <br/><br/>
                     You'll learn practical frameworks for identifying beachhead markets in fragmented ecosystems and understanding the true addressable market for your digital products.
@@ -250,10 +250,10 @@ export default function CourseMaterial({ view, setView }) {
                 <motion.div initial={{opacity:0}} animate={{opacity:1}} className="max-w-3xl space-y-4 h-64 overflow-y-auto pr-4">
                   {transcript.map((line, idx) => (
                     <div key={idx} className={`flex space-x-4 p-3 rounded-lg cursor-pointer transition-colors ${activeTranscriptIdx === idx ? 'bg-emerald-50/30 border-l-4 border-emerald-500' : 'hover:bg-emerald-50'}`} onClick={() => setVideoTime(line.time)}>
-                      <span className={`text-sm font-mono flex-shrink-0 pt-0.5 ${activeTranscriptIdx === idx ? 'text-emerald-600' : 'text-emerald-400'}`}>
+                      <span className={`text-sm font-mono flex-shrink-0 pt-0.5 ${activeTranscriptIdx === idx ? 'text-black' : 'text-black'}`}>
                         {formatTime(line.time)}
                       </span>
-                      <p className={`text-sm leading-relaxed ${activeTranscriptIdx === idx ? 'text-emerald-900 font-medium' : 'text-emerald-600'}`}>
+                      <p className={`text-sm leading-relaxed ${activeTranscriptIdx === idx ? 'text-black font-medium' : 'text-black'}`}>
                         {line.text}
                       </p>
                     </div>
@@ -265,19 +265,19 @@ export default function CourseMaterial({ view, setView }) {
                 <motion.div initial={{opacity:0}} animate={{opacity:1}} className="max-w-3xl">
                   {bookmarks.length === 0 ? (
                     <div className="text-center py-10 bg-emerald-50 rounded-xl border border-dashed border-emerald-300">
-                      <Bookmark className="w-8 h-8 text-emerald-400 mx-auto mb-3" />
-                      <p className="text-emerald-500">No notes yet. Click the bookmark icon on the video to take a note at a specific timestamp.</p>
+                      <Bookmark className="w-8 h-8 text-black mx-auto mb-3" />
+                      <p className="text-black">No notes yet. Click the bookmark icon on the video to take a note at a specific timestamp.</p>
                     </div>
                   ) : (
                     <div className="space-y-4">
                       {bookmarks.map((bm, idx) => (
                         <div key={idx} className="bg-emerald-50 p-4 rounded-lg border border-emerald-200">
-                          <div className="flex items-center space-x-2 mb-2 cursor-pointer text-emerald-600 font-medium text-sm hover:underline">
+                          <div className="flex items-center space-x-2 mb-2 cursor-pointer text-black font-medium text-sm hover:underline">
                             <PlayCircle className="w-4 h-4" />
                             <span>{bm.time}</span>
                           </div>
                           <textarea 
-                            className="w-full bg-white border border-emerald-300 rounded p-3 text-sm text-emerald-800 focus:ring-1 focus:ring-emerald-500 focus:outline-none"
+                            className="w-full bg-white border border-emerald-300 rounded p-3 text-sm text-black focus:ring-1 focus:ring-emerald-500 focus:outline-none"
                             defaultValue={bm.note}
                             rows={3}
                           />
@@ -303,11 +303,11 @@ export default function CourseMaterial({ view, setView }) {
               className="absolute top-0 right-0 bottom-0 w-96 bg-white border-l border-emerald-200 shadow-2xl z-20 flex flex-col"
             >
               <div className="p-4 border-b border-emerald-200 flex items-center justify-between">
-                <h3 className="font-bold text-emerald-900 flex items-center space-x-2">
-                  <MessageSquare className="w-5 h-5 text-emerald-600" />
+                <h3 className="font-bold text-black flex items-center space-x-2">
+                  <MessageSquare className="w-5 h-5 text-black" />
                   <span>Class Discussion</span>
                 </h3>
-                <button onClick={() => setShowDrawer(false)} className="p-2 hover:bg-emerald-100 rounded-full text-emerald-500">
+                <button onClick={() => setShowDrawer(false)} className="p-2 hover:bg-emerald-100 rounded-full text-black">
                   <X className="w-5 h-5" />
                 </button>
               </div>
@@ -321,10 +321,10 @@ export default function CourseMaterial({ view, setView }) {
                     <img src={`https://i.pravatar.cc/150?img=${idx+10}`} alt="User" className="w-8 h-8 rounded-full" />
                     <div>
                       <div className="flex items-center space-x-2 mb-1">
-                        <span className="font-bold text-sm text-emerald-900">{msg.name}</span>
-                        {msg.role === 'Instructor' && <span className="bg-emerald-100 text-emerald-800 text-[10px] px-1.5 py-0.5 rounded font-bold uppercase">Instructor</span>}
+                        <span className="font-bold text-sm text-black">{msg.name}</span>
+                        {msg.role === 'Instructor' && <span className="bg-emerald-100 text-black text-[10px] px-1.5 py-0.5 rounded font-bold uppercase">Instructor</span>}
                       </div>
-                      <p className="text-sm text-emerald-600 bg-emerald-50/50 p-3 rounded-lg rounded-tl-none">{msg.msg}</p>
+                      <p className="text-sm text-black bg-emerald-50/50 p-3 rounded-lg rounded-tl-none">{msg.msg}</p>
                     </div>
                   </div>
                 ))}

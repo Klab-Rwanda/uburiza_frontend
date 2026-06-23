@@ -34,7 +34,7 @@ export default function Signup({ setView }) {
   };
 
   return (
-    <div className="min-h-screen flex bg-emerald-50 transition-colors duration-300 font-sans">
+    <div className="min-h-screen flex bg-slate-50 transition-colors duration-300 font-sans">
       
       {/* Left Panel - Branding */}
       <div className="hidden lg:flex lg:w-1/2 bg-emerald-900 relative overflow-hidden flex-col justify-between p-12 order-2">
@@ -43,7 +43,7 @@ export default function Signup({ setView }) {
         
         <div className="relative z-10 flex justify-end">
           <div 
-            className="flex items-center space-x-2 text-emerald-400 font-bold text-2xl cursor-pointer" 
+            className="flex items-center space-x-2 text-black font-bold text-2xl cursor-pointer" 
             onClick={() => setView('LandingPage')}
           >
             <Activity className="w-8 h-8" />
@@ -61,7 +61,7 @@ export default function Signup({ setView }) {
             <div className="flex items-center space-x-1 text-amber-400 mb-3">
               {[1, 2, 3, 4, 5].map(i => <svg key={i} className="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>)}
             </div>
-            <p className="text-emerald-50 text-sm italic mb-4">"Uburiza Learn gave me the practical skills I needed to land my first role as a Frontend Developer in Kigali. The community is unmatched!"</p>
+            <p className="text-black text-sm italic mb-4">"Uburiza Learn gave me the practical skills I needed to land my first role as a Frontend Developer in Kigali. The community is unmatched!"</p>
             <div className="flex items-center space-x-3">
               <img src="https://i.pravatar.cc/150?img=32" alt="Reviewer" className="w-10 h-10 rounded-full" />
               <div>
@@ -76,7 +76,7 @@ export default function Signup({ setView }) {
       {/* Right Panel - Form */}
       <div className="w-full lg:w-1/2 flex items-center justify-center p-8 sm:p-12 lg:p-24 relative order-1">
         <div 
-          className="absolute top-8 left-8 lg:hidden flex items-center space-x-2 text-emerald-600 font-bold text-xl cursor-pointer" 
+          className="absolute top-8 left-8 lg:hidden flex items-center space-x-2 text-black font-bold text-xl cursor-pointer" 
           onClick={() => setView('LandingPage')}
         >
           <Activity className="w-6 h-6" />
@@ -90,8 +90,8 @@ export default function Signup({ setView }) {
           className="w-full max-w-md"
         >
           <div className="mb-10">
-            <h2 className="text-3xl font-bold text-emerald-900 mb-3">Create an account</h2>
-            <p className="text-emerald-500 text-sm">Join our community and start learning today.</p>
+            <h2 className="text-3xl font-bold text-black mb-3">Create an account</h2>
+            <p className="text-black text-sm">Join our community and start learning today.</p>
           </div>
 
           {error && (
@@ -102,46 +102,46 @@ export default function Signup({ setView }) {
 
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-emerald-700 mb-1.5">Full Name</label>
+              <label className="block text-sm font-medium text-black mb-1.5">Full Name</label>
               <div className="relative">
-                <User className="w-5 h-5 text-emerald-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                <User className="w-5 h-5 text-black absolute left-3 top-1/2 -translate-y-1/2" />
                 <input 
                   type="text" 
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
                   placeholder="John Doe" 
-                  className="w-full pl-10 pr-4 py-3 bg-white border border-emerald-200 rounded-xl text-emerald-900 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-colors"
+                  className="w-full pl-10 pr-4 py-3 bg-white border border-emerald-200 rounded-xl text-black text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-colors"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-emerald-700 mb-1.5">Email Address</label>
+              <label className="block text-sm font-medium text-black mb-1.5">Email Address</label>
               <div className="relative">
-                <Mail className="w-5 h-5 text-emerald-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                <Mail className="w-5 h-5 text-black absolute left-3 top-1/2 -translate-y-1/2" />
                 <input 
                   type="email" 
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
                   placeholder="name@example.com" 
-                  className="w-full pl-10 pr-4 py-3 bg-white border border-emerald-200 rounded-xl text-emerald-900 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-colors"
+                  className="w-full pl-10 pr-4 py-3 bg-white border border-emerald-200 rounded-xl text-black text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-colors"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-emerald-700 mb-1.5">Password</label>
+              <label className="block text-sm font-medium text-black mb-1.5">Password</label>
               <div className="relative">
-                <Lock className="w-5 h-5 text-emerald-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                <Lock className="w-5 h-5 text-black absolute left-3 top-1/2 -translate-y-1/2" />
                 <input 
                   type="password" 
                   name="password"
                   value={formData.password}
                   onChange={handleChange}
                   placeholder="••••••••" 
-                  className="w-full pl-10 pr-4 py-3 bg-white border border-emerald-200 rounded-xl text-emerald-900 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-colors"
+                  className="w-full pl-10 pr-4 py-3 bg-white border border-emerald-200 rounded-xl text-black text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-colors"
                 />
               </div>
             </div>
@@ -156,14 +156,14 @@ export default function Signup({ setView }) {
               </button>
             </div>
             
-            <p className="text-xs text-emerald-500 mt-4 text-center px-4">
-              By creating an account, you agree to our <a href="#" className="underline hover:text-emerald-600">Terms of Service</a> and <a href="#" className="underline hover:text-emerald-600">Privacy Policy</a>.
+            <p className="text-xs text-black mt-4 text-center px-4">
+              By creating an account, you agree to our <a href="#" className="underline hover:text-gray-700">Terms of Service</a> and <a href="#" className="underline hover:text-gray-700">Privacy Policy</a>.
             </p>
           </div>
 
           <div className="mt-8 flex items-center">
             <div className="flex-1 border-t border-emerald-200"></div>
-            <span className="px-4 text-xs text-emerald-500 uppercase tracking-wider font-semibold">Or sign up with</span>
+            <span className="px-4 text-xs text-black uppercase tracking-wider font-semibold">Or sign up with</span>
             <div className="flex-1 border-t border-emerald-200"></div>
           </div>
 
@@ -175,20 +175,20 @@ export default function Signup({ setView }) {
                 <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
                 <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
               </svg>
-              <span className="text-sm font-medium text-emerald-700">Google</span>
+              <span className="text-sm font-medium text-black">Google</span>
             </button>
             <button className="flex items-center justify-center space-x-2 py-2.5 border border-emerald-200 bg-white rounded-xl hover:bg-emerald-50 transition-colors">
-              <svg className="w-5 h-5 text-emerald-900 fill-current" viewBox="0 0 24 24">
+              <svg className="w-5 h-5 text-black fill-current" viewBox="0 0 24 24">
                 <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
               </svg>
-              <span className="text-sm font-medium text-emerald-700">GitHub</span>
+              <span className="text-sm font-medium text-black">GitHub</span>
             </button>
           </div>
 
-          <p className="mt-8 text-center text-sm text-emerald-600">
+          <p className="mt-8 text-center text-sm text-black">
             Already have an account?{' '}
             <button 
-              className="font-bold text-emerald-600 hover:text-emerald-700 hover:underline"
+              className="font-bold text-black hover:text-gray-700 hover:underline"
               onClick={() => setView('Login')}
             >
               Log in

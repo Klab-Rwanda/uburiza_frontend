@@ -31,7 +31,7 @@ export default function Login({ setView }) {
   };
 
   return (
-    <div className="min-h-screen flex bg-emerald-50 transition-colors duration-300 font-sans">
+    <div className="min-h-screen flex flex-row-reverse bg-slate-50 transition-colors duration-300 font-sans">
       
       {/* Left Panel - Branding */}
       <div className="hidden lg:flex lg:w-1/2 bg-emerald-900 relative overflow-hidden flex-col justify-between p-12 order-2">
@@ -39,7 +39,7 @@ export default function Login({ setView }) {
         <div className="absolute inset-0 bg-gradient-to-t from-emerald-950 via-emerald-900/80 to-transparent"></div>
         
         <div 
-          className="relative z-10 flex items-center space-x-2 text-emerald-400 font-bold text-2xl cursor-pointer w-fit" 
+          className="relative z-10 flex items-center space-x-2 text-black font-bold text-2xl cursor-pointer w-fit" 
           onClick={() => setView('LandingPage')}
         >
           <Activity className="w-8 h-8" />
@@ -66,7 +66,7 @@ export default function Login({ setView }) {
       {/* Right Panel - Form */}
       <div className="w-full lg:w-1/2 flex items-center justify-center p-8 sm:p-12 lg:p-24 relative order-1">
         <div 
-          className="absolute top-8 left-8 lg:hidden flex items-center space-x-2 text-emerald-600 font-bold text-xl cursor-pointer" 
+          className="absolute top-8 left-8 lg:hidden flex items-center space-x-2 text-black font-bold text-xl cursor-pointer" 
           onClick={() => setView('LandingPage')}
         >
           <Activity className="w-6 h-6" />
@@ -80,8 +80,8 @@ export default function Login({ setView }) {
           className="w-full max-w-md"
         >
           <div className="mb-10">
-            <h2 className="text-3xl font-bold text-emerald-900 mb-3">Log in to your account</h2>
-            <p className="text-emerald-500 text-sm">Enter your credentials to access your dashboard.</p>
+            <h2 className="text-3xl font-bold text-black mb-3">Log in to your account</h2>
+            <p className="text-black text-sm">Enter your credentials to access your dashboard.</p>
           </div>
 
           {error && (
@@ -92,34 +92,34 @@ export default function Login({ setView }) {
 
           <div className="space-y-5">
             <div>
-              <label className="block text-sm font-medium text-emerald-700 mb-2">Email Address</label>
+              <label className="block text-sm font-medium text-black mb-2">Email Address</label>
               <div className="relative">
-                <Mail className="w-5 h-5 text-emerald-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                <Mail className="w-5 h-5 text-black absolute left-3 top-1/2 -translate-y-1/2" />
                 <input 
                   type="email" 
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
                   placeholder="name@example.com" 
-                  className="w-full pl-10 pr-4 py-3 bg-white border border-emerald-200 rounded-xl text-emerald-900 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-colors"
+                  className="w-full pl-10 pr-4 py-3 bg-white border border-emerald-200 rounded-xl text-black text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-colors"
                 />
               </div>
             </div>
 
             <div>
               <div className="flex items-center justify-between mb-2">
-                <label className="block text-sm font-medium text-emerald-700">Password</label>
-                <a href="#" className="text-xs font-bold text-emerald-600 hover:text-emerald-700">Forgot password?</a>
+                <label className="block text-sm font-medium text-black">Password</label>
+                <a href="#" className="text-xs font-bold text-black hover:text-gray-700">Forgot password?</a>
               </div>
               <div className="relative">
-                <Lock className="w-5 h-5 text-emerald-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                <Lock className="w-5 h-5 text-black absolute left-3 top-1/2 -translate-y-1/2" />
                 <input 
                   type="password" 
                   name="password"
                   value={formData.password}
                   onChange={handleChange}
                   placeholder="••••••••" 
-                  className="w-full pl-10 pr-4 py-3 bg-white border border-emerald-200 rounded-xl text-emerald-900 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-colors"
+                  className="w-full pl-10 pr-4 py-3 bg-white border border-emerald-200 rounded-xl text-black text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-colors"
                 />
               </div>
             </div>
@@ -135,7 +135,7 @@ export default function Login({ setView }) {
 
           <div className="mt-8 flex items-center">
             <div className="flex-1 border-t border-emerald-200"></div>
-            <span className="px-4 text-xs text-emerald-500 uppercase tracking-wider font-semibold">Or continue with</span>
+            <span className="px-4 text-xs text-black uppercase tracking-wider font-semibold">Or continue with</span>
             <div className="flex-1 border-t border-emerald-200"></div>
           </div>
 
@@ -147,20 +147,20 @@ export default function Login({ setView }) {
                 <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
                 <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
               </svg>
-              <span className="text-sm font-medium text-emerald-700">Google</span>
+              <span className="text-sm font-medium text-black">Google</span>
             </button>
             <button className="flex items-center justify-center space-x-2 py-2.5 border border-emerald-200 bg-white rounded-xl hover:bg-emerald-50 transition-colors">
-              <svg className="w-5 h-5 text-emerald-900 fill-current" viewBox="0 0 24 24">
+              <svg className="w-5 h-5 text-black fill-current" viewBox="0 0 24 24">
                 <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
               </svg>
-              <span className="text-sm font-medium text-emerald-700">GitHub</span>
+              <span className="text-sm font-medium text-black">GitHub</span>
             </button>
           </div>
 
-          <p className="mt-10 text-center text-sm text-emerald-600">
+          <p className="mt-10 text-center text-sm text-black">
             Don't have an account?{' '}
             <button 
-              className="font-bold text-emerald-600 hover:text-emerald-700 hover:underline"
+              className="font-bold text-black hover:text-gray-700 hover:underline"
               onClick={() => setView('Signup')}
             >
               Sign up
