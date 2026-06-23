@@ -12,7 +12,7 @@ export default function OperationalAnalytics() {
           <h1 className="text-2xl font-bold text-black mb-1">Operational Overview</h1>
           <p className="text-sm text-black">Monitor platform growth and learner engagement in real-time.</p>
         </div>
-        <button className="flex items-center text-sm font-medium text-black bg-white border border-emerald-300 px-4 py-2 rounded-lg hover:bg-emerald-50 transition-colors">
+        <button className="flex items-center text-sm font-medium text-[#1e4c31] bg-white border border-emerald-300 px-4 py-2 rounded-lg hover:bg-emerald-50 transition-colors">
           <Filter className="w-4 h-4 mr-2" /> Filter Dates
         </button>
       </div>
@@ -21,8 +21,8 @@ export default function OperationalAnalytics() {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         <div className="bg-white border border-emerald-200 rounded-2xl p-6 shadow-sm">
           <div className="flex justify-between items-start mb-4">
-            <div className="bg-emerald-50 p-2 rounded-lg">
-              <Users className="w-5 h-5 text-black" />
+            <div>
+              <Users className="w-5 h-5 text-emerald-700" />
             </div>
             <span className="text-xs font-bold text-black flex items-center">
               <TrendingUp className="w-3 h-3 mr-1" /> +14.2%
@@ -34,8 +34,8 @@ export default function OperationalAnalytics() {
 
         <div className="bg-white border border-emerald-200 rounded-2xl p-6 shadow-sm">
           <div className="flex justify-between items-start mb-4">
-            <div className="bg-emerald-50 p-2 rounded-lg">
-              <BookOpen className="w-5 h-5 text-black" />
+            <div>
+              <BookOpen className="w-5 h-5 text-emerald-700" />
             </div>
             <span className="text-xs font-bold text-black flex items-center">
               <TrendingUp className="w-3 h-3 mr-1" /> +4.8%
@@ -47,8 +47,8 @@ export default function OperationalAnalytics() {
 
         <div className="bg-white border border-emerald-200 rounded-2xl p-6 shadow-sm">
           <div className="flex justify-between items-start mb-4">
-            <div className="bg-emerald-50 p-2 rounded-lg">
-              <TrendingUp className="w-5 h-5 text-black" />
+            <div>
+              <TrendingUp className="w-5 h-5 text-emerald-700" />
             </div>
             <span className="text-xs font-bold text-black flex items-center">
               <TrendingUp className="w-3 h-3 mr-1" /> +22.5%
@@ -60,8 +60,8 @@ export default function OperationalAnalytics() {
 
         <div className="bg-white border border-emerald-200 rounded-2xl p-6 shadow-sm">
           <div className="flex justify-between items-start mb-4">
-            <div className="bg-emerald-50 p-2 rounded-lg">
-              <FileText className="w-5 h-5 text-black" />
+            <div>
+              <FileText className="w-5 h-5 text-emerald-700" />
             </div>
             <span className="text-xs font-bold text-black flex items-center">
               <TrendingUp className="w-3 h-3 mr-1" /> +12.1%
@@ -116,13 +116,13 @@ export default function OperationalAnalytics() {
               <button className="w-full bg-[#1e4c31] hover:bg-emerald-900 text-white py-3 px-4 rounded-xl font-medium flex items-center justify-center transition-colors">
                 <Plus className="w-5 h-5 mr-2" /> Launch New Course
               </button>
-              <button className="w-full bg-white hover:bg-emerald-50 border border-emerald-300 text-black py-3 px-4 rounded-xl font-medium flex items-center justify-center transition-colors">
+              <button className="w-full bg-white hover:bg-emerald-50 border border-emerald-300 text-[#1e4c31] py-3 px-4 rounded-xl font-medium flex items-center justify-center transition-colors">
                 <Upload className="w-5 h-5 mr-2" /> Upload Bulk Resources
               </button>
             </div>
 
             <div className="mt-8">
-              <h4 className="text-xs font-bold text-black uppercase tracking-wider mb-4">System Health</h4>
+              <h4 className="text-xs font-bold text-emerald-700 uppercase tracking-wider mb-4">System Health</h4>
               <div className="space-y-4">
                 <div className="flex justify-between items-center text-sm">
                   <span className="text-black">Server Load</span>
@@ -171,7 +171,7 @@ export default function OperationalAnalytics() {
               <button type="button" className="bg-[#1e4c31] text-white px-6 py-2.5 rounded-lg text-sm font-medium hover:bg-emerald-900 transition-colors flex-1">
                 Save Draft
               </button>
-              <button type="button" className="bg-white border border-emerald-300 text-black px-6 py-2.5 rounded-lg text-sm font-medium hover:bg-emerald-50 transition-colors flex-1">
+              <button type="button" className="bg-white border border-emerald-300 text-[#1e4c31] px-6 py-2.5 rounded-lg text-sm font-medium hover:bg-emerald-50 transition-colors flex-1">
                 Preview
               </button>
             </div>
@@ -183,21 +183,21 @@ export default function OperationalAnalytics() {
           <h2 className="text-lg font-bold text-black mb-1">Resource Repository</h2>
           <p className="text-sm text-black mb-6">Manage curriculum downloads and study materials</p>
           
-          <div className="border-2 border-dashed border-emerald-300 rounded-xl p-8 flex flex-col items-center justify-center text-center hover:bg-emerald-50 transition-colors cursor-pointer mb-6">
-            <div className="bg-emerald-50 p-3 rounded-full mb-3">
-              <Upload className="w-6 h-6 text-black" />
+          <div className="border-2 border-dashed border-slate-300 rounded-xl p-8 flex flex-col items-center justify-center text-center hover:bg-slate-50 transition-colors cursor-pointer mb-6">
+            <div className="p-3 rounded-full mb-3">
+              <Upload className="w-6 h-6 text-emerald-600" />
             </div>
             <p className="font-medium text-black mb-1">Drag and drop resource files</p>
             <p className="text-xs text-black mb-4">Supports PDF, MP4, and ZIP up to 500MB</p>
-            <button className="text-black font-semibold text-sm hover:underline">Or browse files</button>
+            <button className="text-emerald-700 font-semibold text-sm hover:underline">Or browse files</button>
           </div>
 
           <div className="flex-grow">
             <h4 className="text-sm font-bold text-black mb-3">Pending Uploads</h4>
             <div className="space-y-3">
-              <div className="flex items-center justify-between p-3 border border-emerald-200 rounded-lg bg-emerald-50">
+              <div className="flex items-center justify-between p-3 border border-emerald-50 rounded-lg bg-white shadow-sm">
                 <div className="flex items-center space-x-3">
-                  <FileText className="w-5 h-5 text-black" />
+                  <FileText className="w-5 h-5 text-emerald-700" />
                   <div>
                     <p className="text-sm font-medium text-black">Digital_Strategy_Module_1.pdf</p>
                     <p className="text-xs text-black">4.2 MB • Waiting for verification</p>
@@ -205,9 +205,9 @@ export default function OperationalAnalytics() {
                 </div>
                 <button className="text-red-500 p-1 hover:bg-red-50 rounded"><span className="text-lg leading-none">&times;</span></button>
               </div>
-              <div className="flex items-center justify-between p-3 border border-emerald-200 rounded-lg bg-emerald-50">
+              <div className="flex items-center justify-between p-3 border border-emerald-50 rounded-lg bg-white shadow-sm">
                 <div className="flex items-center space-x-3">
-                  <FileText className="w-5 h-5 text-black" />
+                  <FileText className="w-5 h-5 text-emerald-700" />
                   <div>
                     <p className="text-sm font-medium text-black">Digital_Strategy_Module_2.pdf</p>
                     <p className="text-xs text-black">4.2 MB • Waiting for verification</p>
@@ -230,7 +230,7 @@ export default function OperationalAnalytics() {
           <div className="flex items-center space-x-3">
             <div className="relative">
               <Search className="w-4 h-4 text-black absolute left-3 top-1/2 -translate-y-1/2" />
-              <input type="text" placeholder="Search students..." className="pl-9 pr-4 py-2 border border-emerald-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 w-64" />
+              <input type="text" placeholder="Search students..." className="pl-9 pr-4 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 w-64" />
             </div>
             <button className="p-2 border border-emerald-200 rounded-lg hover:bg-emerald-50 text-black">
               <Filter className="w-4 h-4" />
@@ -261,10 +261,10 @@ export default function OperationalAnalytics() {
                   <td className="py-4 px-4 text-sm text-black">{learner.course}</td>
                   <td className="py-4 px-4 text-sm text-black">{learner.date}</td>
                   <td className="py-4 px-4">
-                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold
-                      ${learner.status === 'Active' ? 'bg-emerald-100 text-black' : 
-                        learner.status === 'Completed' ? 'bg-[#1e4c31] text-white' : 
-                        'bg-emerald-100 text-black'}`}>
+                    <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-bold
+                      ${learner.status === 'Active' ? 'bg-[#1e4c31] text-white' : 
+                        learner.status === 'Completed' ? 'bg-[#10b981] text-white' : 
+                        'bg-white border border-slate-200 text-black'}`}>
                       {learner.status}
                     </span>
                   </td>

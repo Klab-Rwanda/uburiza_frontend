@@ -1,9 +1,10 @@
-import React from 'react';
-import { Bell, Search, Activity, Flame } from 'lucide-react';
+import React, { useState } from 'react';
+import { Bell, Search, Activity, Flame, Menu, X } from 'lucide-react';
 import { useAppContext } from '../context/AppContext';
 
 export default function TopNav({ view, setView }) {
   const { streak } = useAppContext();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
     <header className="bg-white border-b border-emerald-200 h-16 flex items-center justify-between px-8 sticky top-0 z-10 transition-colors duration-300">
@@ -18,11 +19,11 @@ export default function TopNav({ view, setView }) {
         <nav className="hidden md:flex space-x-6 text-sm font-medium">
           <button onClick={() => setView('Dashboard')} className={`${view === 'Dashboard' ? 'text-black' : 'text-black hover:text-gray-700'}`}>Courses</button>
           <button onClick={() => setView('Resources')} className={`${view === 'Resources' ? 'text-black' : 'text-black hover:text-gray-700'}`}>Resources</button>
-          <button onClick={() => setView('Dashboard')} className={`${view === 'Dashboard' ? 'text-black' : 'text-black hover:text-gray-700'}`}>My Dashboard</button>
+          <button onClick={() => setView('Analytics')} className={`${view === 'Analytics' ? 'text-black' : 'text-black hover:text-gray-700'}`}>Admin</button>
         </nav>
       </div>
 
-      <div className="flex items-center space-x-6">
+      <div className="hidden md:flex items-center space-x-6">
         <div className="relative">
           <Search className="w-4 h-4 text-black absolute left-3 top-1/2 -translate-y-1/2" />
           <input 
@@ -32,14 +33,14 @@ export default function TopNav({ view, setView }) {
           />
         </div>
         
-        <div className="flex items-center space-x-1 text-orange-500 font-bold text-sm bg-orange-50/20 px-3 py-1.5 rounded-full" title={`${streak} Day Streak!`}>
-          <Flame className="w-4 h-4 fill-orange-500" />
+        <div className="flex items-center space-x-1 text-black font-bold text-sm bg-emerald-50 px-3 py-1.5 rounded-full" title={`${streak} Day Streak!`}>
+          <Flame className="w-4 h-4 text-emerald-600" />
           <span>{streak}</span>
         </div>
 
         <button className="text-black hover:text-gray-700 relative">
           <Bell className="w-5 h-5" />
-          <span className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
+          <span className="absolute top-0 right-0 w-2 h-2 bg-emerald-500 rounded-full"></span>
         </button>
 
         <div className="relative cursor-pointer">
@@ -47,6 +48,21 @@ export default function TopNav({ view, setView }) {
           <div className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 border-2 border-white rounded-full"></div>
         </div>
       </div>
+
+      <div className="md:hidden flex items-center space-x-4">
+        <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="text-black">
+          {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+        </button>
+      </div>
+
+      {isMobileMenuOpen && (
+        <div className="absolute top-16 left-0 right-0 bg-white border-b border-emerald-200 p-4 flex flex-col space-y-4 md:hidden z-50">
+          <button onClick={() => { setView('Dashboard'); setIsMobileMenuOpen(false); }} className="text-left font-medium text-black py-2">Courses</button>
+          <button onClick={() => { setView('Resources'); setIsMobileMenuOpen(false); }} className="text-left font-medium text-black py-2">Resources</button>
+          <button onClick={() => { setView('Analytics'); setIsMobileMenuOpen(false); }} className="text-left font-medium text-black py-2">Admin Dashboard</button>
+          <button onClick={() => { setView('LandingPage'); setIsMobileMenuOpen(false); }} className="text-left font-medium text-black py-2">Log Out</button>
+        </div>
+      )}
     </header>
   );
 }

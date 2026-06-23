@@ -7,7 +7,7 @@ export default function LearnerDashboard({ setView }) {
   return (
     <div className="page p-8 mx-auto space-y-8">
       {/* Hero Section */}
-      <div className="bg-gradient-to-r from-emerald-50 to-emerald-100 rounded-3xl p-8 flex justify-between items-center relative overflow-hidden">
+      <div className="bg-gradient-to-r from-emerald-50 to-emerald-100 rounded-3xl p-8 flex flex-col md:flex-row justify-between items-start md:items-center relative overflow-hidden gap-6">
         <div className="z-10 space-y-4">
           <div className="inline-block bg-emerald-200 text-black text-xs font-semibold px-3 py-1 rounded-full">
             Growth Mindset
@@ -147,7 +147,7 @@ export default function LearnerDashboard({ setView }) {
               {upcomingEvents.map((event, i) => (
                 <div key={event.id} className="relative flex items-start space-x-4">
                   <div className={`w-4 h-4 rounded-full border-2 border-white ring-2 z-10 flex-shrink-0 mt-1 ${
-                    event.type === 'quiz' ? 'bg-red-500 ring-red-100' :
+                    event.type === 'quiz' ? 'bg-black ring-slate-200' :
                     event.type === 'assignment' ? 'bg-white ring-emerald-500 border-emerald-500' :
                     'bg-white ring-emerald-500 border-emerald-500'
                   }`} />
@@ -205,7 +205,7 @@ export default function LearnerDashboard({ setView }) {
                   <div className="flex items-center space-x-3">
                     <div className="relative">
                       <img src={mentor.avatar} alt={mentor.name} className="w-10 h-10 rounded-full" />
-                      <div className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-yellow-400 border-2 border-white rounded-full"></div>
+                      <div className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 border-2 border-white rounded-full"></div>
                     </div>
                     <div>
                       <p className="font-semibold text-sm text-black">{mentor.name}</p>

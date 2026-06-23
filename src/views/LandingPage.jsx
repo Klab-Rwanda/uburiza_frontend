@@ -95,9 +95,9 @@ export default function LandingPage({ setView }) {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-left">
             {[
               { title: 'AI & Data Science', courses: '12 Courses', icon: Code, color: 'text-black', bg: 'bg-emerald-50' },
-              { title: 'Entrepreneurship', courses: '8 Courses', icon: Lightbulb, color: 'text-blue-600', bg: 'bg-blue-50' },
-              { title: 'Digital Marketing', courses: '15 Courses', icon: Marketing, color: 'text-purple-600', bg: 'bg-purple-50' },
-              { title: 'Digital Literacy', courses: '6 Courses', icon: MonitorSmartphone, color: 'text-orange-600', bg: 'bg-orange-50' }
+              { title: 'Entrepreneurship', courses: '8 Courses', icon: Lightbulb, color: 'text-emerald-700', bg: 'bg-emerald-50' },
+              { title: 'Digital Marketing', courses: '15 Courses', icon: Marketing, color: 'text-emerald-700', bg: 'bg-emerald-50' },
+              { title: 'Digital Literacy', courses: '6 Courses', icon: MonitorSmartphone, color: 'text-emerald-700', bg: 'bg-emerald-50' }
             ].map((path, idx) => (
               <div key={idx} className="bg-emerald-50 rounded-2xl p-8 hover:shadow-lg transition-all cursor-pointer group border border-emerald-100">
                 <div className={`w-14 h-14 rounded-xl ${path.bg} ${path.color} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>

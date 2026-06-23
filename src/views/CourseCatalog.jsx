@@ -34,7 +34,7 @@ export default function CourseCatalog({ setView }) {
       duration: '45h 00m',
       rating: '4.8',
       img: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
-      tags: [{ text: 'Beginner', type: 'dark' }, { text: 'Premium', type: 'purple' }]
+      tags: [{ text: 'Beginner', type: 'dark' }, { text: 'Premium', type: 'emerald' }]
     },
     {
       category: 'MARKETING',
@@ -56,7 +56,7 @@ export default function CourseCatalog({ setView }) {
       duration: '28h 45m',
       rating: '4.9',
       img: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
-      tags: [{ text: 'Expert', type: 'dark' }, { text: 'Premium', type: 'purple' }]
+      tags: [{ text: 'Expert', type: 'dark' }, { text: 'Premium', type: 'emerald' }]
     },
     {
       category: 'BUSINESS',
@@ -78,7 +78,7 @@ export default function CourseCatalog({ setView }) {
       duration: '20h 10m',
       rating: '4.8',
       img: 'https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
-      tags: [{ text: 'Beginner', type: 'dark' }, { text: 'Premium', type: 'purple' }]
+      tags: [{ text: 'Beginner', type: 'dark' }, { text: 'Premium', type: 'emerald' }]
     }
   ];
 
@@ -238,7 +238,7 @@ export default function CourseCatalog({ setView }) {
                         {course.tags.map(tag => (
                           <span key={tag.text} className={`text-xs font-bold px-2 py-1 rounded-md ${
                             tag.type === 'dark' ? 'bg-emerald-900/80 text-white' : 
-                            tag.type === 'green' ? 'bg-emerald-500 text-white' : 'bg-purple-500 text-white'
+                            tag.type === 'green' ? 'bg-emerald-500 text-white' : 'bg-emerald-700 text-white'
                           }`}>
                             {tag.text}
                           </span>

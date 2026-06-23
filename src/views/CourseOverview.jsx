@@ -167,7 +167,7 @@ export default function CourseOverview({ view, setView }) {
                         {mod.items.map((item, iIdx) => (
                           <div key={iIdx} className="flex items-center justify-between p-3 hover:bg-emerald-50 rounded-lg cursor-pointer" onClick={() => setView('CourseMaterial')}>
                             <div className="flex items-center space-x-3">
-                              {item.type === 'video' ? <PlayCircle className="w-4 h-4 text-black" /> : <FileText className="w-4 h-4 text-orange-500" />}
+                              {item.type === 'video' ? <PlayCircle className="w-4 h-4 text-black" /> : <FileText className="w-4 h-4 text-black" />}
                               <span className="text-sm text-black">{item.title}</span>
                             </div>
                             <span className="text-xs text-black font-medium">{item.duration}</span>
@@ -278,9 +278,9 @@ export default function CourseOverview({ view, setView }) {
                   <div className="flex items-end space-x-3 mb-2">
                     <span className="text-4xl font-black text-black">$49.99</span>
                     <span className="text-lg text-black line-through mb-1">$120.99</span>
-                    <span className="bg-red-100 text-red-700 text-xs font-bold px-2 py-1 rounded mb-2">60% OFF</span>
+                    <span className="bg-emerald-100 text-emerald-900 text-xs font-bold px-2 py-1 rounded mb-2">60% OFF</span>
                   </div>
-                  <div className="text-sm text-red-600 font-medium flex items-center space-x-1 mb-6">
+                  <div className="text-sm text-black font-medium flex items-center space-x-1 mb-6">
                     <Clock className="w-4 h-4" />
                     <span>Offer ends in 14:24:05</span>
                   </div>
@@ -317,7 +317,7 @@ export default function CourseOverview({ view, setView }) {
                 
                 <div className="bg-emerald-50 p-4 border-t border-emerald-100 flex items-center justify-between">
                   <div className="flex space-x-3">
-                    <button className="text-black hover:text-red-500 transition-colors">
+                    <button className="text-black hover:text-emerald-700 transition-colors">
                       <Heart className="w-5 h-5" />
                     </button>
                     <button className="text-black hover:text-gray-700 transition-colors">
