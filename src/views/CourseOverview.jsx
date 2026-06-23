@@ -42,7 +42,7 @@ export default function CourseOverview({ view, setView }) {
   ];
 
   return (
-    <div className="bg-slate-50 min-h-screen flex flex-col font-sans">
+    <div className="bg-white min-h-screen flex flex-col font-sans">
       <TopNav view={view} setView={setView} />
       
       <main className="flex-1">

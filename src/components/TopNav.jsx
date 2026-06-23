@@ -28,7 +28,7 @@ export default function TopNav({ view, setView }) {
           <input 
             type="text" 
             placeholder="Search skills..." 
-            className="pl-9 pr-4 py-2 border border-emerald-200 bg-white text-black rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 w-64 transition-colors duration-300"
+            className="pl-9 pr-4 py-2 border border-slate-200 bg-white text-black rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 w-64 transition-colors duration-300"
           />
         </div>
         

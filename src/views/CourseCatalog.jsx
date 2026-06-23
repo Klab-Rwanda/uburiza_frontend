@@ -83,17 +83,17 @@ export default function CourseCatalog({ setView }) {
   ];
 
   return (
-    <div className="bg-slate-50 min-h-screen flex flex-col font-sans">
+    <div className="bg-white min-h-screen flex flex-col font-sans">
       <TopNavPublic setView={setView} />
       
       <main className="flex-1 max-w-7xl mx-auto px-8 py-12 w-full">
         {/* Header */}
         <div className="mb-10">
-          <div className="inline-block border border-emerald-200 text-black bg-emerald-50 px-3 py-1 rounded-full text-xs font-bold tracking-wider mb-4">
+          <div className="inline-block border border-emerald-200 text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full text-xs font-bold tracking-wider mb-4">
             1,420 ACTIVE COURSES
           </div>
           <h1 className="text-4xl font-bold text-black mb-4">
-            Discover Your Next <span className="text-black">Digital Skill</span>
+            Discover Your Next <span className="text-emerald-600">Digital Skill</span>
           </h1>
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <p className="text-black max-w-2xl">
@@ -128,7 +128,7 @@ export default function CourseCatalog({ setView }) {
                 <input 
                   type="text" 
                   placeholder="Search keywords..." 
-                  className="w-full pl-9 pr-4 py-2.5 border border-emerald-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                  className="w-full pl-9 pr-4 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
                 />
               </div>
             </div>
@@ -247,7 +247,7 @@ export default function CourseCatalog({ setView }) {
                     </div>
                     
                     <div className="p-5 flex-1 flex flex-col">
-                      <div className="text-xs font-bold text-black tracking-wider mb-2 uppercase">{course.category}</div>
+                      <div className="text-xs font-bold text-emerald-600 tracking-wider mb-2 uppercase">{course.category}</div>
                       <h3 className="text-lg font-bold text-black mb-4 line-clamp-2">{course.title}</h3>
                       
                       <div className="flex items-center space-x-3 mb-6">
@@ -276,7 +276,7 @@ export default function CourseCatalog({ setView }) {
                           <Star className="w-4 h-4 text-amber-400 fill-amber-400" />
                           <span className="font-bold text-black">{course.rating}</span>
                         </div>
-                        <button className="text-black font-semibold flex items-center space-x-1 group-hover:text-gray-700">
+                        <button className="text-emerald-600 font-semibold flex items-center space-x-1 group-hover:text-emerald-700">
                           <span>Preview</span>
                           <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                         </button>
@@ -290,10 +290,14 @@ export default function CourseCatalog({ setView }) {
             {/* Load More */}
             <div className="mt-12 text-center border-t border-emerald-100 pt-12">
               <p className="text-sm text-black mb-4">Showing 6 of 1,420 courses</p>
-              <button className="inline-flex items-center space-x-2 border border-emerald-300 text-black px-6 py-3 rounded-lg font-medium hover:bg-emerald-50 transition-colors">
-                <span>Show More Courses</span>
-                <ChevronDown className="w-4 h-4" />
-              </button>
+              <div className="flex justify-center items-center space-x-3">
+                <button className="border border-emerald-300 text-black px-6 py-3 rounded-lg font-medium hover:bg-emerald-50 transition-colors">
+                  <span>Show More Courses</span>
+                </button>
+                <button className="bg-emerald-800 text-white p-3 rounded-lg hover:bg-emerald-900 transition-colors">
+                  <ArrowRight className="w-5 h-5 -rotate-45" />
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -301,15 +305,15 @@ export default function CourseCatalog({ setView }) {
         {/* Bottom Banner */}
         <div className="mt-20 bg-emerald-50 rounded-3xl p-10 flex flex-col md:flex-row items-center justify-between border border-emerald-100 relative overflow-hidden">
           <div className="relative z-10 mb-8 md:mb-0 max-w-xl">
-            <h2 className="text-2xl font-bold text-black mb-3">Join 50k+ African Learners</h2>
+            <h2 className="text-2xl font-bold text-emerald-900 mb-3">Join 50k+ African Learners</h2>
             <p className="text-black mb-6">Empower yourself with world-class education designed for the future of work in Africa.</p>
             <div className="flex flex-wrap gap-4">
               <div className="flex items-center space-x-2 bg-white px-4 py-2 rounded-full border border-emerald-200 text-sm font-medium text-black">
-                <CheckCircle2 className="w-4 h-4 text-black" />
+                <CheckCircle2 className="w-4 h-4 text-emerald-600" />
                 <span>Verified Certificates</span>
               </div>
               <div className="flex items-center space-x-2 bg-white px-4 py-2 rounded-full border border-emerald-200 text-sm font-medium text-black">
-                <CheckCircle2 className="w-4 h-4 text-black" />
+                <CheckCircle2 className="w-4 h-4 text-emerald-600" />
                 <span>Expert Instructors</span>
               </div>
             </div>

@@ -34,7 +34,7 @@ export default function Signup({ setView }) {
   };
 
   return (
-    <div className="h-screen overflow-hidden flex flex-row-reverse bg-slate-50 transition-colors duration-300 font-sans">
+    <div className="h-screen overflow-hidden flex flex-row-reverse bg-white transition-colors duration-300 font-sans">
       
       {/* Left Panel - Branding */}
       <div className="hidden lg:flex lg:w-1/2 bg-emerald-900 relative overflow-hidden flex-col justify-center p-12 order-2">
@@ -106,12 +106,12 @@ export default function Signup({ setView }) {
               <div className="relative">
                 <User className="w-5 h-5 text-black absolute left-3 top-1/2 -translate-y-1/2" />
                 <input 
-                  type="text" 
+                  type="text"
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
                   placeholder="John Doe" 
-                  className="w-full pl-10 pr-4 py-3 bg-white border border-emerald-200 rounded-xl text-black text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-colors"
+                  className="w-full border border-slate-200 rounded-lg pl-10 pr-4 py-3 text-black focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-shadow bg-white"
                 />
               </div>
             </div>
@@ -121,12 +121,12 @@ export default function Signup({ setView }) {
               <div className="relative">
                 <Mail className="w-5 h-5 text-black absolute left-3 top-1/2 -translate-y-1/2" />
                 <input 
-                  type="email" 
+                  type="email"
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
                   placeholder="name@example.com" 
-                  className="w-full pl-10 pr-4 py-3 bg-white border border-emerald-200 rounded-xl text-black text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-colors"
+                  className="w-full border border-slate-200 rounded-lg pl-10 pr-4 py-3 text-black focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-shadow bg-white"
                 />
               </div>
             </div>
@@ -136,12 +136,12 @@ export default function Signup({ setView }) {
               <div className="relative">
                 <Lock className="w-5 h-5 text-black absolute left-3 top-1/2 -translate-y-1/2" />
                 <input 
-                  type="password" 
+                  type="password"
                   name="password"
                   value={formData.password}
                   onChange={handleChange}
                   placeholder="••••••••" 
-                  className="w-full pl-10 pr-4 py-3 bg-white border border-emerald-200 rounded-xl text-black text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-colors"
+                  className="w-full border border-slate-200 rounded-lg pl-10 pr-4 py-3 text-black focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-shadow bg-white"
                 />
               </div>
             </div>

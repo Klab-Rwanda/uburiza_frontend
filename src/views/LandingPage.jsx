@@ -6,15 +6,15 @@ import agriTechImg from '../assets/sustainable_agritech.png';
 
 export default function LandingPage({ setView }) {
   return (
-    <div className="bg-slate-50 min-h-screen flex flex-col font-sans">
+    <div className="bg-white min-h-screen flex flex-col font-sans">
       <TopNavPublic setView={setView} />
       
       <main className="flex-1">
         {/* Hero Section */}
         <section className="px-8 md:px-16 py-16 md:py-24 max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-12">
           <div className="flex-1">
-            <div className="flex items-center space-x-2 text-black font-medium mb-6">
-              <span className="w-8 h-[2px] bg-black"></span>
+            <div className="flex items-center space-x-2 text-emerald-600 font-medium mb-6">
+              <span className="w-8 h-[2px] bg-emerald-500"></span>
               <span>Empowering African Tech Leaders</span>
             </div>
             <h1 className="text-5xl md:text-7xl font-bold text-emerald-900 leading-tight mb-6">
@@ -32,7 +32,7 @@ export default function LandingPage({ setView }) {
               >
                 Explore Courses
               </button>
-              <button className="flex items-center space-x-2 text-black font-semibold px-6 py-4 rounded-lg border border-emerald-200 hover:bg-emerald-50 transition-colors">
+              <button className="flex items-center space-x-2 text-emerald-600 font-semibold px-6 py-4 rounded-lg border border-emerald-200 hover:bg-emerald-50 transition-colors">
                 <Play className="w-5 h-5" />
                 <span>How it works</span>
               </button>
@@ -122,7 +122,7 @@ export default function LandingPage({ setView }) {
               </div>
               <button 
                 onClick={() => setView('CourseCatalog')}
-                className="hidden md:flex items-center space-x-2 text-black font-semibold hover:text-gray-700 transition-colors"
+                className="hidden md:flex items-center space-x-2 text-emerald-600 font-semibold hover:text-emerald-700 transition-colors"
               >
                 <span>View all courses</span>
                 <ArrowRight className="w-4 h-4" />
@@ -169,7 +169,7 @@ export default function LandingPage({ setView }) {
             <div className="mt-8 text-center md:hidden">
               <button 
                 onClick={() => setView('CourseCatalog')}
-                className="inline-flex items-center space-x-2 text-black font-semibold hover:text-gray-700 transition-colors"
+                className="inline-flex items-center space-x-2 text-emerald-600 font-semibold hover:text-emerald-700 transition-colors"
               >
                 <span>View all courses</span>
                 <ArrowRight className="w-4 h-4" />

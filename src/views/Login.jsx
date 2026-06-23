@@ -31,7 +31,7 @@ export default function Login({ setView }) {
   };
 
   return (
-    <div className="h-screen overflow-hidden flex flex-row-reverse bg-slate-50 transition-colors duration-300 font-sans">
+    <div className="h-screen overflow-hidden flex flex-row-reverse bg-white transition-colors duration-300 font-sans">
       
       {/* Left Panel - Branding */}
       <div className="hidden lg:flex lg:w-1/2 bg-emerald-900 relative overflow-hidden flex-col justify-center p-12 order-2">
@@ -103,7 +103,7 @@ export default function Login({ setView }) {
                   value={formData.email}
                   onChange={handleChange}
                   placeholder="name@example.com" 
-                  className="w-full pl-10 pr-4 py-3 bg-white border border-emerald-200 rounded-xl text-black text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-colors"
+                  className="w-full pl-10 pr-4 py-3 bg-white border border-slate-200 rounded-xl text-black text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-colors"
                 />
               </div>
             </div>
@@ -121,7 +121,7 @@ export default function Login({ setView }) {
                   value={formData.password}
                   onChange={handleChange}
                   placeholder="••••••••" 
-                  className="w-full pl-10 pr-4 py-3 bg-white border border-emerald-200 rounded-xl text-black text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-colors"
+                  className="w-full pl-10 pr-4 py-3 bg-white border border-slate-200 rounded-xl text-black text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-colors"
                 />
               </div>
             </div>

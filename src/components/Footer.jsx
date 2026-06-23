@@ -15,9 +15,6 @@ export default function Footer() {
           <p className="text-black text-sm mb-8">
             Empowering the next generation of African digital leaders through premium, accessible education.
           </p>
-          <div className="text-xs text-black mt-12">
-            Built for the future of Africa. © 2024 Uburiza Learn.
-          </div>
         </div>
 
         <div>
@@ -49,12 +46,20 @@ export default function Footer() {
             <input 
               type="email" 
               placeholder="Email address" 
-              className="px-4 py-2 border border-emerald-300 rounded-l-lg focus:outline-none focus:ring-1 focus:ring-emerald-500 w-full text-sm"
+              className="px-4 py-2 border border-slate-200 rounded-l-lg focus:outline-none focus:ring-1 focus:ring-emerald-500 w-full text-sm"
             />
             <button className="bg-emerald-800 hover:bg-emerald-900 text-white px-4 py-2 rounded-r-lg text-sm font-medium transition-colors">
               Join
             </button>
           </div>
+        </div>
+      </div>
+      
+      <div className="max-w-7xl mx-auto mt-16 pt-8 border-t border-emerald-100 flex flex-col md:flex-row justify-between items-center text-sm text-black">
+        <p>Built for the future of Africa. © 2024 Uburiza Learn.</p>
+        <div className="flex space-x-6 mt-4 md:mt-0">
+          <a href="#" className="hover:text-emerald-700 transition-colors">Privacy Policy</a>
+          <a href="#" className="hover:text-emerald-700 transition-colors">Terms of Service</a>
         </div>
       </div>
     </footer>

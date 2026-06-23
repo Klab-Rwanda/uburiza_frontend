@@ -28,12 +28,12 @@ export default function TopNavPublic({ setView }) {
           <input 
             type="text" 
             placeholder="Search skills..." 
-            className="pl-9 pr-4 py-2 border border-emerald-200 bg-white text-black rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 w-64 transition-colors duration-300"
+            className="pl-9 pr-4 py-2 border border-slate-200 bg-white text-black rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 w-64 transition-colors duration-300"
           />
         </div>
         
         <div className="flex items-center space-x-4 border-l border-emerald-200 pl-6">
-          <button className="text-sm font-medium text-black hover:text-gray-700 transition-colors ml-2" onClick={() => setView('Login')}>Login</button>
+          <button className="text-sm font-medium text-emerald-900 hover:text-emerald-700 transition-colors ml-2" onClick={() => setView('Login')}>Login</button>
           <button className="text-sm font-medium bg-emerald-800 text-white px-5 py-2 rounded-lg hover:bg-emerald-900 transition-colors shadow-sm" onClick={() => setView('Signup')}>
             Join Free
           </button>

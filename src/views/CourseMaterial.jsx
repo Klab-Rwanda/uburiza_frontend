@@ -72,7 +72,7 @@ export default function CourseMaterial({ view, setView }) {
   );
 
   return (
-    <div className="bg-slate-50 min-h-screen flex flex-col font-sans h-screen overflow-hidden transition-colors duration-300">
+    <div className="bg-white min-h-screen flex flex-col font-sans h-screen overflow-hidden transition-colors duration-300">
       <TopNav view={view} setView={setView} />
       
       <div className="flex flex-1 overflow-hidden relative">
