@@ -5,48 +5,48 @@ import { courses, upcomingEvents, mentors, activityData } from '../data/mockData
 
 export default function LearnerDashboard({ setView }) {
   return (
-    <div className="page p-8 mx-auto space-y-8">
+    <div className="page p-4 md:p-8 mx-auto space-y-6 md:space-y-8">
       {/* Hero Section */}
-      <div className="bg-gradient-to-r from-emerald-50 to-emerald-100 rounded-3xl p-8 flex flex-col md:flex-row justify-between items-start md:items-center relative overflow-hidden gap-6">
-        <div className="z-10 space-y-4">
-          <div className="inline-block bg-emerald-200 text-black text-xs font-semibold px-3 py-1 rounded-full">
+      <div className="bg-gradient-to-br from-emerald-50 to-emerald-100/80 rounded-[2rem] p-6 md:p-10 flex flex-col lg:flex-row justify-between items-start lg:items-center relative overflow-hidden gap-8">
+        <div className="z-10 space-y-5 w-full lg:w-auto">
+          <div className="inline-block bg-white text-emerald-800 text-xs font-bold px-4 py-1.5 rounded-full shadow-sm border border-emerald-100">
             Growth Mindset
           </div>
-          <h1 className="text-4xl font-bold text-black">
-            Welcome back, Abebe! <span className="text-3xl">👋</span>
+          <h1 className="text-3xl md:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
+            Welcome back, Abebe! <span className="text-3xl md:text-5xl inline-block origin-bottom-right hover:animate-pulse">👋</span>
           </h1>
-          <p className="text-black max-w-md">
-            You've completed 75% of your weekly goal. Keep it up to stay ahead of the curve!
+          <p className="text-slate-600 max-w-md text-sm md:text-base leading-relaxed">
+            You've completed <strong className="text-emerald-700">75%</strong> of your weekly goal. Keep it up to stay ahead of the curve!
           </p>
-          <div className="flex space-x-4 pt-2">
-            <button className="bg-emerald-800 hover:bg-emerald-900 text-white px-6 py-2.5 rounded-lg font-medium flex items-center transition-colors">
-              <Play className="w-4 h-4 mr-2" fill="currentColor" />
-              Resume: UI/UX Design for Africa
+          <div className="flex flex-col sm:flex-row gap-3 pt-3">
+            <button className="bg-emerald-800 hover:bg-emerald-900 text-white px-6 py-3 rounded-xl font-semibold flex items-center justify-center transition-all shadow-lg shadow-emerald-800/20 active:scale-95">
+              <Play className="w-5 h-5 mr-2" fill="currentColor" />
+              Resume Learning
             </button>
-            <button className="bg-white border border-emerald-300 hover:bg-emerald-50 text-black px-6 py-2.5 rounded-lg font-medium transition-colors">
+            <button className="bg-white border-2 border-emerald-100 hover:bg-emerald-50 hover:border-emerald-200 text-emerald-800 px-6 py-3 rounded-xl font-semibold transition-all text-center active:scale-95">
               Explore More
             </button>
           </div>
         </div>
         
         {/* Stats Blocks */}
-        <div className="flex space-x-4 z-10">
-          <div className="bg-white p-4 rounded-2xl shadow-sm border border-emerald-100 flex items-center space-x-4 min-w-[160px]">
-            <div className="bg-emerald-50 p-3 rounded-xl">
-              <TrendingUp className="w-6 h-6 text-black" />
+        <div className="flex flex-col sm:flex-row gap-4 w-full lg:w-auto z-10 mt-2 lg:mt-0">
+          <div className="bg-white/80 backdrop-blur-md p-4 md:p-5 rounded-2xl shadow-sm border border-white flex items-center space-x-4 flex-1 lg:min-w-[180px] hover:shadow-md transition-shadow">
+            <div className="bg-emerald-100 p-3.5 rounded-xl text-emerald-700">
+              <TrendingUp className="w-6 h-6" />
             </div>
             <div>
-              <p className="text-xs text-black font-medium">Current Streak</p>
-              <p className="text-xl font-bold text-black">12 Days</p>
+              <p className="text-xs text-slate-500 font-bold uppercase tracking-wider mb-0.5">Current Streak</p>
+              <p className="text-2xl font-extrabold text-slate-900">12 <span className="text-base font-semibold text-slate-500">Days</span></p>
             </div>
           </div>
-          <div className="bg-white p-4 rounded-2xl shadow-sm border border-emerald-100 flex items-center space-x-4 min-w-[160px]">
-            <div className="bg-emerald-50 p-3 rounded-xl">
-              <Zap className="w-6 h-6 text-black" />
+          <div className="bg-white/80 backdrop-blur-md p-4 md:p-5 rounded-2xl shadow-sm border border-white flex items-center space-x-4 flex-1 lg:min-w-[180px] hover:shadow-md transition-shadow">
+            <div className="bg-amber-100 p-3.5 rounded-xl text-amber-600">
+              <Zap className="w-6 h-6" />
             </div>
             <div>
-              <p className="text-xs text-black font-medium">Points Earned</p>
-              <p className="text-xl font-bold text-black">2,450</p>
+              <p className="text-xs text-slate-500 font-bold uppercase tracking-wider mb-0.5">Points Earned</p>
+              <p className="text-2xl font-extrabold text-slate-900">2,450</p>
             </div>
           </div>
         </div>

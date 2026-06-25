@@ -106,41 +106,57 @@ export default function TopNav({ view, setView }) {
       </div>
 
       <div className="md:hidden flex items-center space-x-4">
-        <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="text-black">
-          {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+        <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="text-black z-50">
+          <Menu className="w-6 h-6" />
         </button>
       </div>
 
       {isMobileMenuOpen && (
-        <div className="absolute top-16 left-0 right-0 bg-white border-b border-emerald-200 p-6 shadow-xl flex flex-col space-y-2 md:hidden z-50 animate-in slide-in-from-top-2">
-          <div className="flex items-center space-x-4 mb-4 pb-4 border-b border-emerald-100">
-            <img src="https://i.pravatar.cc/150?img=11" alt="Avatar" className="w-12 h-12 rounded-full border border-emerald-200" />
-            <div>
-              <p className="font-bold text-black">Abebe Bikila</p>
-              <p className="text-xs text-emerald-600">{isAdmin ? 'Administrator' : 'Learner'}</p>
+        <>
+          <div 
+            className="fixed inset-0 bg-emerald-950/60 backdrop-blur-sm z-40 md:hidden transition-opacity" 
+            onClick={() => setIsMobileMenuOpen(false)}
+          ></div>
+          <div className="fixed top-0 right-0 bottom-0 w-[85%] max-w-sm bg-white shadow-2xl p-6 flex flex-col z-50 animate-in slide-in-from-right-8 duration-300 md:hidden">
+            <div className="flex justify-between items-center mb-6 pb-4 border-b border-emerald-100">
+              <div className="flex items-center space-x-3">
+                <img src="https://i.pravatar.cc/150?img=11" alt="Avatar" className="w-12 h-12 rounded-full border-2 border-emerald-200" />
+                <div>
+                  <p className="font-bold text-black text-lg">Abebe Bikila</p>
+                  <p className="text-sm text-emerald-600 font-medium">{isAdmin ? 'Administrator' : 'Learner'}</p>
+                </div>
+              </div>
+              <button onClick={() => setIsMobileMenuOpen(false)} className="text-gray-400 hover:text-black transition-colors bg-gray-50 hover:bg-gray-100 p-2 rounded-full">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            
+            <div className="flex-1 overflow-y-auto space-y-2 pr-2">
+              <button onClick={() => { setView('CourseCatalog'); setIsMobileMenuOpen(false); }} className="w-full text-left font-semibold text-black py-3.5 px-4 rounded-xl hover:bg-emerald-50 active:bg-emerald-100 transition-colors">Courses Catalog</button>
+              <button onClick={() => { setView(isAdmin ? 'Analytics' : 'Dashboard'); setIsMobileMenuOpen(false); }} className="w-full text-left font-semibold text-black py-3.5 px-4 rounded-xl hover:bg-emerald-50 active:bg-emerald-100 transition-colors">My Dashboard</button>
+              <button onClick={() => { setView('Resources'); setIsMobileMenuOpen(false); }} className="w-full text-left font-semibold text-black py-3.5 px-4 rounded-xl hover:bg-emerald-50 active:bg-emerald-100 transition-colors">Resources</button>
+              <button onClick={() => { setView('Settings'); setIsMobileMenuOpen(false); }} className="w-full text-left font-semibold text-black py-3.5 px-4 rounded-xl hover:bg-emerald-50 active:bg-emerald-100 transition-colors">Settings</button>
+              
+              <div className="pt-2">
+                {!isAdmin ? (
+                  <button onClick={() => { setUserRole('admin'); setView('Analytics'); setIsMobileMenuOpen(false); }} className="w-full text-left font-semibold text-black py-3.5 px-4 rounded-xl bg-slate-50 hover:bg-slate-100 transition-colors flex items-center border border-slate-200">
+                    <ShieldCheck className="w-5 h-5 mr-3 text-slate-600" /> Switch to Admin
+                  </button>
+                ) : (
+                  <button onClick={() => { setUserRole('learner'); setView('Dashboard'); setIsMobileMenuOpen(false); }} className="w-full text-left font-semibold text-emerald-700 py-3.5 px-4 rounded-xl bg-emerald-50 hover:bg-emerald-100 transition-colors flex items-center border border-emerald-200">
+                    <User className="w-5 h-5 mr-3" /> Switch to Learner
+                  </button>
+                )}
+              </div>
+            </div>
+
+            <div className="border-t border-emerald-100 mt-auto pt-6 pb-2">
+              <button onClick={() => { setView('LandingPage'); setIsMobileMenuOpen(false); }} className="w-full text-left font-semibold text-red-600 py-3.5 px-4 rounded-xl hover:bg-red-50 active:bg-red-100 transition-colors flex items-center">
+                <LogOut className="w-5 h-5 mr-3 text-red-500" /> Log Out
+              </button>
             </div>
           </div>
-          
-          <button onClick={() => { setView('CourseCatalog'); setIsMobileMenuOpen(false); }} className="text-left font-medium text-black py-3 px-4 rounded-lg hover:bg-emerald-50 transition-colors">Courses Catalog</button>
-          <button onClick={() => { setView(isAdmin ? 'Analytics' : 'Dashboard'); setIsMobileMenuOpen(false); }} className="text-left font-medium text-black py-3 px-4 rounded-lg hover:bg-emerald-50 transition-colors">My Dashboard</button>
-          <button onClick={() => { setView('Resources'); setIsMobileMenuOpen(false); }} className="text-left font-medium text-black py-3 px-4 rounded-lg hover:bg-emerald-50 transition-colors">Resources</button>
-          <button onClick={() => { setView('Settings'); setIsMobileMenuOpen(false); }} className="text-left font-medium text-black py-3 px-4 rounded-lg hover:bg-emerald-50 transition-colors">Settings</button>
-          
-          {!isAdmin ? (
-            <button onClick={() => { setUserRole('admin'); setView('Analytics'); setIsMobileMenuOpen(false); }} className="text-left font-medium text-black py-3 px-4 rounded-lg hover:bg-emerald-50 transition-colors flex items-center">
-              <ShieldCheck className="w-4 h-4 mr-2" /> Switch to Admin
-            </button>
-          ) : (
-            <button onClick={() => { setUserRole('learner'); setView('Dashboard'); setIsMobileMenuOpen(false); }} className="text-left font-medium text-black py-3 px-4 rounded-lg hover:bg-emerald-50 transition-colors flex items-center">
-              <User className="w-4 h-4 mr-2" /> Switch to Learner
-            </button>
-          )}
-
-          <div className="border-t border-emerald-100 my-2"></div>
-          <button onClick={() => { setView('LandingPage'); setIsMobileMenuOpen(false); }} className="text-left font-medium text-red-600 py-3 px-4 rounded-lg hover:bg-red-50 transition-colors flex items-center">
-            <LogOut className="w-4 h-4 mr-2" /> Log Out
-          </button>
-        </div>
+        </>
       )}
     </header>
   );
