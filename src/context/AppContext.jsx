@@ -6,7 +6,10 @@ export function AppProvider({ children }) {
   const [theme, setTheme] = useState('light');
   const [dataSaver, setDataSaver] = useState(false);
   const [streak, setStreak] = useState(12);
-  const [userRole, setUserRole] = useState('learner');
+  const [userRole, setUserRole] = useState(() => {
+    const user = JSON.parse(localStorage.getItem('loggedInUser') || '{}');
+    return user.role ? user.role.toLowerCase() : 'learner';
+  });
 
   // Apply dark mode to document body
   useEffect(() => {

@@ -13,6 +13,9 @@ import CourseMaterial from './views/CourseMaterial';
 import Login from './views/Login';
 import Signup from './views/Signup';
 import SettingsView from './views/SettingsView';
+import VerifyEmail from './views/VerifyEmail';
+import ForgotPassword from './views/ForgotPassword';
+import ResetPassword from './views/ResetPassword';
 import { AppProvider } from './context/AppContext';
 import { AnimatePresence, motion } from 'framer-motion';
 
@@ -22,6 +25,9 @@ function AppContent() {
     return hash || 'LandingPage';
   });
 
+  const [pendingEmail, setPendingEmail] = useState('');
+  const [resetParams, setResetParams] = useState({ token: '', email: '' });
+
   const setView = (newView) => {
     if (window.location.hash !== `#${newView}`) {
       window.location.hash = newView;
@@ -29,12 +35,22 @@ function AppContent() {
   };
 
   useEffect(() => {
+    // Handle reset-password links: /reset-password?token=...&email=...
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get('token');
+    const email = params.get('email');
+    if (token && email && window.location.pathname.includes('reset-password')) {
+      setResetParams({ token, email });
+      setViewInternal('ResetPassword');
+      window.history.replaceState({}, '', '/');
+      return;
+    }
+
     const handleHashChange = () => {
       const hash = window.location.hash.replace('#', '');
       setViewInternal(hash || 'LandingPage');
     };
     window.addEventListener('hashchange', handleHashChange);
-    // Trigger once on mount in case there's an initial hash
     handleHashChange();
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
@@ -62,15 +78,21 @@ function AppContent() {
       case 'CourseMaterial':
         return <CourseMaterial view={view} setView={setView} />;
       case 'Login':
-        return <Login setView={setView} />;
+        return <Login setView={setView} setPendingEmail={setPendingEmail} />;
       case 'Signup':
-        return <Signup setView={setView} />;
+        return <Signup setView={setView} setPendingEmail={setPendingEmail} />;
+      case 'VerifyEmail':
+        return <VerifyEmail setView={setView} email={pendingEmail} />;
+      case 'ForgotPassword':
+        return <ForgotPassword setView={setView} />;
+      case 'ResetPassword':
+        return <ResetPassword setView={setView} token={resetParams.token} email={resetParams.email} />;
       default:
         return <LandingPage setView={setView} />;
     }
   };
 
-  const isFullPageView = ['LandingPage', 'CourseCatalog', 'CourseOverview', 'CourseMaterial', 'Login', 'Signup'].includes(view);
+  const isFullPageView = ['LandingPage', 'CourseCatalog', 'CourseOverview', 'CourseMaterial', 'Login', 'Signup', 'VerifyEmail', 'ForgotPassword', 'ResetPassword'].includes(view);
 
   const pageVariants = {
     initial: { opacity: 0, y: 20 },

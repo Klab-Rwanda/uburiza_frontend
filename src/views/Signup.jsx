@@ -2,35 +2,35 @@ import React, { useState } from 'react';
 import { Activity, Mail, Lock, User, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useAppContext } from '../context/AppContext';
+import { register } from '../api/auth';
 
-export default function Signup({ setView }) {
+export default function Signup({ setView, setPendingEmail }) {
   const { theme } = useAppContext();
   
-  const [formData, setFormData] = useState({ name: '', email: '', password: '' });
+  const [formData, setFormData] = useState({ name: '', username: '', email: '', password: '' });
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSignup = () => {
-    if (!formData.name || !formData.email || !formData.password) {
+  const handleSignup = async () => {
+    if (!formData.name || !formData.username || !formData.email || !formData.password) {
       setError('Please fill in all fields');
       return;
     }
-    
-    const existingUsers = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
-    
-    if (existingUsers.some(u => u.email === formData.email)) {
-      setError('Email already exists. Please log in.');
-      return;
+    setLoading(true);
+    setError('');
+    try {
+      await register({ name: formData.name, username: formData.username, email: formData.email, password: formData.password });
+      setPendingEmail(formData.email);
+      setView('VerifyEmail');
+    } catch (err) {
+      setError(err.error || 'Signup failed. Please try again.');
+    } finally {
+      setLoading(false);
     }
-    
-    existingUsers.push(formData);
-    localStorage.setItem('registeredUsers', JSON.stringify(existingUsers));
-    localStorage.setItem('loggedInUser', JSON.stringify(formData));
-    
-    setView('Dashboard');
   };
 
   return (
@@ -117,6 +117,21 @@ export default function Signup({ setView }) {
             </div>
 
             <div>
+              <label className="block text-sm font-medium text-black mb-1.5">Username</label>
+              <div className="relative">
+                <User className="w-5 h-5 text-black absolute left-3 top-1/2 -translate-y-1/2" />
+                <input 
+                  type="text"
+                  name="username"
+                  value={formData.username}
+                  onChange={handleChange}
+                  placeholder="johndoe123" 
+                  className="w-full border border-slate-200 rounded-lg pl-10 pr-4 py-3 text-black focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-shadow bg-white"
+                />
+              </div>
+            </div>
+
+            <div>
               <label className="block text-sm font-medium text-black mb-1.5">Email Address</label>
               <div className="relative">
                 <Mail className="w-5 h-5 text-black absolute left-3 top-1/2 -translate-y-1/2" />
@@ -148,11 +163,12 @@ export default function Signup({ setView }) {
 
             <div className="pt-2">
               <button 
-                className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl transition-all shadow-lg shadow-emerald-200 flex items-center justify-center space-x-2 group"
+                className="w-full bg-emerald-600 hover:bg-emerald-700 disabled:opacity-60 text-white font-bold py-3 rounded-xl transition-all shadow-lg shadow-emerald-200 flex items-center justify-center space-x-2 group"
                 onClick={handleSignup}
+                disabled={loading}
               >
-                <span>Create Account</span>
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                <span>{loading ? 'Creating Account...' : 'Create Account'}</span>
+                {!loading && <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />}
               </button>
             </div>
             

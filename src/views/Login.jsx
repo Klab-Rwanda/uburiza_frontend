@@ -2,38 +2,41 @@ import React, { useState } from 'react';
 import { Activity, Mail, Lock, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useAppContext } from '../context/AppContext';
+import { login } from '../api/auth';
 
-export default function Login({ setView }) {
-  const { theme } = useAppContext();
+export default function Login({ setView, setPendingEmail }) {
+  const { setUserRole } = useAppContext();
   
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     if (!formData.email || !formData.password) {
       setError('Please fill in all fields');
       return;
     }
-    
-    // Hardcoded Admin login for prototype
-    if (formData.email === 'admin@uburiza.com' && formData.password === 'admin123') {
-      localStorage.setItem('loggedInUser', JSON.stringify({ email: formData.email, role: 'admin' }));
-      setView('Analytics');
-      return;
-    }
-    
-    const existingUsers = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
-    const user = existingUsers.find(u => u.email === formData.email && u.password === formData.password);
-    
-    if (user) {
-      localStorage.setItem('loggedInUser', JSON.stringify(user));
-      setView('Dashboard');
-    } else {
-      setError('Invalid email or password. Try admin@uburiza.com / admin123 for admin access.');
+    setLoading(true);
+    setError('');
+    try {
+      const data = await login(formData);
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('loggedInUser', JSON.stringify(data.user));
+      setUserRole(data.user.role.toLowerCase());
+      setView(data.user.role === 'ADMIN' ? 'Analytics' : 'Dashboard');
+    } catch (err) {
+      if (err.error === 'Please verify your email first.') {
+        setPendingEmail(formData.email);
+        setView('VerifyEmail');
+        return;
+      }
+      setError(err.error || 'Invalid credentials');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -118,7 +121,7 @@ export default function Login({ setView }) {
             <div>
               <div className="flex items-center justify-between mb-2">
                 <label className="block text-sm font-medium text-black">Password</label>
-                <a href="#" className="text-xs font-bold text-black hover:text-gray-700">Forgot password?</a>
+                <button onClick={() => setView('ForgotPassword')} className="text-xs font-bold text-black hover:text-gray-700">Forgot password?</button>
               </div>
               <div className="relative">
                 <Lock className="w-5 h-5 text-black absolute left-3 top-1/2 -translate-y-1/2" />
@@ -134,11 +137,12 @@ export default function Login({ setView }) {
             </div>
 
             <button 
-              className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl transition-all shadow-lg shadow-emerald-200 flex items-center justify-center space-x-2 group mt-2"
+              className="w-full bg-emerald-600 hover:bg-emerald-700 disabled:opacity-60 text-white font-bold py-3 rounded-xl transition-all shadow-lg shadow-emerald-200 flex items-center justify-center space-x-2 group mt-2"
               onClick={handleLogin}
+              disabled={loading}
             >
-              <span>Log In</span>
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              <span>{loading ? 'Logging in...' : 'Log In'}</span>
+              {!loading && <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />}
             </button>
           </div>
 
