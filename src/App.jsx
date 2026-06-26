@@ -16,6 +16,9 @@ import SettingsView from './views/SettingsView';
 import VerifyEmail from './views/VerifyEmail';
 import ForgotPassword from './views/ForgotPassword';
 import ResetPassword from './views/ResetPassword';
+import PartnerWithUs from './views/PartnerWithUs';
+import TeachWithUs from './views/TeachWithUs';
+import BusinessInquiry from './views/BusinessInquiry';
 import { AppProvider } from './context/AppContext';
 import { AnimatePresence, motion } from 'framer-motion';
 
@@ -87,12 +90,18 @@ function AppContent() {
         return <ForgotPassword setView={setView} />;
       case 'ResetPassword':
         return <ResetPassword setView={setView} token={resetParams.token} email={resetParams.email} />;
+      case 'PartnerWithUs':
+        return <PartnerWithUs setView={setView} />;
+      case 'TeachWithUs':
+        return <TeachWithUs setView={setView} />;
+      case 'BusinessInquiry':
+        return <BusinessInquiry setView={setView} />;
       default:
         return <LandingPage setView={setView} />;
     }
   };
 
-  const isFullPageView = ['LandingPage', 'CourseCatalog', 'CourseOverview', 'CourseMaterial', 'Login', 'Signup', 'VerifyEmail', 'ForgotPassword', 'ResetPassword'].includes(view);
+  const isFullPageView = ['LandingPage', 'CourseCatalog', 'CourseOverview', 'CourseMaterial', 'Login', 'Signup', 'VerifyEmail', 'ForgotPassword', 'ResetPassword', 'PartnerWithUs', 'TeachWithUs', 'BusinessInquiry'].includes(view);
 
   const pageVariants = {
     initial: { opacity: 0, y: 20 },

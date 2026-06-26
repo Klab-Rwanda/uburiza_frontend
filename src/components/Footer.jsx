@@ -1,7 +1,7 @@
 import React from 'react';
 import { Activity } from 'lucide-react';
 
-export default function Footer() {
+export default function Footer({ setView }) {
   return (
     <footer className="bg-white border-t border-emerald-200 py-16 px-8 md:px-16">
       <div className="w-full px-8 md:px-16 grid grid-cols-1 md:grid-cols-4 gap-12">
@@ -28,11 +28,11 @@ export default function Footer() {
         </div>
 
         <div>
-          <h4 className="font-semibold text-black mb-4">Community</h4>
+          <h4 className="font-semibold text-black mb-4">Community & Partners</h4>
           <ul className="space-y-3 text-sm text-black">
-            <li><a href="#" className="hover:text-gray-700 transition-colors">Africa Tech Network</a></li>
-            <li><a href="#" className="hover:text-gray-700 transition-colors">Student Mentorship</a></li>
-            <li><a href="#" className="hover:text-gray-700 transition-colors">Partnerships</a></li>
+            <li><button onClick={() => setView?.('PartnerWithUs')} className="hover:text-gray-700 transition-colors">Partner With Us</button></li>
+            <li><button onClick={() => setView?.('TeachWithUs')} className="hover:text-gray-700 transition-colors">Teach on Uburiza Academy</button></li>
+            <li><button onClick={() => setView?.('BusinessInquiry')} className="hover:text-gray-700 transition-colors">Uburiza Academy Business</button></li>
             <li><a href="#" className="hover:text-gray-700 transition-colors">Events</a></li>
           </ul>
         </div>

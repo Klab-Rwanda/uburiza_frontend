@@ -8,14 +8,16 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Outfit', 'sans-serif'],
+        sans: ['Inter', 'sans-serif'],
+        fraunces: ['Fraunces', 'serif'],
+        inter: ['Inter', 'sans-serif'],
       },
       colors: {
         brand: {
-          dark: '#1e4c31', // very dark emerald
-          primary: '#247045', // standard emerald
-          light: '#e8f3ec', // very light green
-          accent: '#10b981', // bright green for charts
+          dark: '#11664a', // darker shade of primary
+          primary: '#1D9E75', // the requested Uburiza green
+          light: '#e8f5f1', // light tint
+          accent: '#10b981', // keeping accent
         }
       }
     },

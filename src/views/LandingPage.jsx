@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import TopNavPublic from '../components/TopNavPublic';
 import Footer from '../components/Footer';
 import { Play, TrendingUp, Code, Lightbulb, TrendingUp as Marketing, MonitorSmartphone, Star, ArrowRight, CheckCircle2 } from 'lucide-react';
 import agriTechImg from '../assets/sustainable_agritech.png';
+import { courses } from '../data/mockData';
 
 export default function LandingPage({ setView }) {
+  const [selectedCategory, setSelectedCategory] = useState('All');
+  const categories = ['All', 'AI & Data Science', 'Digital Marketing', 'Entrepreneurship', 'Digital Literacy'];
+  const filteredCourses = selectedCategory === 'All' ? courses : courses.filter(c => c.category === selectedCategory);
+
   return (
     <div className="bg-white min-h-screen flex flex-col font-sans">
       <TopNavPublic setView={setView} />
@@ -113,11 +118,11 @@ export default function LandingPage({ setView }) {
         {/* Featured Courses */}
         <section className="py-24 px-8 md:px-16 bg-emerald-50">
           <div className="w-full">
-            <div className="flex justify-between items-end mb-12">
+            <div className="flex justify-between items-end mb-8">
               <div>
-                <h2 className="text-3xl font-bold text-black mb-4">Featured Courses</h2>
+                <h2 className="text-3xl font-bold text-black mb-4">Department Course Categories</h2>
                 <p className="text-black max-w-xl">
-                  Start learning with our most popular programs, led by industry experts across the continent.
+                  Start learning with our most popular programs, organized by subject area.
                 </p>
               </div>
               <button 
@@ -129,32 +134,45 @@ export default function LandingPage({ setView }) {
               </button>
             </div>
 
+            {/* Category Tabs */}
+            <div className="flex space-x-4 mb-12 overflow-x-auto pb-4 hide-scrollbar">
+              {categories.map(category => (
+                <button
+                  key={category}
+                  onClick={() => setSelectedCategory(category)}
+                  className={`px-6 py-2 rounded-full font-semibold whitespace-nowrap transition-colors border ${
+                    selectedCategory === category 
+                      ? 'bg-emerald-600 text-white border-emerald-600 shadow-md' 
+                      : 'bg-white text-emerald-900 border-emerald-200 hover:bg-emerald-100'
+                  }`}
+                >
+                  {category}
+                </button>
+              ))}
+            </div>
+
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {[
-                { title: 'FinTech Fundamentals for Africa', author: 'Kwame Osei', rating: '4.8', learners: '1.2k', img: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80', tag: 'TRENDING' },
-                { title: 'Sustainable Agri-Tech Solutions', author: 'Amina Hassan', rating: '4.9', learners: '850', img: agriTechImg, tag: 'NEW' },
-                { title: 'Mastering Mobile UX Design', author: 'David Kalu', rating: '4.7', learners: '2.1k', img: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80', tag: 'ADVANCED' }
-              ].map((course, idx) => (
+              {filteredCourses.map((course, idx) => (
                 <div key={idx} className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-emerald-100 flex flex-col cursor-pointer" onClick={() => setView('CourseOverview')}>
                   <div className="relative h-48">
-                    <img src={course.img} alt={course.title} className="w-full h-full object-cover" />
+                    <img src={course.image || course.img} alt={course.title} className="w-full h-full object-cover" />
                     <div className="absolute top-4 left-4 bg-emerald-500 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
-                      {course.tag}
+                      {course.category}
                     </div>
                   </div>
                   <div className="p-6 flex-1 flex flex-col">
                     <div className="flex items-center space-x-4 text-sm text-black mb-3">
                       <div className="flex items-center space-x-1">
                         <Star className="w-4 h-4 text-amber-400 fill-amber-400" />
-                        <span className="font-medium text-black">{course.rating}</span>
+                        <span className="font-medium text-black">4.8</span>
                       </div>
                       <span>•</span>
-                      <span>{course.learners} learners</span>
+                      <span>{course.progress > 0 ? course.progress + ' learners' : 'New'}</span>
                     </div>
                     <h3 className="text-xl font-bold text-black mb-4 line-clamp-2">{course.title}</h3>
                     <div className="mt-auto flex items-center justify-between">
                       <div className="flex items-center space-x-3">
-                        <img src={`https://i.pravatar.cc/150?img=${idx + 20}`} alt={course.author} className="w-8 h-8 rounded-full" />
+                        <img src={course.authorAvatar} alt={course.author} className="w-8 h-8 rounded-full" />
                         <span className="text-sm font-medium text-black">{course.author}</span>
                       </div>
                       <button className="text-black border border-emerald-200 px-4 py-2 rounded-lg text-sm font-semibold hover:bg-emerald-50 transition-colors">
@@ -255,7 +273,7 @@ export default function LandingPage({ setView }) {
         </section>
       </main>
 
-      <Footer />
+      <Footer setView={setView} />
     </div>
   );
 }

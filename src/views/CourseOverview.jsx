@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import TopNav from '../components/TopNav';
 import Footer from '../components/Footer';
-import { Star, Clock, Users, Play, CheckCircle2, ChevronDown, ChevronUp, PlayCircle, FileText, Smartphone, Award, Heart, Share2, ShieldCheck, HelpCircle, Activity } from 'lucide-react';
+import { Star, Clock, Users, Play, CheckCircle2, ChevronDown, ChevronUp, PlayCircle, FileText, Smartphone, Award, Heart, Share2, ShieldCheck, HelpCircle, Activity, Download, Briefcase, FileCheck, HelpCircle as QuizIcon } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { aiFluencyCourse } from '../data/mockData';
 
 export default function CourseOverview({ view, setView }) {
   const [activeModule, setActiveModule] = useState(0);
@@ -19,85 +20,75 @@ export default function CourseOverview({ view, setView }) {
     };
   }, []);
 
-  const curriculum = [
-    {
-      title: 'Foundations of Digital Mastery',
-      lessons: '3 lessons • 45m',
-      items: [
-        { title: 'Introduction to the African Tech Ecosystem', duration: '15:45', type: 'video' },
-        { title: 'Setting up your local environment', duration: '18:20', type: 'video' },
-        { title: 'Quiz: Basics of Web Architecture', duration: '15:00', type: 'quiz' }
-      ]
-    },
-    {
-      title: 'Advanced Layout Techniques',
-      lessons: '5 lessons • 1h 15m',
-      items: []
-    },
-    {
-      title: 'Low-Bandwidth Optimization',
-      lessons: '4 lessons • 55m',
-      items: []
+  const course = aiFluencyCourse;
+
+  const getIconForType = (type) => {
+    switch(type) {
+      case 'video': return <PlayCircle className="w-4 h-4" />;
+      case 'reading': return <FileText className="w-4 h-4" />;
+      case 'quiz': return <QuizIcon className="w-4 h-4" />;
+      case 'download': return <Download className="w-4 h-4" />;
+      case 'project': return <Briefcase className="w-4 h-4" />;
+      case 'certificate': return <Award className="w-4 h-4" />;
+      default: return <FileText className="w-4 h-4" />;
     }
-  ];
+  };
 
   return (
-    <div className="bg-white min-h-screen flex flex-col font-sans">
+    <div className="bg-white min-h-screen flex flex-col font-inter">
       <TopNav view={view} setView={setView} />
       
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="bg-emerald-50 border-b border-emerald-100 py-16 px-8 md:px-16">
-          <div className="w-full flex flex-col lg:flex-row gap-12 items-center">
+        <section className="bg-brand-light border-b border-[#1D9E75]/20 py-16 px-4 md:px-16">
+          <div className="w-full flex flex-col lg:flex-row gap-12 items-center max-w-7xl mx-auto">
             <div className="flex-1 space-y-6">
-              <div className="flex items-center space-x-3">
-                <span className="bg-emerald-500 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
-                  Bestseller
+              <div className="flex flex-wrap items-center gap-3">
+                <span className="bg-[#1D9E75] text-white text-xs font-bold px-3 py-1 rounded-full tracking-wider">
+                  {course.level}
                 </span>
-                <div className="flex items-center space-x-1">
-                  <Star className="w-4 h-4 text-amber-400 fill-amber-400" />
-                  <span className="font-bold text-black text-sm">4.9</span>
-                  <span className="text-black text-sm">(2.4k ratings)</span>
-                </div>
+                <span className="border border-[#1D9E75] text-[#1D9E75] text-xs font-bold px-3 py-1 rounded-full tracking-wider bg-white">
+                  {course.access}
+                </span>
               </div>
 
-              <h1 className="text-4xl md:text-5xl font-bold text-black leading-tight">
-                Advanced Digital Product Design for the <span className="text-black">African Market</span>
+              <h1 className="text-4xl md:text-5xl font-bold text-slate-900 leading-tight font-fraunces">
+                {course.title}
               </h1>
               
-              <p className="text-lg text-black max-w-2xl">
-                Learn to craft world-class digital experiences that respect infrastructure constraints while maintaining a premium aesthetic. Master Figma, Accessibility, and modern Frontend principles.
+              <p className="text-lg text-slate-700 max-w-2xl font-inter">
+                {course.description}
               </p>
 
-              <div className="flex flex-wrap items-center gap-6 text-sm text-black font-medium">
+              <div className="flex flex-wrap items-center gap-6 text-sm text-slate-700 font-medium font-inter">
                 <div className="flex items-center space-x-2">
-                  <Users className="w-5 h-5 text-black" />
-                  <span>12,450 Learners</span>
+                  <Briefcase className="w-5 h-5 text-[#1D9E75]" />
+                  <span>Output: {course.portfolioOutput}</span>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <span className="w-5 h-5 flex items-center justify-center text-black border border-emerald-400 rounded-full">🌐</span>
-                  <span>English, Swahili, French</span>
+                  <Clock className="w-5 h-5 text-[#1D9E75]" />
+                  <span>{course.duration}</span>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <Clock className="w-5 h-5 text-black" />
-                  <span>Last updated 10/2024</span>
+                  <PlayCircle className="w-5 h-5 text-[#1D9E75]" />
+                  <span>{course.modulesCount} Modules · {course.lessons} Lessons</span>
                 </div>
               </div>
 
               <div className="flex items-center space-x-4 pt-4">
-                <img src="https://i.pravatar.cc/150?img=47" alt="Instructor" className="w-12 h-12 rounded-full border-2 border-white shadow-md" />
+                <img src={course.authorAvatar} alt="Instructor" className="w-14 h-14 rounded-full border-2 border-[#1D9E75] shadow-sm" />
                 <div>
-                  <div className="text-xs text-black font-bold uppercase tracking-wider">Created By</div>
-                  <div className="font-bold text-black">Dr. Amina Kalu</div>
+                  <div className="text-xs text-slate-500 font-bold uppercase tracking-wider">Taught By</div>
+                  <div className="font-bold text-slate-900 text-lg">{course.author}</div>
                 </div>
               </div>
             </div>
 
             <div className="w-full lg:w-5/12 relative">
-              <div className="rounded-2xl overflow-hidden shadow-2xl relative border-4 border-white">
-                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Course Video Preview" className="w-full aspect-video object-cover" />
-                <div className="absolute inset-0 bg-emerald-950/30 flex items-center justify-center">
-                  <button className="w-16 h-16 bg-white/90 rounded-full flex items-center justify-center text-black hover:scale-110 transition-transform">
+              <div className="rounded-2xl overflow-hidden shadow-2xl relative border-4 border-white bg-slate-900">
+                <img src={course.image} alt="Course Preview" className="w-full aspect-video object-cover opacity-80" />
+                <div className="absolute inset-0 bg-[#1D9E75]/20 flex items-center justify-center">
+                  <button className="w-16 h-16 bg-white/95 rounded-full flex items-center justify-center text-[#1D9E75] hover:scale-105 transition-transform shadow-xl">
                     <Play className="w-8 h-8 ml-1" />
                   </button>
                 </div>
@@ -107,7 +98,7 @@ export default function CourseOverview({ view, setView }) {
         </section>
 
         {/* Content Section */}
-        <section className="py-16 px-8 md:px-16 w-full flex flex-col lg:flex-row gap-12">
+        <section className="py-16 px-4 md:px-16 w-full flex flex-col lg:flex-row gap-12 max-w-7xl mx-auto">
           
           {/* Main Column */}
           <div className="flex-1 space-y-16">
@@ -115,22 +106,15 @@ export default function CourseOverview({ view, setView }) {
             {/* What you will master */}
             <div>
               <div className="flex items-center space-x-3 mb-8">
-                <CheckCircle2 className="w-6 h-6 text-black" />
-                <h2 className="text-2xl font-bold text-black">What You Will Master</h2>
+                <CheckCircle2 className="w-6 h-6 text-[#1D9E75]" />
+                <h2 className="text-2xl font-bold text-slate-900 font-fraunces">What you will be able to do</h2>
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {[
-                  "Design high-converting landing pages tailored for African markets",
-                  "Master advanced typography and color theory for accessibility",
-                  "Build responsive layouts using modern CSS frameworks",
-                  "Understand low-bandwidth optimization techniques",
-                  "Create professional design portfolios that attract global clients",
-                  "Apply African-inspired visual elements in digital design"
-                ].map((item, idx) => (
-                  <div key={idx} className="flex space-x-3 bg-emerald-50 p-4 rounded-xl border border-emerald-100">
-                    <CheckCircle2 className="w-5 h-5 text-black flex-shrink-0 mt-0.5" />
-                    <span className="text-sm text-black leading-relaxed">{item}</span>
+                {course.objectives.map((item, idx) => (
+                  <div key={idx} className="flex space-x-3 bg-brand-light p-4 rounded-xl border border-[#1D9E75]/20">
+                    <CheckCircle2 className="w-5 h-5 text-[#1D9E75] flex-shrink-0 mt-0.5" />
+                    <span className="text-sm text-slate-800 leading-relaxed font-inter">{item}</span>
                   </div>
                 ))}
               </div>
@@ -140,129 +124,84 @@ export default function CourseOverview({ view, setView }) {
             <div>
               <div className="flex items-center justify-between mb-8">
                 <div className="flex items-center space-x-3">
-                  <PlayCircle className="w-6 h-6 text-black" />
-                  <h2 className="text-2xl font-bold text-black">Course Curriculum</h2>
+                  <PlayCircle className="w-6 h-6 text-[#1D9E75]" />
+                  <h2 className="text-2xl font-bold text-slate-900 font-fraunces">Course Curriculum</h2>
                 </div>
-                <div className="text-sm text-black">
-                  <span className="font-bold text-black">14 Modules</span> • 128 lectures • 24h total length
+                <div className="text-sm text-slate-600">
+                  <span className="font-bold text-slate-900">{course.modulesCount} Modules</span> • {course.duration}
                 </div>
               </div>
 
               <div className="space-y-4">
-                {curriculum.map((mod, idx) => (
-                  <div key={idx} className="border border-emerald-200 rounded-xl overflow-hidden">
+                {course.modules.map((mod, idx) => (
+                  <div key={idx} className="border border-[#1D9E75]/20 rounded-xl overflow-hidden bg-white shadow-sm">
                     <button 
-                      className={`w-full flex items-center justify-between p-5 text-left transition-colors ${activeModule === idx ? 'bg-emerald-50' : 'bg-white hover:bg-emerald-50'}`}
+                      className={`w-full flex items-center justify-between p-5 text-left transition-colors ${activeModule === idx ? 'bg-brand-light' : 'hover:bg-brand-light/50'}`}
                       onClick={() => setActiveModule(activeModule === idx ? null : idx)}
                     >
-                      <div>
-                        <h4 className="font-bold text-black">{mod.title}</h4>
-                        <div className="text-xs text-black font-medium mt-1">{mod.lessons}</div>
+                      <div className="flex-1">
+                        <div className="flex items-center space-x-3 mb-1">
+                          <h4 className="font-bold text-slate-900 text-lg font-fraunces">{mod.title}</h4>
+                          {mod.badge === 'Free' && <span className="bg-[#1D9E75]/10 text-[#1D9E75] text-xs font-bold px-2 py-0.5 rounded border border-[#1D9E75]/20">Free</span>}
+                          {mod.badge === 'Portfolio' && <span className="bg-purple-100 text-purple-700 text-xs font-bold px-2 py-0.5 rounded border border-purple-200">Portfolio</span>}
+                        </div>
+                        <div className="text-sm text-slate-600 font-medium font-inter">
+                          {mod.lessonsCount} • {mod.duration}
+                        </div>
                       </div>
-                      {activeModule === idx ? <ChevronUp className="w-5 h-5 text-black" /> : <ChevronDown className="w-5 h-5 text-black" />}
+                      {activeModule === idx ? <ChevronUp className="w-5 h-5 text-slate-400" /> : <ChevronDown className="w-5 h-5 text-slate-400" />}
                     </button>
                     
-                    {activeModule === idx && mod.items.length > 0 && (
-                      <div className="border-t border-emerald-100 bg-white p-2">
+                    {activeModule === idx && mod.items && (
+                      <div className="border-t border-[#1D9E75]/10 bg-white p-2">
+                        {mod.description && (
+                          <div className="p-4 mb-2 bg-purple-50 rounded-lg border border-purple-100 mx-2 mt-2">
+                            <h5 className="font-bold text-purple-900 text-sm mb-1">Learning by Creating — Portfolio Output</h5>
+                            <p className="text-sm text-purple-800 leading-relaxed">{mod.description}</p>
+                          </div>
+                        )}
                         {mod.items.map((item, iIdx) => (
-                          <div key={iIdx} className="flex items-center justify-between p-3 hover:bg-emerald-50 rounded-lg cursor-pointer" onClick={() => setView('CourseMaterial')}>
-                            <div className="flex items-center space-x-3">
-                              {item.type === 'video' ? <PlayCircle className="w-4 h-4 text-black" /> : <FileText className="w-4 h-4 text-black" />}
-                              <span className="text-sm text-black">{item.title}</span>
+                          <div key={iIdx} className="flex flex-col sm:flex-row sm:items-center justify-between p-3 hover:bg-slate-50 rounded-lg cursor-pointer group" onClick={() => setView('CourseMaterial')}>
+                            <div className="flex items-start sm:items-center space-x-3 mb-2 sm:mb-0">
+                              <div className={`p-2 rounded-full ${item.type === 'project' ? 'bg-purple-100 text-purple-600' : 'bg-brand-light text-[#1D9E75]'} group-hover:bg-[#1D9E75] group-hover:text-white transition-colors`}>
+                                {getIconForType(item.type)}
+                              </div>
+                              <div>
+                                <span className="text-sm font-medium text-slate-900 block">{item.title}</span>
+                                <span className="text-xs text-slate-500">{item.description}</span>
+                              </div>
                             </div>
-                            <span className="text-xs text-black font-medium">{item.duration}</span>
+                            <span className="text-xs text-slate-500 font-medium sm:ml-4">{item.duration}</span>
                           </div>
                         ))}
                       </div>
                     )}
                   </div>
                 ))}
-                
-                <button className="w-full py-4 border border-emerald-200 text-black font-bold rounded-xl hover:bg-emerald-50 transition-colors">
-                  View All 14 Modules
-                </button>
               </div>
             </div>
 
             {/* Instructor */}
-            <div className="bg-emerald-50 rounded-2xl p-8 border border-emerald-100 flex flex-col sm:flex-row gap-8 items-start">
-              <img src="https://i.pravatar.cc/150?img=47" alt="Instructor" className="w-24 h-24 rounded-full border-4 border-white shadow-md flex-shrink-0" />
+            <div className="bg-brand-light rounded-2xl p-8 border border-[#1D9E75]/20 flex flex-col sm:flex-row gap-8 items-start">
+              <img src={course.authorAvatar} alt="Instructor" className="w-24 h-24 rounded-full border-4 border-white shadow-md flex-shrink-0" />
               <div>
-                <h3 className="text-xl font-bold text-black">Dr. Amina Kalu</h3>
-                <p className="text-black font-medium text-sm mb-4">Chief Design Officer at TechSafari Africa</p>
-                <div className="flex items-center space-x-6 text-sm text-black mb-4">
+                <h3 className="text-xl font-bold text-slate-900 font-fraunces">{course.author}</h3>
+                <p className="text-slate-700 font-medium text-sm mb-4">Instructor at Uburiza Academy</p>
+                <div className="flex items-center space-x-6 text-sm text-slate-700 mb-4">
                   <div className="flex items-center space-x-1">
                     <Star className="w-4 h-4 text-amber-400 fill-amber-400" />
-                    <span className="font-bold text-black">4.9</span>
-                    <span>Instructor Rating</span>
+                    <span className="font-bold text-slate-900">4.9</span>
+                    <span>Rating</span>
                   </div>
                   <div className="flex items-center space-x-1">
-                    <Users className="w-4 h-4" />
-                    <span className="font-bold text-black">85k</span>
+                    <Users className="w-4 h-4 text-[#1D9E75]" />
+                    <span className="font-bold text-slate-900">12k</span>
                     <span>Students</span>
                   </div>
-                  <div className="flex items-center space-x-1">
-                    <PlayCircle className="w-4 h-4" />
-                    <span className="font-bold text-black">12</span>
-                    <span>Courses</span>
-                  </div>
                 </div>
-                <p className="text-black text-sm leading-relaxed italic">
-                  "My mission is to empower the next generation of African designers to create products that solve local problems with global standards. With over 15 years in the industry, I've led design teams across Lagos, Nairobi, and Cape Town."
+                <p className="text-slate-700 text-sm leading-relaxed italic font-inter">
+                  "I specialize in breaking down complex technological concepts into simple, everyday language. My goal is to equip African professionals with the practical AI skills they need to thrive without the confusing jargon."
                 </p>
-                <button className="mt-6 text-sm font-bold text-black border border-emerald-200 px-6 py-2 rounded-lg hover:bg-emerald-100 transition-colors">
-                  View Full Profile
-                </button>
-              </div>
-            </div>
-
-            {/* Testimonials */}
-            <div>
-              <h2 className="text-2xl font-bold text-black mb-8">What our learners say</h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {[1, 2, 3].map((i) => (
-                  <div key={i} className="bg-white border border-emerald-200 rounded-xl p-6 shadow-sm">
-                    <div className="flex items-center space-x-4 mb-4">
-                      <img src={`https://i.pravatar.cc/150?img=${i+12}`} alt="Student" className="w-10 h-10 rounded-full" />
-                      <div>
-                        <div className="font-bold text-black text-sm">Kofi A.</div>
-                        <div className="flex text-amber-400">
-                          {[1,2,3,4,5].map(s => <Star key={s} className="w-3 h-3 fill-amber-400" />)}
-                        </div>
-                      </div>
-                    </div>
-                    <p className="text-sm text-black italic">
-                      "This course changed how I view web design. The focus on low-bandwidth optimization is something you don't find elsewhere."
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* FAQ */}
-            <div>
-              <div className="text-center mb-10">
-                <h2 className="text-2xl font-bold text-black mb-2">Frequently Asked Questions</h2>
-                <p className="text-black">Everything you need to know about the course and the Uburiza platform.</p>
-              </div>
-              
-              <div className="max-w-3xl mx-auto space-y-4">
-                {['Is there a deadline to complete the course?', 'Can I download the videos for offline viewing?', 'Do I get a certificate after completion?'].map((q, idx) => (
-                  <div key={idx} className="border border-emerald-200 rounded-xl bg-white">
-                    <button 
-                      className="w-full flex items-center justify-between p-5 text-left font-medium text-black"
-                      onClick={() => setActiveFaq(activeFaq === idx ? null : idx)}
-                    >
-                      <span>{q}</span>
-                      {activeFaq === idx ? <ChevronUp className="w-5 h-5 text-black" /> : <ChevronDown className="w-5 h-5 text-black" />}
-                    </button>
-                    {activeFaq === idx && (
-                      <div className="p-5 pt-0 text-black text-sm leading-relaxed border-t border-emerald-100">
-                        Yes, absolutely. We understand that internet connectivity can be challenging, so all our video content and supplementary materials are available for offline download through our mobile app.
-                      </div>
-                    )}
-                  </div>
-                ))}
               </div>
             </div>
 
@@ -272,73 +211,53 @@ export default function CourseOverview({ view, setView }) {
           <div className="w-full lg:w-96 flex-shrink-0">
             <div className="sticky top-24 space-y-6">
               
-              {/* Pricing Card */}
-              <div className="bg-white border border-emerald-200 rounded-2xl shadow-xl overflow-hidden">
+              {/* Enrollment Card */}
+              <div className="bg-white border border-[#1D9E75]/20 rounded-2xl shadow-xl overflow-hidden">
                 <div className="p-8 pb-6">
-                  <div className="flex items-end space-x-3 mb-2">
-                    <span className="text-4xl font-black text-black">$49.99</span>
-                    <span className="text-lg text-black line-through mb-1">$120.99</span>
-                    <span className="bg-emerald-100 text-emerald-900 text-xs font-bold px-2 py-1 rounded mb-2">60% OFF</span>
-                  </div>
-                  <div className="text-sm text-black font-medium flex items-center space-x-1 mb-6">
-                    <Clock className="w-4 h-4" />
-                    <span>Offer ends in 14:24:05</span>
+                  <div className="flex items-center space-x-3 mb-6">
+                    <span className="text-4xl font-black text-[#1D9E75] font-fraunces">Free</span>
+                    <span className="bg-brand-light text-[#1D9E75] text-xs font-bold px-2 py-1 rounded">Open Access</span>
                   </div>
 
-                  <button className="w-full bg-emerald-800 text-white py-4 rounded-xl font-bold text-lg hover:bg-emerald-900 transition-colors mb-3 shadow-lg shadow-emerald-200" onClick={() => setView('CourseMaterial')}>
-                    Enroll Now
+                  <button className="w-full bg-[#1D9E75] text-white py-4 rounded-xl font-bold text-lg hover:bg-brand-dark transition-colors mb-3 shadow-lg shadow-[#1D9E75]/20" onClick={() => setView('CourseMaterial')}>
+                    Enroll for Free
                   </button>
-                  <button className="w-full bg-white text-black border border-emerald-200 py-3 rounded-xl font-bold hover:bg-emerald-50 transition-colors mb-6">
-                    Add to Cart
-                  </button>
+                  <p className="text-center text-xs text-slate-500 mb-6">Create a free account to track your progress.</p>
 
                   <div className="space-y-4">
-                    <div className="text-sm font-bold text-black">This course includes:</div>
+                    <div className="text-sm font-bold text-slate-900">This course includes:</div>
                     <ul className="space-y-3">
-                      <li className="flex items-center space-x-3 text-sm text-black">
-                        <PlayCircle className="w-4 h-4 text-black" />
-                        <span>24 hours on-demand video</span>
+                      <li className="flex items-center space-x-3 text-sm text-slate-700">
+                        <PlayCircle className="w-4 h-4 text-[#1D9E75]" />
+                        <span>{course.duration} on-demand video</span>
                       </li>
-                      <li className="flex items-center space-x-3 text-sm text-black">
-                        <FileText className="w-4 h-4 text-black" />
-                        <span>42 downloadable resources</span>
+                      <li className="flex items-center space-x-3 text-sm text-slate-700">
+                        <Briefcase className="w-4 h-4 text-[#1D9E75]" />
+                        <span>Build a {course.portfolioOutput}</span>
                       </li>
-                      <li className="flex items-center space-x-3 text-sm text-black">
-                        <Smartphone className="w-4 h-4 text-black" />
-                        <span>Access on mobile and TV</span>
+                      <li className="flex items-center space-x-3 text-sm text-slate-700">
+                        <Smartphone className="w-4 h-4 text-[#1D9E75]" />
+                        <span>Mobile-first & optimized</span>
                       </li>
-                      <li className="flex items-center space-x-3 text-sm text-black">
-                        <Award className="w-4 h-4 text-black" />
+                      <li className="flex items-center space-x-3 text-sm text-slate-700">
+                        <Award className="w-4 h-4 text-[#1D9E75]" />
                         <span>Certificate of completion</span>
                       </li>
                     </ul>
                   </div>
                 </div>
                 
-                <div className="bg-emerald-50 p-4 border-t border-emerald-100 flex items-center justify-between">
+                <div className="bg-slate-50 p-4 border-t border-slate-100 flex items-center justify-between">
                   <div className="flex space-x-3">
-                    <button className="text-black hover:text-emerald-700 transition-colors">
+                    <button className="text-slate-500 hover:text-[#1D9E75] transition-colors">
                       <Heart className="w-5 h-5" />
                     </button>
-                    <button className="text-black hover:text-gray-700 transition-colors">
+                    <button className="text-slate-500 hover:text-slate-800 transition-colors">
                       <Share2 className="w-5 h-5" />
                     </button>
                   </div>
-                  <button className="text-black text-sm font-bold hover:underline">
-                    Apply Coupon
-                  </button>
                 </div>
               </div>
-
-              {/* Guarantee */}
-              <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-6 flex items-start space-x-4">
-                <ShieldCheck className="w-8 h-8 text-black flex-shrink-0" />
-                <div>
-                  <h4 className="font-bold text-black mb-1">30-Day Money-Back</h4>
-                  <p className="text-xs text-black">Full refund if not satisfied.</p>
-                </div>
-              </div>
-
             </div>
           </div>
         </section>
@@ -354,17 +273,17 @@ export default function CourseOverview({ view, setView }) {
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -50 }}
-            className="fixed bottom-6 left-6 z-50 bg-white shadow-xl border border-emerald-200 rounded-lg p-4 flex items-center space-x-4 max-w-sm"
+            className="fixed bottom-6 left-6 z-50 bg-white shadow-xl border border-[#1D9E75]/20 rounded-lg p-4 flex items-center space-x-4 max-w-sm"
           >
             <div className="relative">
-              <img src="https://i.pravatar.cc/150?img=33" alt="User" className="w-10 h-10 rounded-full" />
-              <div className="absolute -bottom-1 -right-1 bg-emerald-500 rounded-full p-0.5 border-2 border-white">
+              <img src="https://i.pravatar.cc/150?img=33" alt="User" className="w-10 h-10 rounded-full border border-slate-200" />
+              <div className="absolute -bottom-1 -right-1 bg-[#1D9E75] rounded-full p-0.5 border-2 border-white">
                 <Activity className="w-3 h-3 text-white" />
               </div>
             </div>
             <div>
-              <p className="text-sm font-medium text-black">David from Lagos</p>
-              <p className="text-xs text-black">Just enrolled in this course</p>
+              <p className="text-sm font-medium text-slate-900 font-inter">A learner from Kigali</p>
+              <p className="text-xs text-slate-500 font-inter">Just enrolled in this course</p>
             </div>
           </motion.div>
         )}
