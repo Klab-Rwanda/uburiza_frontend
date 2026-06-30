@@ -1,14 +1,16 @@
 import React from 'react';
 import { BookOpen, LayoutDashboard, FileText, Settings, LogOut, ShieldCheck, BarChart2 } from 'lucide-react';
 import { useAppContext } from '../context/AppContext';
+import { useLogout } from '../api/hooks/useAuthMutations';
 
 export default function Sidebar({ view, setView }) {
-  const { userRole } = useAppContext();
+  const { userRole, setUser, setUserRole } = useAppContext();
+  const { handleLogout, isPending: isLoggingOut } = useLogout({ setView, setUser, setUserRole });
   const isAdmin = userRole === 'admin';
 
   const learnerItems = [
     { name: 'Overview', icon: LayoutDashboard, id: 'Dashboard' },
-    { name: 'Resources', icon: BookOpen, id: 'Resources' },
+    { name: 'My Courses', icon: BookOpen, id: 'MyCourses' },
     { name: 'Certificate', icon: FileText, id: 'Certificate' },
   ];
 
@@ -49,9 +51,13 @@ export default function Sidebar({ view, setView }) {
           <Settings className={`w-5 h-5 ${view === 'Settings' ? 'text-emerald-700' : 'text-gray-400'}`} />
           <span>Settings</span>
         </button>
-        <button onClick={() => setView('LandingPage')} className="w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-black hover:bg-slate-100 transition-colors">
+        <button
+          onClick={handleLogout}
+          disabled={isLoggingOut}
+          className="w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-black hover:bg-slate-100 transition-colors disabled:opacity-60"
+        >
           <LogOut className="w-5 h-5 text-black" />
-          <span>Log Out</span>
+          <span>{isLoggingOut ? 'Logging out...' : 'Log Out'}</span>
         </button>
       </div>
     </div>

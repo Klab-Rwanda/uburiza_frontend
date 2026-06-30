@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Sidebar from './components/Sidebar';
 import TopNav from './components/TopNav';
 import LearnerDashboard from './views/LearnerDashboard';
+import MyCourses from './views/MyCourses';
 import ResourceLibrary from './views/ResourceLibrary';
 import CertificateView from './views/CertificateView';
 import OperationalAnalytics from './views/OperationalAnalytics';
@@ -27,6 +28,8 @@ function AppContent() {
 
   const [pendingEmail, setPendingEmail] = useState('');
   const [resetParams, setResetParams] = useState({ token: '', email: '' });
+  const [editCourseId, setEditCourseId] = useState(null);
+  const [selectedLessonId, setSelectedLessonId] = useState(null);
 
   const setView = (newView) => {
     if (window.location.hash !== `#${newView}`) {
@@ -59,6 +62,8 @@ function AppContent() {
     switch(view) {
       case 'Dashboard':
         return <LearnerDashboard setView={setView} />;
+      case 'MyCourses':
+        return <MyCourses setView={setView} />;
       case 'Resources':
         return <ResourceLibrary setView={setView} />;
       case 'Certificate':
@@ -66,17 +71,17 @@ function AppContent() {
       case 'Analytics':
         return <OperationalAnalytics setView={setView} />;
       case 'AdminForms':
-        return <AdminManagementForms setView={setView} />;
+        return <AdminManagementForms setView={setView} editCourseId={editCourseId} onEditDone={() => setEditCourseId(null)} />;
       case 'Settings':
         return <SettingsView setView={setView} />;
       case 'LandingPage':
         return <LandingPage setView={setView} />;
       case 'CourseCatalog':
-        return <CourseCatalog setView={setView} />;
+        return <CourseCatalog setView={setView} onEditCourse={(id) => { setEditCourseId(id); setView('AdminForms'); }} />;
       case 'CourseOverview':
-        return <CourseOverview view={view} setView={setView} />;
+        return <CourseOverview view={view} setView={setView} onSelectLesson={(id) => { setSelectedLessonId(id); setView('CourseMaterial'); }} />;
       case 'CourseMaterial':
-        return <CourseMaterial view={view} setView={setView} />;
+        return <CourseMaterial view={view} setView={setView} lessonId={selectedLessonId} />;
       case 'Login':
         return <Login setView={setView} setPendingEmail={setPendingEmail} />;
       case 'Signup':

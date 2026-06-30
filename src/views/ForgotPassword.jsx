@@ -1,26 +1,33 @@
 import React, { useState } from 'react';
 import { Activity, Mail, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { forgotPassword } from '../api/auth';
+import { useForgotPasswordMutation } from '../api/hooks/useAuthMutations';
+import { getAuthErrorMessage } from '../api/auth-session';
 
 export default function ForgotPassword({ setView }) {
+  const forgotPasswordMutation = useForgotPasswordMutation();
+
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
-  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async () => {
-    if (!email) { setError('Please enter your email address'); return; }
-    setLoading(true);
-    setError('');
-    try {
-      const data = await forgotPassword({ email });
-      setMessage(data.message);
-    } catch (err) {
-      setError(err.error || 'Something went wrong. Please try again.');
-    } finally {
-      setLoading(false);
+  const handleSubmit = () => {
+    if (!email) {
+      setError('Please enter your email address');
+      return;
     }
+    setError('');
+    forgotPasswordMutation.mutate(
+      { email },
+      {
+        onSuccess: (data) => {
+          setMessage(data.message);
+        },
+        onError: (err) => {
+          setError(getAuthErrorMessage(err, 'Something went wrong. Please try again.'));
+        },
+      }
+    );
   };
 
   return (
@@ -72,11 +79,11 @@ export default function ForgotPassword({ setView }) {
 
             <button
               onClick={handleSubmit}
-              disabled={loading}
+              disabled={forgotPasswordMutation.isPending}
               className="w-full bg-emerald-600 hover:bg-emerald-700 disabled:opacity-60 text-white font-bold py-3 rounded-xl transition-all shadow-lg shadow-emerald-200 flex items-center justify-center space-x-2 group"
             >
-              <span>{loading ? 'Sending...' : 'Send Reset Link'}</span>
-              {!loading && <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />}
+              <span>{forgotPasswordMutation.isPending ? 'Sending...' : 'Send Reset Link'}</span>
+              {!forgotPasswordMutation.isPending && <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />}
             </button>
           </div>
         )}

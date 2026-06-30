@@ -1,42 +1,52 @@
 import React, { useState } from 'react';
 import { Activity, ArrowRight, RotateCcw } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { verifyEmail, resendVerification } from '../api/auth';
+import { useVerifyEmailMutation, useResendVerificationMutation } from '../api/hooks/useAuthMutations';
+import { getAuthErrorMessage, persistSession } from '../api/auth-session';
 import { useAppContext } from '../context/AppContext';
 
 export default function VerifyEmail({ setView, email }) {
-  const { setUserRole } = useAppContext();
+  const { setUser, setUserRole } = useAppContext();
+  const verifyMutation = useVerifyEmailMutation();
+  const resendMutation = useResendVerificationMutation();
+
   const [otp, setOtp] = useState('');
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
-  const [loading, setLoading] = useState(false);
 
-  const handleVerify = async () => {
-    if (!otp) { setError('Please enter the verification code'); return; }
-    setLoading(true);
-    setError('');
-    try {
-      const data = await verifyEmail({ email, otp });
-      localStorage.setItem('token', data.token);
-      localStorage.setItem('loggedInUser', JSON.stringify(data.user));
-      setUserRole(data.user.role.toLowerCase());
-      setView(data.user.role === 'ADMIN' ? 'Analytics' : 'Dashboard');
-    } catch (err) {
-      setError(err.error || 'Invalid or expired code');
-    } finally {
-      setLoading(false);
+  const handleVerify = () => {
+    if (!otp) {
+      setError('Please enter the verification code');
+      return;
     }
+    setError('');
+    verifyMutation.mutate(
+      { email, otp },
+      {
+        onSuccess: (data) => {
+          setView(persistSession(data, { setUser, setUserRole }));
+        },
+        onError: (err) => {
+          setError(getAuthErrorMessage(err, 'Invalid or expired code'));
+        },
+      }
+    );
   };
 
-  const handleResend = async () => {
+  const handleResend = () => {
     setError('');
     setMessage('');
-    try {
-      const data = await resendVerification({ email });
-      setMessage(data.message);
-    } catch (err) {
-      setError(err.error || 'Failed to resend code');
-    }
+    resendMutation.mutate(
+      { email },
+      {
+        onSuccess: (data) => {
+          setMessage(data.message);
+        },
+        onError: (err) => {
+          setError(getAuthErrorMessage(err, 'Failed to resend code'));
+        },
+      }
+    );
   };
 
   return (
@@ -77,19 +87,20 @@ export default function VerifyEmail({ setView, email }) {
 
           <button
             onClick={handleVerify}
-            disabled={loading}
+            disabled={verifyMutation.isPending}
             className="w-full bg-emerald-600 hover:bg-emerald-700 disabled:opacity-60 text-white font-bold py-3 rounded-xl transition-all shadow-lg shadow-emerald-200 flex items-center justify-center space-x-2 group"
           >
-            <span>{loading ? 'Verifying...' : 'Verify Email'}</span>
-            {!loading && <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />}
+            <span>{verifyMutation.isPending ? 'Verifying...' : 'Verify Email'}</span>
+            {!verifyMutation.isPending && <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />}
           </button>
 
           <button
             onClick={handleResend}
-            className="w-full flex items-center justify-center space-x-2 text-sm text-black hover:text-emerald-700 font-medium py-2"
+            disabled={resendMutation.isPending}
+            className="w-full flex items-center justify-center space-x-2 text-sm text-black hover:text-emerald-700 font-medium py-2 disabled:opacity-60"
           >
             <RotateCcw className="w-4 h-4" />
-            <span>Resend code</span>
+            <span>{resendMutation.isPending ? 'Sending...' : 'Resend code'}</span>
           </button>
         </div>
 

@@ -2,8 +2,11 @@ import React from 'react';
 import { Play, TrendingUp, Zap, ChevronRight, Clock, Award } from 'lucide-react';
 import { AreaChart, Area, ResponsiveContainer, YAxis, XAxis } from 'recharts';
 import { courses, upcomingEvents, mentors, activityData } from '../data/mockData';
+import { useAppContext } from '../context/AppContext';
 
 export default function LearnerDashboard({ setView }) {
+  const { user } = useAppContext();
+
   return (
     <div className="page p-8 mx-auto space-y-8">
       {/* Hero Section */}
@@ -13,7 +16,7 @@ export default function LearnerDashboard({ setView }) {
             Growth Mindset
           </div>
           <h1 className="text-4xl font-bold text-black">
-            Welcome back, Abebe! <span className="text-3xl">👋</span>
+            Welcome back, {user?.name || user?.username || 'there'}! <span className="text-3xl">👋</span>
           </h1>
           <p className="text-black max-w-md">
             You've completed 75% of your weekly goal. Keep it up to stay ahead of the curve!

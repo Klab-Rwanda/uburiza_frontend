@@ -4,7 +4,7 @@ import Footer from '../components/Footer';
 import { Star, Clock, Users, Play, CheckCircle2, ChevronDown, ChevronUp, PlayCircle, FileText, Smartphone, Award, Heart, Share2, ShieldCheck, HelpCircle, Activity } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-export default function CourseOverview({ view, setView }) {
+export default function CourseOverview({ view, setView, onSelectLesson }) {
   const [activeModule, setActiveModule] = useState(0);
   const [activeFaq, setActiveFaq] = useState(null);
   const [showToast, setShowToast] = useState(false);
@@ -165,7 +165,7 @@ export default function CourseOverview({ view, setView }) {
                     {activeModule === idx && mod.items.length > 0 && (
                       <div className="border-t border-emerald-100 bg-white p-2">
                         {mod.items.map((item, iIdx) => (
-                          <div key={iIdx} className="flex items-center justify-between p-3 hover:bg-emerald-50 rounded-lg cursor-pointer" onClick={() => setView('CourseMaterial')}>
+                          <div key={iIdx} className="flex items-center justify-between p-3 hover:bg-emerald-50 rounded-lg cursor-pointer" onClick={() => onSelectLesson ? onSelectLesson(item.id) : setView('CourseMaterial')}>
                             <div className="flex items-center space-x-3">
                               {item.type === 'video' ? <PlayCircle className="w-4 h-4 text-black" /> : <FileText className="w-4 h-4 text-black" />}
                               <span className="text-sm text-black">{item.title}</span>

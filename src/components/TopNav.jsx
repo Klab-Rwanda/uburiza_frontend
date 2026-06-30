@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { Bell, Search, Activity, Flame, Menu, X, ChevronDown, User, LayoutDashboard, Settings, LogOut, ShieldCheck } from 'lucide-react';
 import { useAppContext } from '../context/AppContext';
+import { useLogout } from '../api/hooks/useAuthMutations';
 
 export default function TopNav({ view, setView }) {
-  const { streak, userRole, setUserRole } = useAppContext();
+  const { streak, user, userRole, setUser, setUserRole } = useAppContext();
+  const { handleLogout, isPending: isLoggingOut } = useLogout({ setView, setUser, setUserRole });
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
   
@@ -22,13 +24,12 @@ export default function TopNav({ view, setView }) {
         <nav className="hidden md:flex space-x-6 text-sm font-medium">
           <button onClick={() => setView('CourseCatalog')} className={`${view === 'CourseCatalog' ? 'text-emerald-700 font-bold' : 'text-black hover:text-emerald-700 transition-colors'}`}>Courses</button>
           <button onClick={() => setView('Resources')} className={`${view === 'Resources' ? 'text-emerald-700 font-bold' : 'text-black hover:text-emerald-700 transition-colors'}`}>Resources</button>
-          {!isAdmin ? (
-            <button onClick={() => { setUserRole('admin'); setView('Analytics'); }} className="text-black hover:text-emerald-700 transition-colors flex items-center">
+          {!isAdmin && (
+            <button onClick={() => setView('Dashboard')} className={`${view === 'Dashboard' ? 'text-emerald-700 font-bold' : 'text-black hover:text-emerald-700 transition-colors'}`}>My Dashboard</button>
+          )}
+          {isAdmin && (
+            <button onClick={() => setView('Analytics')} className={`${view === 'Analytics' ? 'text-emerald-700 font-bold' : 'text-black hover:text-emerald-700 transition-colors'} flex items-center`}>
               <ShieldCheck className="w-4 h-4 mr-1" /> Admin
-            </button>
-          ) : (
-            <button onClick={() => { setUserRole('learner'); setView('Dashboard'); }} className="text-emerald-600 font-bold hover:text-emerald-800 transition-colors flex items-center">
-              <User className="w-4 h-4 mr-1" /> Learner View
             </button>
           )}
         </nav>
@@ -72,8 +73,8 @@ export default function TopNav({ view, setView }) {
             <div className="absolute right-0 top-full pt-2 w-48 z-50">
               <div className="bg-white border border-emerald-100 rounded-xl shadow-xl overflow-hidden">
                 <div className="p-3 border-b border-emerald-50 bg-emerald-50/50">
-                  <p className="text-sm font-bold text-black">Abebe Bikila</p>
-                  <p className="text-xs text-gray-500">{isAdmin ? 'Administrator' : 'Learner'}</p>
+                  <p className="text-sm font-bold text-black">{user?.name || user?.username || 'User'}</p>
+                  <p className="text-xs text-gray-500">{user?.email || (isAdmin ? 'Administrator' : 'Learner')}</p>
                 </div>
                 <div className="p-2 space-y-1">
                   <button 
@@ -92,11 +93,12 @@ export default function TopNav({ view, setView }) {
                   </button>
                   <div className="border-t border-emerald-50 my-1"></div>
                   <button 
-                    onClick={() => { setView('LandingPage'); setIsProfileDropdownOpen(false); }} 
-                    className="w-full flex items-center space-x-3 px-3 py-2 text-sm text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                    onClick={() => { handleLogout(); setIsProfileDropdownOpen(false); }} 
+                    disabled={isLoggingOut}
+                    className="w-full flex items-center space-x-3 px-3 py-2 text-sm text-red-600 hover:bg-red-50 rounded-lg transition-colors disabled:opacity-60"
                   >
                     <LogOut className="w-4 h-4 text-red-500" />
-                    <span>Log Out</span>
+                    <span>{isLoggingOut ? 'Logging out...' : 'Log Out'}</span>
                   </button>
                 </div>
               </div>
@@ -116,29 +118,32 @@ export default function TopNav({ view, setView }) {
           <div className="flex items-center space-x-4 mb-4 pb-4 border-b border-emerald-100">
             <img src="https://i.pravatar.cc/150?img=11" alt="Avatar" className="w-12 h-12 rounded-full border border-emerald-200" />
             <div>
-              <p className="font-bold text-black">Abebe Bikila</p>
-              <p className="text-xs text-emerald-600">{isAdmin ? 'Administrator' : 'Learner'}</p>
+              <p className="font-bold text-black">{user?.name || user?.username || 'User'}</p>
+              <p className="text-xs text-emerald-600">{user?.email || (isAdmin ? 'Administrator' : 'Learner')}</p>
             </div>
           </div>
           
-          <button onClick={() => { setView('CourseCatalog'); setIsMobileMenuOpen(false); }} className="text-left font-medium text-black py-3 px-4 rounded-lg hover:bg-emerald-50 transition-colors">Courses Catalog</button>
+          {!isAdmin ? (
+            <button onClick={() => { setView('CourseCatalog'); setIsMobileMenuOpen(false); }} className="text-left font-medium text-black py-3 px-4 rounded-lg hover:bg-emerald-50 transition-colors">Courses Catalog</button>
+          ) : (
+            <>
+              <button onClick={() => { setView('CourseCatalog'); setIsMobileMenuOpen(false); }} className="text-left font-medium text-black py-3 px-4 rounded-lg hover:bg-emerald-50 transition-colors">Courses Catalog</button>
+              <button onClick={() => { setView('Analytics'); setIsMobileMenuOpen(false); }} className="text-left font-medium text-black py-3 px-4 rounded-lg hover:bg-emerald-50 transition-colors flex items-center">
+                <ShieldCheck className="w-4 h-4 mr-2" /> Admin Dashboard
+              </button>
+            </>
+          )}
           <button onClick={() => { setView(isAdmin ? 'Analytics' : 'Dashboard'); setIsMobileMenuOpen(false); }} className="text-left font-medium text-black py-3 px-4 rounded-lg hover:bg-emerald-50 transition-colors">My Dashboard</button>
           <button onClick={() => { setView('Resources'); setIsMobileMenuOpen(false); }} className="text-left font-medium text-black py-3 px-4 rounded-lg hover:bg-emerald-50 transition-colors">Resources</button>
           <button onClick={() => { setView('Settings'); setIsMobileMenuOpen(false); }} className="text-left font-medium text-black py-3 px-4 rounded-lg hover:bg-emerald-50 transition-colors">Settings</button>
-          
-          {!isAdmin ? (
-            <button onClick={() => { setUserRole('admin'); setView('Analytics'); setIsMobileMenuOpen(false); }} className="text-left font-medium text-black py-3 px-4 rounded-lg hover:bg-emerald-50 transition-colors flex items-center">
-              <ShieldCheck className="w-4 h-4 mr-2" /> Switch to Admin
-            </button>
-          ) : (
-            <button onClick={() => { setUserRole('learner'); setView('Dashboard'); setIsMobileMenuOpen(false); }} className="text-left font-medium text-black py-3 px-4 rounded-lg hover:bg-emerald-50 transition-colors flex items-center">
-              <User className="w-4 h-4 mr-2" /> Switch to Learner
-            </button>
-          )}
 
           <div className="border-t border-emerald-100 my-2"></div>
-          <button onClick={() => { setView('LandingPage'); setIsMobileMenuOpen(false); }} className="text-left font-medium text-red-600 py-3 px-4 rounded-lg hover:bg-red-50 transition-colors flex items-center">
-            <LogOut className="w-4 h-4 mr-2" /> Log Out
+          <button
+            onClick={() => { handleLogout(); setIsMobileMenuOpen(false); }}
+            disabled={isLoggingOut}
+            className="text-left font-medium text-red-600 py-3 px-4 rounded-lg hover:bg-red-50 transition-colors flex items-center disabled:opacity-60"
+          >
+            <LogOut className="w-4 h-4 mr-2" /> {isLoggingOut ? 'Logging out...' : 'Log Out'}
           </button>
         </div>
       )}

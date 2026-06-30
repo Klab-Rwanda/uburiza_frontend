@@ -1,36 +1,42 @@
 import React, { useState } from 'react';
 import { Activity, Mail, Lock, User, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { useAppContext } from '../context/AppContext';
-import { register } from '../api/auth';
+import { useRegisterMutation } from '../api/hooks/useAuthMutations';
+import { getAuthErrorMessage } from '../api/auth-session';
 
 export default function Signup({ setView, setPendingEmail }) {
-  const { theme } = useAppContext();
-  
+  const registerMutation = useRegisterMutation();
+
   const [formData, setFormData] = useState({ name: '', username: '', email: '', password: '' });
   const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSignup = async () => {
+  const handleSignup = () => {
     if (!formData.name || !formData.username || !formData.email || !formData.password) {
       setError('Please fill in all fields');
       return;
     }
-    setLoading(true);
     setError('');
-    try {
-      await register({ name: formData.name, username: formData.username, email: formData.email, password: formData.password });
-      setPendingEmail(formData.email);
-      setView('VerifyEmail');
-    } catch (err) {
-      setError(err.error || 'Signup failed. Please try again.');
-    } finally {
-      setLoading(false);
-    }
+    registerMutation.mutate(
+      {
+        name: formData.name,
+        username: formData.username,
+        email: formData.email,
+        password: formData.password,
+      },
+      {
+        onSuccess: () => {
+          setPendingEmail(formData.email);
+          setView('VerifyEmail');
+        },
+        onError: (err) => {
+          setError(getAuthErrorMessage(err, 'Signup failed. Please try again.'));
+        },
+      }
+    );
   };
 
   return (
@@ -165,10 +171,10 @@ export default function Signup({ setView, setPendingEmail }) {
               <button 
                 className="w-full bg-emerald-600 hover:bg-emerald-700 disabled:opacity-60 text-white font-bold py-3 rounded-xl transition-all shadow-lg shadow-emerald-200 flex items-center justify-center space-x-2 group"
                 onClick={handleSignup}
-                disabled={loading}
+                disabled={registerMutation.isPending}
               >
-                <span>{loading ? 'Creating Account...' : 'Create Account'}</span>
-                {!loading && <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />}
+                <span>{registerMutation.isPending ? 'Creating Account...' : 'Create Account'}</span>
+                {!registerMutation.isPending && <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />}
               </button>
             </div>
             

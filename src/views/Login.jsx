@@ -2,42 +2,39 @@ import React, { useState } from 'react';
 import { Activity, Mail, Lock, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useAppContext } from '../context/AppContext';
-import { login } from '../api/auth';
+import { useLoginMutation } from '../api/hooks/useAuthMutations';
+import { getAuthErrorMessage, persistSession } from '../api/auth-session';
 
 export default function Login({ setView, setPendingEmail }) {
-  const { setUserRole } = useAppContext();
-  
+  const { setUser, setUserRole } = useAppContext();
+  const loginMutation = useLoginMutation();
+
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleLogin = async () => {
+  const handleLogin = () => {
     if (!formData.email || !formData.password) {
       setError('Please fill in all fields');
       return;
     }
-    setLoading(true);
     setError('');
-    try {
-      const data = await login(formData);
-      localStorage.setItem('token', data.token);
-      localStorage.setItem('loggedInUser', JSON.stringify(data.user));
-      setUserRole(data.user.role.toLowerCase());
-      setView(data.user.role === 'ADMIN' ? 'Analytics' : 'Dashboard');
-    } catch (err) {
-      if (err.error === 'Please verify your email first.') {
-        setPendingEmail(formData.email);
-        setView('VerifyEmail');
-        return;
-      }
-      setError(err.error || 'Invalid credentials');
-    } finally {
-      setLoading(false);
-    }
+    loginMutation.mutate(formData, {
+      onSuccess: (data) => {
+        setView(persistSession(data, { setUser, setUserRole }));
+      },
+      onError: (err) => {
+        if (err.error === 'Please verify your email first.') {
+          setPendingEmail(formData.email);
+          setView('VerifyEmail');
+          return;
+        }
+        setError(getAuthErrorMessage(err, 'Invalid credentials'));
+      },
+    });
   };
 
   return (
@@ -139,10 +136,10 @@ export default function Login({ setView, setPendingEmail }) {
             <button 
               className="w-full bg-emerald-600 hover:bg-emerald-700 disabled:opacity-60 text-white font-bold py-3 rounded-xl transition-all shadow-lg shadow-emerald-200 flex items-center justify-center space-x-2 group mt-2"
               onClick={handleLogin}
-              disabled={loading}
+              disabled={loginMutation.isPending}
             >
-              <span>{loading ? 'Logging in...' : 'Log In'}</span>
-              {!loading && <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />}
+              <span>{loginMutation.isPending ? 'Logging in...' : 'Log In'}</span>
+              {!loginMutation.isPending && <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />}
             </button>
           </div>
 

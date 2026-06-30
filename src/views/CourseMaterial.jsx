@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import TopNav from '../components/TopNav';
-import { ChevronDown, ChevronUp, PlayCircle, Headphones, Flag, CheckCircle, Maximize, Volume2, Settings, MessageSquare, ChevronRight, X, Bookmark } from 'lucide-react';
+import { ChevronDown, ChevronUp, PlayCircle, FileText, Headphones, Flag, CheckCircle, Maximize, Volume2, Settings, MessageSquare, ChevronRight, X, Bookmark } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useLesson } from '../api/hooks/useCourse';
 
-export default function CourseMaterial({ view, setView }) {
-  const [activeModule, setActiveModule] = useState(1); // 0-indexed, so 1 is Module 2
+export default function CourseMaterial({ view, setView, lessonId }) {
+  const [activeModule, setActiveModule] = useState(1);
   const [showDrawer, setShowDrawer] = useState(false);
   const [activeTab, setActiveTab] = useState('Overview');
   const [bookmarks, setBookmarks] = useState([]);
   const [videoTime, setVideoTime] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
+
+  const { data: lesson, isLoading } = useLesson(lessonId);
 
   // Mock video progress
   useEffect(() => {
@@ -145,37 +148,58 @@ export default function CourseMaterial({ view, setView }) {
 
             {/* Video Player Container */}
             <div className="relative w-full aspect-video bg-emerald-950 rounded-2xl overflow-hidden shadow-xl mb-4 group">
-              <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Video frame" className="w-full h-full object-cover opacity-80" />
-              
-              <div className="absolute inset-0 flex items-center justify-center">
-                <button 
-                  onClick={() => setIsPlaying(!isPlaying)}
-                  className="w-20 h-20 bg-emerald-800/90 rounded-full flex items-center justify-center text-white hover:scale-110 transition-transform shadow-2xl"
-                >
-                  {isPlaying ? <span className="w-6 h-6 bg-white mr-1"></span> : <PlayCircle className="w-10 h-10 ml-1" />}
-                </button>
-              </div>
+              {isLoading ? (
+                <div className="w-full h-full bg-emerald-200 animate-pulse" />
+              ) : lesson?.type === 'VIDEO' && lesson?.content_url ? (
+                <iframe
+                  src={lesson.content_url}
+                  className="w-full h-full"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              ) : lesson?.type === 'TEXT' ? (
+                <div className="w-full h-full flex items-center justify-center bg-emerald-50">
+                  <div className="text-center">
+                    <FileText className="w-16 h-16 text-emerald-400 mx-auto mb-3" />
+                    <p className="text-emerald-700 font-medium">Text Lesson</p>
+                  </div>
+                </div>
+              ) : (
+                <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Video frame" className="w-full h-full object-cover opacity-80" />
+              )}
 
-              {/* Video Controls overlay */}
-              <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-emerald-950/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
-                <div className="w-full bg-white/30 h-1 rounded-full mb-4 cursor-pointer">
-                  <div className={`bg-emerald-500 h-full rounded-full relative`} style={{ width: `${(videoTime / 2520) * 100}%` }}>
-                    <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full shadow"></div>
+              {/* overlay controls only for non-iframe */}
+              {(!lesson?.content_url || lesson?.type !== 'VIDEO') && (
+                <>
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <button
+                      onClick={() => setIsPlaying(!isPlaying)}
+                      className="w-20 h-20 bg-emerald-800/90 rounded-full flex items-center justify-center text-white hover:scale-110 transition-transform shadow-2xl"
+                    >
+                      {isPlaying ? <span className="w-6 h-6 bg-white mr-1"></span> : <PlayCircle className="w-10 h-10 ml-1" />}
+                    </button>
                   </div>
-                </div>
-                <div className="flex items-center justify-between text-white">
-                  <div className="flex items-center space-x-4">
-                    <button onClick={() => setIsPlaying(!isPlaying)}>{isPlaying ? <span className="w-4 h-4 bg-white block"></span> : <PlayCircle className="w-6 h-6" />}</button>
-                    <button><Volume2 className="w-5 h-5" /></button>
-                    <span className="text-sm font-medium">{formatTime(videoTime)} / 42:00</span>
+                  <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-emerald-950/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                    <div className="w-full bg-white/30 h-1 rounded-full mb-4 cursor-pointer">
+                      <div className="bg-emerald-500 h-full rounded-full relative" style={{ width: `${(videoTime / 2520) * 100}%` }}>
+                        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full shadow"></div>
+                      </div>
+                    </div>
+                    <div className="flex items-center justify-between text-white">
+                      <div className="flex items-center space-x-4">
+                        <button onClick={() => setIsPlaying(!isPlaying)}>{isPlaying ? <span className="w-4 h-4 bg-white block"></span> : <PlayCircle className="w-6 h-6" />}</button>
+                        <button><Volume2 className="w-5 h-5" /></button>
+                        <span className="text-sm font-medium">{formatTime(videoTime)} / {lesson?.duration_mins ? `${lesson.duration_mins}:00` : '42:00'}</span>
+                      </div>
+                      <div className="flex items-center space-x-4">
+                        <button onClick={addBookmark}><Bookmark className="w-5 h-5 hover:text-gray-300" /></button>
+                        <button><Settings className="w-5 h-5" /></button>
+                        <button><Maximize className="w-5 h-5" /></button>
+                      </div>
+                    </div>
                   </div>
-                  <div className="flex items-center space-x-4">
-                    <button onClick={addBookmark} title="Take Note at this Timestamp"><Bookmark className="w-5 h-5 hover:text-gray-700" /></button>
-                    <button><Settings className="w-5 h-5" /></button>
-                    <button><Maximize className="w-5 h-5" /></button>
-                  </div>
-                </div>
-              </div>
+                </>
+              )}
             </div>
             
             <div className="flex justify-end mb-6">
@@ -189,13 +213,13 @@ export default function CourseMaterial({ view, setView }) {
             <div className="flex flex-col lg:flex-row justify-between items-start gap-6 mb-8">
               <div>
                 <div className="inline-block border border-emerald-200 text-black bg-emerald-50/30 px-3 py-1 rounded-full text-xs font-bold mb-3">
-                  Module 2: Market Analysis
+                  {lesson?.type ?? 'VIDEO'}
                 </div>
-                <h1 className="text-3xl font-bold text-black mb-2">Identifying Target Markets in African Tech</h1>
+                <h1 className="text-3xl font-bold text-black mb-2">
+                  {isLoading ? 'Loading...' : lesson?.title ?? 'Lesson'}
+                </h1>
                 <div className="flex items-center space-x-2 text-black text-sm">
-                  <span>By <span className="font-bold text-black cursor-pointer">Dr. Kwame Osei</span></span>
-                  <span>•</span>
-                  <span>42 mins</span>
+                  {lesson?.duration_mins && <span>{lesson.duration_mins} mins</span>}
                 </div>
               </div>
 
@@ -238,11 +262,22 @@ export default function CourseMaterial({ view, setView }) {
               {activeTab === 'Overview' && (
                 <motion.div initial={{opacity:0}} animate={{opacity:1}}>
                   <h3 className="text-xl font-bold text-black mb-4">About this lesson</h3>
-                  <p className="text-black leading-relaxed max-w-3xl">
-                    In this lesson, we dive deep into the unique characteristics of African tech markets. We'll explore how to segment audiences based on connectivity, device usage, and cultural nuances rather than just traditional demographics. 
-                    <br/><br/>
-                    You'll learn practical frameworks for identifying beachhead markets in fragmented ecosystems and understanding the true addressable market for your digital products.
-                  </p>
+                  {isLoading ? (
+                    <div className="space-y-3">
+                      <div className="h-4 bg-emerald-100 rounded animate-pulse w-full" />
+                      <div className="h-4 bg-emerald-100 rounded animate-pulse w-4/5" />
+                      <div className="h-4 bg-emerald-100 rounded animate-pulse w-3/5" />
+                    </div>
+                  ) : (
+                    <p className="text-black leading-relaxed max-w-3xl whitespace-pre-line">
+                      {lesson?.description ?? 'No description available.'}
+                    </p>
+                  )}
+                  {lesson?.content_url && lesson?.type !== 'VIDEO' && (
+                    <a href={lesson.content_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 mt-6 bg-[#1e4c31] text-white px-5 py-2.5 rounded-lg text-sm font-semibold hover:bg-emerald-900">
+                      <FileText className="w-4 h-4" /> Open Content
+                    </a>
+                  )}
                 </motion.div>
               )}
 

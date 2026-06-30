@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import { Activity, Lock, ArrowRight, Eye, EyeOff } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { resetPassword } from '../api/auth';
+import { useResetPasswordMutation } from '../api/hooks/useAuthMutations';
+import { getAuthErrorMessage } from '../api/auth-session';
 
 export default function ResetPassword({ setView, token, email }) {
+  const resetPasswordMutation = useResetPasswordMutation();
+
   const [formData, setFormData] = useState({ password: '', confirmPassword: '' });
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
-  const [loading, setLoading] = useState(false);
 
   if (!token || !email) {
     return (
@@ -23,7 +25,7 @@ export default function ResetPassword({ setView, token, email }) {
     );
   }
 
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
     if (!formData.password || !formData.confirmPassword) {
       setError('Please fill in all fields');
       return;
@@ -36,16 +38,18 @@ export default function ResetPassword({ setView, token, email }) {
       setError('Passwords do not match');
       return;
     }
-    setLoading(true);
     setError('');
-    try {
-      const data = await resetPassword({ email, token, password: formData.password });
-      setMessage(data.message);
-    } catch (err) {
-      setError(err.error || 'Failed to reset password. The link may have expired.');
-    } finally {
-      setLoading(false);
-    }
+    resetPasswordMutation.mutate(
+      { email, token, password: formData.password },
+      {
+        onSuccess: (data) => {
+          setMessage(data.message);
+        },
+        onError: (err) => {
+          setError(getAuthErrorMessage(err, 'Failed to reset password. The link may have expired.'));
+        },
+      }
+    );
   };
 
   return (
@@ -125,11 +129,11 @@ export default function ResetPassword({ setView, token, email }) {
 
             <button
               onClick={handleSubmit}
-              disabled={loading}
+              disabled={resetPasswordMutation.isPending}
               className="w-full bg-emerald-600 hover:bg-emerald-700 disabled:opacity-60 text-white font-bold py-3 rounded-xl transition-all shadow-lg shadow-emerald-200 flex items-center justify-center space-x-2 group"
             >
-              <span>{loading ? 'Resetting...' : 'Reset Password'}</span>
-              {!loading && <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />}
+              <span>{resetPasswordMutation.isPending ? 'Resetting...' : 'Reset Password'}</span>
+              {!resetPasswordMutation.isPending && <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />}
             </button>
           </div>
         )}

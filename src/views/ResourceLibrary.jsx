@@ -1,8 +1,44 @@
-import React from 'react';
-import { Filter, Search, Download, FileText, FileSpreadsheet, File, Video, ArrowRight, Activity } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import { Filter, Search, Download, FileText, FileSpreadsheet, File, Video, ArrowRight, Activity, MoreVertical, Edit2, Trash2, Globe } from 'lucide-react';
 import { resources } from '../data/mockData';
+import { useAppContext } from '../context/AppContext';
+import { useUpdateCourse, useDeleteCourse } from '../api/hooks/useCourse';
 
-export default function ResourceLibrary() {
+function CardMenu({ onEdit, onDelete, onPublish }) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef(null);
+
+  useEffect(() => {
+    function handler(e) { if (ref.current && !ref.current.contains(e.target)) setOpen(false); }
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, []);
+
+  return (
+    <div className="relative" ref={ref}>
+      <button onClick={(e) => { e.stopPropagation(); setOpen((o) => !o); }} className="p-1.5 rounded-lg hover:bg-slate-100 text-gray-500 hover:text-black transition-colors">
+        <MoreVertical className="w-4 h-4" />
+      </button>
+      {open && (
+        <div className="absolute right-0 top-8 bg-white border border-slate-200 rounded-xl shadow-lg z-20 w-36 py-1">
+          <button onClick={(e) => { e.stopPropagation(); setOpen(false); onEdit?.(); }} className="w-full flex items-center gap-2 px-4 py-2 text-sm text-black hover:bg-emerald-50">
+            <Edit2 className="w-3.5 h-3.5" /> Edit
+          </button>
+          <button onClick={(e) => { e.stopPropagation(); setOpen(false); onPublish?.(); }} className="w-full flex items-center gap-2 px-4 py-2 text-sm text-black hover:bg-emerald-50">
+            <Globe className="w-3.5 h-3.5" /> Publish
+          </button>
+          <button onClick={(e) => { e.stopPropagation(); setOpen(false); onDelete?.(); }} className="w-full flex items-center gap-2 px-4 py-2 text-sm text-red-500 hover:bg-red-50">
+            <Trash2 className="w-3.5 h-3.5" /> Delete
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default function ResourceLibrary({ setView }) {
+  const { userRole } = useAppContext();
+  const isAdmin = userRole === 'admin';
   const getIcon = (type) => {
     switch(type) {
       case 'PDF': return <FileText className="w-6 h-6" />;
@@ -83,13 +119,22 @@ export default function ResourceLibrary() {
         {/* Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {resources.map(resource => (
-            <div key={resource.id} className="bg-white border border-emerald-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition-all group flex flex-col h-full">
+            <div key={resource.id} className="bg-white border border-emerald-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition-all group flex flex-col h-full relative">
               <div className="flex justify-between items-start mb-4">
                 <div className={`p-3 rounded-xl ${resource.bgIcon} ${resource.iconColor}`}>
                   {getIcon(resource.type)}
                 </div>
-                <div className="bg-emerald-50 text-black text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wide">
-                  {resource.type}
+                <div className="flex items-center gap-2">
+                  <div className="bg-emerald-50 text-black text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wide">
+                    {resource.type}
+                  </div>
+                  {isAdmin && (
+                    <CardMenu
+                      onEdit={() => setView('AdminForms')}
+                      onPublish={() => {}}
+                      onDelete={() => {}}
+                    />
+                  )}
                 </div>
               </div>
               
