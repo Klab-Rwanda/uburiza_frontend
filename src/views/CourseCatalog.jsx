@@ -8,7 +8,7 @@ import { useAppContext } from '../context/AppContext';
 
 const LEVELS = ['BEGINNER', 'INTERMEDIATE', 'ADVANCED'];
 
-function CardMenu({ onEdit, onDelete, onPublish }) {
+function CardMenu({ onEdit, onDelete, onPublish, onUnpublish, published }) {
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
 
@@ -20,17 +20,27 @@ function CardMenu({ onEdit, onDelete, onPublish }) {
 
   return (
     <div className="relative" ref={ref}>
-      <button onClick={(e) => { e.stopPropagation(); setOpen((o) => !o); }} className="p-1.5 rounded-lg hover:bg-white/80 text-white hover:text-black transition-colors">
+      <button
+        onClick={(e) => { e.stopPropagation(); setOpen((o) => !o); }}
+        className="p-1.5 rounded-lg bg-black/30 hover:bg-black/50 text-white transition-colors"
+      >
         <MoreVertical className="w-4 h-4" />
       </button>
       {open && (
-        <div className="absolute right-0 top-8 bg-white border border-slate-200 rounded-xl shadow-lg z-20 w-36 py-1">
+        <div className="absolute right-0 top-8 bg-white border border-slate-200 rounded-xl shadow-lg z-20 w-40 py-1">
           <button onClick={(e) => { e.stopPropagation(); setOpen(false); onEdit?.(); }} className="w-full flex items-center gap-2 px-4 py-2 text-sm text-black hover:bg-emerald-50">
             <Edit2 className="w-3.5 h-3.5" /> Edit
           </button>
-          <button onClick={(e) => { e.stopPropagation(); setOpen(false); onPublish?.(); }} className="w-full flex items-center gap-2 px-4 py-2 text-sm text-black hover:bg-emerald-50">
-            <Globe className="w-3.5 h-3.5" /> Publish
-          </button>
+          {!published ? (
+            <button onClick={(e) => { e.stopPropagation(); setOpen(false); onPublish?.(); }} className="w-full flex items-center gap-2 px-4 py-2 text-sm text-emerald-700 hover:bg-emerald-50">
+              <Globe className="w-3.5 h-3.5" /> Publish
+            </button>
+          ) : (
+            <button onClick={(e) => { e.stopPropagation(); setOpen(false); onUnpublish?.(); }} className="w-full flex items-center gap-2 px-4 py-2 text-sm text-amber-600 hover:bg-amber-50">
+              <Globe className="w-3.5 h-3.5" /> Unpublish
+            </button>
+          )}
+          <div className="my-1 border-t border-slate-100" />
           <button onClick={(e) => { e.stopPropagation(); setOpen(false); onDelete?.(); }} className="w-full flex items-center gap-2 px-4 py-2 text-sm text-red-500 hover:bg-red-50">
             <Trash2 className="w-3.5 h-3.5" /> Delete
           </button>
@@ -233,12 +243,17 @@ export default function CourseCatalog({ setView, onEditCourse, onSelectCourse })
                         }`}>
                           {course.price ? `$${course.price}` : 'Free'}
                         </span>
+                        {isAdmin && !course.published && (
+                          <span className="text-xs font-bold px-2 py-1 rounded-md bg-yellow-400 text-yellow-900">Draft</span>
+                        )}
                       </div>
                       {isAdmin && (
                         <div className="absolute top-3 right-3">
                           <CardMenu
+                            published={course.published}
                             onEdit={() => onEditCourse(course.id)}
-                            onPublish={() => updateCourse.mutate({ id: course.id, published: !course.published })}
+                            onPublish={() => updateCourse.mutate({ id: course.id, published: true })}
+                            onUnpublish={() => updateCourse.mutate({ id: course.id, published: false })}
                             onDelete={() => { if (confirm('Delete this course?')) deleteCourse.mutate(course.id); }}
                           />
                         </div>

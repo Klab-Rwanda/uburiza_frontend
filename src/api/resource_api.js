@@ -1,25 +1,36 @@
 import api from './api_config';
 
 export const listResources = (params) => api.get('/resources', { params });
-export const createResource = (data) => {
+
+function appendIfPresent(form, key, value) {
+  if (value === undefined || value === null || value === '') return;
+  form.append(key, value instanceof File ? value : String(value));
+}
+
+function buildResourceFormData(data) {
   const form = new FormData();
-  form.append('title', data.title);
-  form.append('description', data.description ?? '');
-  form.append('category', data.category);
-  form.append('type', data.type);
-  if (data.course_id) form.append('course_id', data.course_id);
+  appendIfPresent(form, 'title', data.title);
+  appendIfPresent(form, 'category', data.category);
+  appendIfPresent(form, 'type', data.type);
+  appendIfPresent(form, 'description', data.description);
+  appendIfPresent(form, 'courseId', data.courseId ?? data.course_id);
+  appendIfPresent(form, 'file_url', data.file_url);
   if (data.file) form.append('file', data.file);
-  if (data.file_url) form.append('file_url', data.file_url);
-  return api.post('/resources', form);
-};
+  return form;
+}
+
+export const uploadResource = (data) => api.post('/resources', buildResourceFormData(data));
+export const createResource = (data) => uploadResource(data);
+
 export const updateResource = ({ id, ...data }) => {
   const form = new FormData();
-  if (data.title) form.append('title', data.title);
-  if (data.description !== undefined) form.append('description', data.description);
-  if (data.category) form.append('category', data.category);
-  if (data.type) form.append('type', data.type);
+  appendIfPresent(form, 'title', data.title);
+  appendIfPresent(form, 'description', data.description);
+  appendIfPresent(form, 'category', data.category);
+  appendIfPresent(form, 'type', data.type);
+  appendIfPresent(form, 'courseId', data.courseId ?? data.course_id);
+  appendIfPresent(form, 'file_url', data.file_url);
   if (data.file) form.append('file', data.file);
-  if (data.file_url) form.append('file_url', data.file_url);
   return api.put(`/resources/${id}`, form);
 };
 export const deleteResource = (id) => api.delete(`/resources/${id}`);

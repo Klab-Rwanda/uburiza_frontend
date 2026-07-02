@@ -3,10 +3,9 @@ import { Bell, Search, Activity, Flame, Menu, X, ChevronDown, User, LayoutDashbo
 import { useAppContext } from '../context/AppContext';
 import { useLogout } from '../api/hooks/useAuthMutations';
 
-export default function TopNav({ view, setView }) {
+export default function TopNav({ view, setView, sidebarOpen, setSidebarOpen }) {
   const { streak, user, userRole, setUser, setUserRole } = useAppContext();
   const { handleLogout, isPending: isLoggingOut } = useLogout({ setView, setUser, setUserRole });
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
   
   const isAdmin = userRole === 'admin';
@@ -108,45 +107,10 @@ export default function TopNav({ view, setView }) {
       </div>
 
       <div className="md:hidden flex items-center space-x-4">
-        <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="text-black">
-          {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+        <button onClick={() => setSidebarOpen(!sidebarOpen)} className="text-black">
+          {sidebarOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
       </div>
-
-      {isMobileMenuOpen && (
-        <div className="absolute top-16 left-0 right-0 bg-white border-b border-emerald-200 p-6 shadow-xl flex flex-col space-y-2 md:hidden z-50 animate-in slide-in-from-top-2">
-          <div className="flex items-center space-x-4 mb-4 pb-4 border-b border-emerald-100">
-            <img src="https://i.pravatar.cc/150?img=11" alt="Avatar" className="w-12 h-12 rounded-full border border-emerald-200" />
-            <div>
-              <p className="font-bold text-black">{user?.name || user?.username || 'User'}</p>
-              <p className="text-xs text-emerald-600">{user?.email || (isAdmin ? 'Administrator' : 'Learner')}</p>
-            </div>
-          </div>
-          
-          {!isAdmin ? (
-            <button onClick={() => { setView('CourseCatalog'); setIsMobileMenuOpen(false); }} className="text-left font-medium text-black py-3 px-4 rounded-lg hover:bg-emerald-50 transition-colors">Courses Catalog</button>
-          ) : (
-            <>
-              <button onClick={() => { setView('CourseCatalog'); setIsMobileMenuOpen(false); }} className="text-left font-medium text-black py-3 px-4 rounded-lg hover:bg-emerald-50 transition-colors">Courses Catalog</button>
-              <button onClick={() => { setView('Analytics'); setIsMobileMenuOpen(false); }} className="text-left font-medium text-black py-3 px-4 rounded-lg hover:bg-emerald-50 transition-colors flex items-center">
-                <ShieldCheck className="w-4 h-4 mr-2" /> Admin Dashboard
-              </button>
-            </>
-          )}
-          <button onClick={() => { setView(isAdmin ? 'Analytics' : 'Dashboard'); setIsMobileMenuOpen(false); }} className="text-left font-medium text-black py-3 px-4 rounded-lg hover:bg-emerald-50 transition-colors">My Dashboard</button>
-          <button onClick={() => { setView('Resources'); setIsMobileMenuOpen(false); }} className="text-left font-medium text-black py-3 px-4 rounded-lg hover:bg-emerald-50 transition-colors">Resources</button>
-          <button onClick={() => { setView('Settings'); setIsMobileMenuOpen(false); }} className="text-left font-medium text-black py-3 px-4 rounded-lg hover:bg-emerald-50 transition-colors">Settings</button>
-
-          <div className="border-t border-emerald-100 my-2"></div>
-          <button
-            onClick={() => { handleLogout(); setIsMobileMenuOpen(false); }}
-            disabled={isLoggingOut}
-            className="text-left font-medium text-red-600 py-3 px-4 rounded-lg hover:bg-red-50 transition-colors flex items-center disabled:opacity-60"
-          >
-            <LogOut className="w-4 h-4 mr-2" /> {isLoggingOut ? 'Logging out...' : 'Log Out'}
-          </button>
-        </div>
-      )}
     </header>
   );
 }

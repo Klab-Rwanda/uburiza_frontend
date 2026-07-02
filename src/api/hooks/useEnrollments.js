@@ -33,7 +33,17 @@ export function useAdminStats() {
   return useQuery({
     queryKey: ['adminStats'],
     queryFn: enrollmentApi.getAdminStats,
-    select: (data) => data.stats,
+    select: (data) => ({
+      ...data,
+      total_learners: data.totalUsers ?? 0,
+      active_courses: data.activeUsers ?? 0,
+      total_revenue: data.revenue?.total ?? 0,
+      paid_enrollments: data.revenue?.paidEnrollments ?? 0,
+      pending_payments: data.revenue?.pendingPayments ?? 0,
+      recent_enrollments: data.recent_enrollments ?? [],
+      monthly_chart: data.monthly_chart ?? [],
+      total_lessons: data.total_lessons ?? 0,
+    }),
   });
 }
 

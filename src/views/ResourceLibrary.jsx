@@ -168,14 +168,18 @@ function CardMenu({ onEdit, onDelete }) {
   }, []);
   return (
     <div className="relative" ref={ref}>
-      <button onClick={(e) => { e.stopPropagation(); setOpen((o) => !o); }} className="p-1.5 rounded-lg hover:bg-slate-100 text-gray-500 hover:text-black transition-colors">
+      <button
+        onClick={(e) => { e.stopPropagation(); setOpen((o) => !o); }}
+        className="p-1.5 rounded-lg hover:bg-slate-100 text-slate-400 hover:text-slate-700 transition-colors"
+      >
         <MoreVertical className="w-4 h-4" />
       </button>
       {open && (
-        <div className="absolute right-0 top-8 bg-white border border-slate-200 rounded-xl shadow-lg z-20 w-32 py-1">
+        <div className="absolute right-0 top-8 bg-white border border-slate-200 rounded-xl shadow-lg z-20 w-36 py-1">
           <button onClick={(e) => { e.stopPropagation(); setOpen(false); onEdit(); }} className="w-full flex items-center gap-2 px-4 py-2 text-sm text-black hover:bg-emerald-50">
             <Edit2 className="w-3.5 h-3.5" /> Edit
           </button>
+          <div className="my-1 border-t border-slate-100" />
           <button onClick={(e) => { e.stopPropagation(); setOpen(false); onDelete(); }} className="w-full flex items-center gap-2 px-4 py-2 text-sm text-red-500 hover:bg-red-50">
             <Trash2 className="w-3.5 h-3.5" /> Delete
           </button>
@@ -183,6 +187,16 @@ function CardMenu({ onEdit, onDelete }) {
       )}
     </div>
   );
+}
+
+function getDisplayType(resource) {
+  const mime = resource.file_type ?? '';
+  if (mime.includes('pdf')) return 'PDF';
+  if (mime.includes('word') || mime.includes('msword')) return 'DOC';
+  if (mime.includes('powerpoint') || mime.includes('presentation')) return 'PPT';
+  if (mime.startsWith('video/')) return 'VIDEO';
+  if (mime.startsWith('image/')) return 'IMG';
+  return resource.type ?? 'FILE';
 }
 
 function TypeIcon({ type }) {
@@ -306,10 +320,10 @@ export default function ResourceLibrary({ setView }) {
               <div key={resource.id} className="bg-white border border-emerald-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition-all flex flex-col h-full">
                 <div className="flex justify-between items-start mb-4">
                   <div className="p-3 rounded-xl bg-emerald-50 text-emerald-600">
-                    <TypeIcon type={resource.type} />
+                    <TypeIcon type={getDisplayType(resource)} />
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="bg-emerald-50 text-black text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wide">{resource.type}</span>
+                    <span className="bg-emerald-50 text-black text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wide">{getDisplayType(resource)}</span>
                     {isAdmin && (
                       <CardMenu
                         onEdit={() => { setStepperError(''); setStepper({ mode: 'edit', resource }); }}

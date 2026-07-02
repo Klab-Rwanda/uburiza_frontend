@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Filter, Users, BookOpen, TrendingUp, FileText, Plus, Upload, MoreVertical, Search } from 'lucide-react';
 import { AreaChart, Area, ResponsiveContainer, YAxis, XAxis } from 'recharts';
-import { useCourses } from '../api/hooks/useCourse';
 import { useAdminStats } from '../api/hooks/useEnrollments';
 
 const PAGE_SIZE = 10;
@@ -11,7 +10,6 @@ export default function OperationalAnalytics({ setView }) {
   const [page, setPage] = useState(1);
 
   const { data: stats, isLoading: statsLoading } = useAdminStats();
-  const { data: courses, isLoading: coursesLoading } = useCourses({ published: true });
 
   const enrollments = stats?.recent_enrollments ?? [];
   const chartData = stats?.monthly_chart ?? [];
@@ -24,10 +22,10 @@ export default function OperationalAnalytics({ setView }) {
   const paginated = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
   const metrics = [
-    { icon: Users, label: 'Total Learners', value: stats?.total_learners ?? '—' },
-    { icon: BookOpen, label: 'Active Courses', value: stats?.active_courses ?? courses?.length ?? '—' },
-    { icon: TrendingUp, label: 'Platform Revenue', value: stats?.total_revenue != null ? `$${Number(stats.total_revenue).toLocaleString()}` : '—' },
-    { icon: FileText, label: 'Content Assets', value: stats?.total_lessons ?? '—' },
+    { icon: Users, label: 'Total Learners', value: stats?.totalUsers ?? '—' },
+    { icon: BookOpen, label: 'Total Courses', value: stats?.totalCourses ?? '—' },
+    { icon: TrendingUp, label: 'Platform Revenue', value: stats?.revenue?.total != null ? `${Number(stats.revenue.total).toLocaleString()} RWF` : '—' },
+    { icon: FileText, label: 'Completed Courses', value: stats?.completedCourses ?? '—' },
   ];
 
   return (
@@ -106,7 +104,7 @@ export default function OperationalAnalytics({ setView }) {
                 <Plus className="w-5 h-5 mr-2" /> Launch New Course
               </button>
               <button onClick={() => setView('ResourceUpload')} className="w-full bg-white hover:bg-emerald-50 border border-emerald-300 text-[#1e4c31] py-3 px-4 rounded-xl font-medium flex items-center justify-center transition-colors">
-                <Upload className="w-5 h-5 mr-2" /> Upload Bulk Resources
+                <Upload className="w-5 h-5 mr-2" /> Open Resource Builder
               </button>
             </div>
             <div className="mt-8">

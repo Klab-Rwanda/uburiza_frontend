@@ -25,4 +25,4 @@ export const markLessonComplete = async ({ lessonId }) => {
   }
 };
 export const getCourseProgress = (courseId) => api.get(`/progress/${courseId}`);
-export const getAdminStats = () => api.get('/admin/stats');
+export const getAdminStats = () => api.get('/admin/analytics');

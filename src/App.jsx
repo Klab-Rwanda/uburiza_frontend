@@ -4,6 +4,7 @@ import TopNav from './components/TopNav';
 import LearnerDashboard from './views/LearnerDashboard';
 import MyCourses from './views/MyCourses';
 import ResourceLibrary from './views/ResourceLibrary';
+import ResourceUpload from './views/ResourceUpload';
 import CertificateView from './views/CertificateView';
 import OperationalAnalytics from './views/OperationalAnalytics';
 import AdminManagementForms from './views/AdminManagementForms';
@@ -96,7 +97,7 @@ function AppContent() {
       case 'Resources':
         return <ResourceLibrary setView={setView} />;
       case 'ResourceUpload':
-        return <ResourceLibrary setView={setView} uploadMode />;
+        return <ResourceUpload setView={setView} />;
       case 'Certificate':
         return <CertificateView setView={setView} />;
       case 'Analytics':
@@ -157,11 +158,13 @@ function AppContent() {
     );
   }
 
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
   return (
     <div className="flex flex-col font-sans overflow-hidden bg-white h-screen transition-colors duration-300">
-      <TopNav view={view} setView={setView} />
+      <TopNav view={view} setView={setView} sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
       <div className="flex flex-1 overflow-hidden relative">
-        <Sidebar view={view} setView={setView} />
+        <Sidebar view={view} setView={setView} sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
         <main className="flex-1 overflow-y-auto">
           <AnimatePresence mode="wait">
             <motion.div
