@@ -214,8 +214,9 @@ export default function ResourceLibrary({ setView }) {
 
   const [search, setSearch] = useState('');
   const [activeFilter, setActiveFilter] = useState('All');
-  const [stepper, setStepper] = useState(null); // null | { mode: 'create' } | { mode: 'edit', resource }
+  const [stepper, setStepper] = useState(null);
   const [stepperError, setStepperError] = useState('');
+  const [confirm, setConfirm] = useState(null); // { id }
 
   const params = activeFilter !== 'All' ? { type: activeFilter } : {};
   const { data: resources = [], isLoading } = useResources(params);
@@ -243,8 +244,7 @@ export default function ResourceLibrary({ setView }) {
   }
 
   async function handleDelete(id) {
-    if (!window.confirm('Delete this resource?')) return;
-    await deleteResource.mutateAsync(id);
+    setConfirm({ id });
   }
 
   const saving = createResource.isPending || updateResource.isPending;
@@ -259,6 +259,24 @@ export default function ResourceLibrary({ setView }) {
           saving={saving}
           error={stepperError}
         />
+      )}
+
+      {confirm && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+          <div className="bg-white rounded-2xl shadow-xl p-6 w-full max-w-sm mx-4">
+            <h3 className="text-lg font-bold text-black mb-2">Delete Resource</h3>
+            <p className="text-sm text-gray-600 mb-6">Are you sure you want to <span className="font-semibold text-black">delete this resource</span>? This action cannot be undone.</p>
+            <div className="flex justify-end space-x-3">
+              <button onClick={() => setConfirm(null)} className="px-4 py-2 text-sm font-medium border border-emerald-200 rounded-lg hover:bg-emerald-50 text-black">Cancel</button>
+              <button
+                onClick={async () => { await deleteResource.mutateAsync(confirm.id); setConfirm(null); }}
+                className="px-4 py-2 text-sm font-medium rounded-lg text-white bg-red-600 hover:bg-red-700"
+              >
+                Confirm
+              </button>
+            </div>
+          </div>
+        </div>
       )}
 
       <div className="p-8 mx-auto space-y-8 flex-grow w-full">

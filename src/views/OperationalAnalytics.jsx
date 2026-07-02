@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Filter, Users, BookOpen, TrendingUp, FileText, Plus, Upload, MoreVertical, Search } from 'lucide-react';
 import { AreaChart, Area, ResponsiveContainer, YAxis, XAxis } from 'recharts';
 import { useAdminStats } from '../api/hooks/useEnrollments';
@@ -8,6 +8,20 @@ const PAGE_SIZE = 10;
 export default function OperationalAnalytics({ setView }) {
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
+  const [openMenu, setOpenMenu] = useState(null);
+  const [confirm, setConfirm] = useState(null); // { enrollmentId, action, label }
+  const menuRef = useRef(null);
+
+  useEffect(() => {
+    const handler = (e) => { if (menuRef.current && !menuRef.current.contains(e.target)) setOpenMenu(null); };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, []);
+
+  const handleAction = (enrollmentId, action, label) => {
+    setOpenMenu(null);
+    setConfirm({ enrollmentId, action, label });
+  };
 
   const { data: stats, isLoading: statsLoading } = useAdminStats();
 
@@ -187,9 +201,17 @@ export default function OperationalAnalytics({ setView }) {
                     </span>
                   </td>
                   <td className="py-4 px-4 text-right">
-                    <button className="text-black hover:text-gray-700">
-                      <MoreVertical className="w-5 h-5" />
-                    </button>
+                    <div className="relative inline-block" ref={openMenu === e.id ? menuRef : null}>
+                      <button onClick={() => setOpenMenu(openMenu === e.id ? null : e.id)} className="text-black hover:text-gray-700">
+                        <MoreVertical className="w-5 h-5" />
+                      </button>
+                      {openMenu === e.id && (
+                        <div className="absolute right-0 mt-1 w-44 bg-white border border-emerald-200 rounded-xl shadow-lg z-10 py-1">
+                          <button onClick={() => handleAction(e.id, 'suspend', 'Suspend Learner')} className="w-full text-left px-4 py-2 text-sm text-black hover:bg-emerald-50">Suspend Learner</button>
+                          <button onClick={() => handleAction(e.id, 'unenroll', 'Unenroll Learner')} className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50">Unenroll Learner</button>
+                        </div>
+                      )}
+                    </div>
                   </td>
                 </tr>
               ))}
@@ -205,6 +227,29 @@ export default function OperationalAnalytics({ setView }) {
           </div>
         </div>
       </div>
+      {/* Confirmation Modal */}
+      {confirm && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+          <div className="bg-white rounded-2xl shadow-xl p-6 w-full max-w-sm mx-4">
+            <h3 className="text-lg font-bold text-black mb-2">{confirm.label}</h3>
+            <p className="text-sm text-gray-600 mb-6">Are you sure you want to <span className="font-semibold text-black">{confirm.label.toLowerCase()}</span>? This action cannot be undone.</p>
+            <div className="flex justify-end space-x-3">
+              <button onClick={() => setConfirm(null)} className="px-4 py-2 text-sm font-medium border border-emerald-200 rounded-lg hover:bg-emerald-50 text-black">Cancel</button>
+              <button
+                onClick={() => {
+                  // TODO: call API with confirm.enrollmentId and confirm.action
+                  setConfirm(null);
+                }}
+                className={`px-4 py-2 text-sm font-medium rounded-lg text-white ${
+                  confirm.action === 'unenroll' ? 'bg-red-600 hover:bg-red-700' : 'bg-[#1e4c31] hover:bg-emerald-900'
+                }`}
+              >
+                Confirm
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

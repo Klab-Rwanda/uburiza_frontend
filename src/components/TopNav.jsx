@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
-import { Bell, Search, Activity, Flame, Menu, X, ChevronDown, User, LayoutDashboard, Settings, LogOut, ShieldCheck } from 'lucide-react';
+import { Bell, Search, Activity, Flame, Menu, X, ChevronDown, LayoutDashboard, Settings, LogOut, ShieldCheck } from 'lucide-react';
 import { useAppContext } from '../context/AppContext';
 import { useLogout } from '../api/hooks/useAuthMutations';
+import { useMyProfile } from '../api/hooks/useProfile';
 
 export default function TopNav({ view, setView, sidebarOpen, setSidebarOpen }) {
   const { streak, user, userRole, setUser, setUserRole } = useAppContext();
   const { handleLogout, isPending: isLoggingOut } = useLogout({ setView, setUser, setUserRole });
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
-  
+  const { data: profile } = useMyProfile();
+
   const isAdmin = userRole === 'admin';
+  const avatarSrc = profile?.picture_url ?? `https://i.pravatar.cc/150?img=11`;
+  const displayName = profile ? `${profile.first_name} ${profile.last_name}`.trim() : (user?.name ?? 'User');
 
   return (
     <header className="bg-white border-b border-emerald-200 h-16 flex items-center justify-between px-8 sticky top-0 z-10 transition-colors duration-300">
@@ -61,7 +65,7 @@ export default function TopNav({ view, setView, sidebarOpen, setSidebarOpen }) {
         >
           <div className="flex items-center space-x-2">
             <div className="relative">
-              <img src="https://i.pravatar.cc/150?img=11" alt="Avatar" className="w-8 h-8 rounded-full border border-emerald-200" />
+              <img src={avatarSrc} alt="Avatar" className="w-8 h-8 rounded-full border border-emerald-200 object-cover" />
               <div className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 border-2 border-white rounded-full"></div>
             </div>
             <ChevronDown className="w-4 h-4 text-gray-500 group-hover:text-black transition-colors" />
@@ -72,7 +76,7 @@ export default function TopNav({ view, setView, sidebarOpen, setSidebarOpen }) {
             <div className="absolute right-0 top-full pt-2 w-48 z-50">
               <div className="bg-white border border-emerald-100 rounded-xl shadow-xl overflow-hidden">
                 <div className="p-3 border-b border-emerald-50 bg-emerald-50/50">
-                  <p className="text-sm font-bold text-black">{user?.name || user?.username || 'User'}</p>
+                  <p className="text-sm font-bold text-black">{displayName}</p>
                   <p className="text-xs text-gray-500">{user?.email || (isAdmin ? 'Administrator' : 'Learner')}</p>
                 </div>
                 <div className="p-2 space-y-1">

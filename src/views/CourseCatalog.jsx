@@ -59,6 +59,14 @@ export default function CourseCatalog({ setView, onEditCourse, onSelectCourse })
   const [search, setSearch] = useState('');
   const [selectedLevel, setSelectedLevel] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
+  const [confirm, setConfirm] = useState(null); // { courseId, action, label }
+
+  const handleConfirm = () => {
+    if (confirm.action === 'delete') deleteCourse.mutate(confirm.courseId);
+    else if (confirm.action === 'publish') updateCourse.mutate({ id: confirm.courseId, published: true });
+    else if (confirm.action === 'unpublish') updateCourse.mutate({ id: confirm.courseId, published: false });
+    setConfirm(null);
+  };
 
   const { data: courses = [], isLoading, isError } = useCourses({
     ...(selectedLevel && { level: selectedLevel }),
@@ -252,9 +260,9 @@ export default function CourseCatalog({ setView, onEditCourse, onSelectCourse })
                           <CardMenu
                             published={course.published}
                             onEdit={() => onEditCourse(course.id)}
-                            onPublish={() => updateCourse.mutate({ id: course.id, published: true })}
-                            onUnpublish={() => updateCourse.mutate({ id: course.id, published: false })}
-                            onDelete={() => { if (confirm('Delete this course?')) deleteCourse.mutate(course.id); }}
+                            onPublish={() => setConfirm({ courseId: course.id, action: 'publish', label: 'Publish Course' })}
+                            onUnpublish={() => setConfirm({ courseId: course.id, action: 'unpublish', label: 'Unpublish Course' })}
+                            onDelete={() => setConfirm({ courseId: course.id, action: 'delete', label: 'Delete Course' })}
                           />
                         </div>
                       )}
@@ -338,6 +346,30 @@ export default function CourseCatalog({ setView, onEditCourse, onSelectCourse })
       </main>
 
       <Footer />
+
+      {confirm && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+          <div className="bg-white rounded-2xl shadow-xl p-6 w-full max-w-sm mx-4">
+            <h3 className="text-lg font-bold text-black mb-2">{confirm.label}</h3>
+            <p className="text-sm text-gray-600 mb-6">
+              Are you sure you want to <span className="font-semibold text-black">{confirm.label.toLowerCase()}</span>? This action cannot be undone.
+            </p>
+            <div className="flex justify-end space-x-3">
+              <button onClick={() => setConfirm(null)} className="px-4 py-2 text-sm font-medium border border-emerald-200 rounded-lg hover:bg-emerald-50 text-black">Cancel</button>
+              <button
+                onClick={handleConfirm}
+                className={`px-4 py-2 text-sm font-medium rounded-lg text-white ${
+                  confirm.action === 'delete' ? 'bg-red-600 hover:bg-red-700' :
+                  confirm.action === 'unpublish' ? 'bg-amber-500 hover:bg-amber-600' :
+                  'bg-[#1e4c31] hover:bg-emerald-900'
+                }`}
+              >
+                Confirm
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

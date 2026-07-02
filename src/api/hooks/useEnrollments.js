@@ -33,6 +33,7 @@ export function useAdminStats() {
   return useQuery({
     queryKey: ['adminStats'],
     queryFn: enrollmentApi.getAdminStats,
+    enabled: !!localStorage.getItem('token'),
     select: (data) => ({
       ...data,
       total_learners: data.totalUsers ?? 0,

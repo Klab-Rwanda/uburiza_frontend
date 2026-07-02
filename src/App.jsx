@@ -51,8 +51,10 @@ function AppContent() {
   const [selectedLessonId, setSelectedLessonId] = useState(null);
   const [selectedCourseId, setSelectedCourseId] = useState(null);
   const [paymentCourse, setPaymentCourse] = useState(null);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const setView = (newView) => {
+    setViewInternal(newView);
     if (window.location.hash !== `#${newView}`) {
       window.location.hash = newView;
     }
@@ -157,8 +159,6 @@ function AppContent() {
       </div>
     );
   }
-
-  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
     <div className="flex flex-col font-sans overflow-hidden bg-white h-screen transition-colors duration-300">

@@ -1,10 +1,17 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import * as authApi from '../auth';
 import queryClient from '../query-client';
 import { clearSession } from '../auth-session';
 
 export function useLoginMutation() {
-  return useMutation({ mutationFn: authApi.login });
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: authApi.login,
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ['adminStats'] });
+      qc.invalidateQueries({ queryKey: ['myProfile'] });
+    },
+  });
 }
 
 export function useRegisterMutation() {
