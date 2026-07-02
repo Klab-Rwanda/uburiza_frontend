@@ -184,18 +184,6 @@ function QuizStep({ modules, courseId, createLesson, updateLesson }) {
         </div>
       </div>
 
-      {/* Selector */}
-      <div className="mb-8 max-w-2xl">
-        <Field label="Quiz Lesson">
-          <select className={inputCls} value={selected} onChange={(e) => { setSelected(e.target.value); setError(''); }}>
-            <option value="__new__">+ Create new quiz lesson</option>
-            {quizLessons.map((l) => (
-              <option key={l.id} value={l.id}>{l.moduleName} — {l.title}</option>
-            ))}
-          </select>
-        </Field>
-      </div>
-
       {loadingLesson ? (
         <p className="text-sm text-gray-400">Loading quiz data...</p>
       ) : (
@@ -300,6 +288,7 @@ export default function AdminManagementForms({ setView, editCourseId, onEditDone
   const [step, setStep] = useState(0);
   const [courseId, setCourseId] = useState(editCourseId ?? null);
   const [courseForm, setCourseForm] = useState(emptyCourse);
+  const [thumbnailFile, setThumbnailFile] = useState(null);
   const [courseError, setCourseError] = useState('');
   const [prefilled, setPrefilled] = useState(false);
 
@@ -322,13 +311,14 @@ export default function AdminManagementForms({ setView, editCourseId, onEditDone
       setCourseForm({
         title: course.title ?? '',
         description: course.description ?? '',
-        thumbnail_url: course.thumbnail_url ?? '',
+        thumbnail_url: course.image_url ?? '',
         price: course.price ?? '',
         category: course.category ?? '',
         level: course.level ?? 'BEGINNER',
         published: course.published ?? false,
         isPaid: !!course.price,
       });
+      setThumbnailFile(null);
       setPrefilled(true);
     }
   }, [course, editCourseId, prefilled]);
@@ -351,16 +341,29 @@ export default function AdminManagementForms({ setView, editCourseId, onEditDone
     setCourseForm((f) => ({ ...f, [name]: type === 'checkbox' ? checked : value }));
   }
 
+  function handleThumbnailChange(e) {
+    const file = e.target.files?.[0] ?? null;
+    setThumbnailFile(file);
+    setCourseForm((f) => ({
+      ...f,
+      thumbnail_url: file ? file.name : f.thumbnail_url,
+    }));
+  }
+
   async function handleCourseNext() {
     if (!courseForm.title.trim()) return setCourseError('Title is required.');
+    if (!courseForm.description.trim()) return setCourseError('Description is required.');
+    if (!courseForm.category.trim()) return setCourseError('Category is required.');
+    if (courseForm.isPaid && !courseForm.price) return setCourseError('Price is required for paid courses.');
     setCourseError('');
     try {
       const payload = {
         title: courseForm.title,
-        description: courseForm.description || undefined,
-        thumbnail_url: courseForm.thumbnail_url || undefined,
-        price: courseForm.isPaid && courseForm.price ? parseFloat(courseForm.price) : null,
-        category: courseForm.category || undefined,
+        description: courseForm.description,
+        imageFile: thumbnailFile,
+        price: courseForm.isPaid ? parseFloat(courseForm.price) : undefined,
+        is_free: !courseForm.isPaid,
+        category: courseForm.category,
         level: courseForm.level,
         published: courseForm.published,
       };
@@ -686,8 +689,18 @@ export default function AdminManagementForms({ setView, editCourseId, onEditDone
                       />
                     </div>
                   </div>
-                  <Field label="Thumbnail URL">
-                    <input name="thumbnail_url" value={courseForm.thumbnail_url} onChange={handleCourseChange} placeholder="https://..." className={inputCls} />
+                  <Field label="Thumbnail Upload" required>
+                    <div className="space-y-3">
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={handleThumbnailChange}
+                        className="block w-full text-sm text-black file:mr-4 file:rounded-lg file:border-0 file:bg-emerald-600 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-white hover:file:bg-emerald-700"
+                      />
+                      <p className="text-xs text-gray-500">
+                        {thumbnailFile ? `Selected file: ${thumbnailFile.name}` : courseForm.thumbnail_url ? `Current thumbnail: ${courseForm.thumbnail_url}` : 'Upload an image for the course thumbnail.'}
+                      </p>
+                    </div>
                   </Field>
                   <div className="flex items-center space-x-3">
                     <input type="checkbox" id="published" name="published" checked={courseForm.published} onChange={handleCourseChange} className="w-4 h-4 accent-[#1e4c31]" />
@@ -800,8 +813,8 @@ export default function AdminManagementForms({ setView, editCourseId, onEditDone
                   <div className="space-y-8 max-w-3xl">
                     {/* Hero */}
                     <div className="rounded-2xl overflow-hidden border border-emerald-100 bg-emerald-50 p-8 flex flex-col md:flex-row gap-8">
-                      {course.thumbnail_url && (
-                        <img src={course.thumbnail_url} alt={course.title} className="w-full md:w-56 h-36 object-cover rounded-xl flex-shrink-0" />
+                      {course.image_url && (
+                        <img src={course.image_url} alt={course.title} className="w-full md:w-56 h-36 object-cover rounded-xl flex-shrink-0" />
                       )}
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-3">

@@ -1,5 +1,5 @@
 import React from 'react';
-import { BookOpen, LayoutDashboard, FileText, Settings, LogOut, ShieldCheck, BarChart2 } from 'lucide-react';
+import { BookOpen, LayoutDashboard, FileText, Settings, LogOut, Library, BarChart2 } from 'lucide-react';
 import { useAppContext } from '../context/AppContext';
 import { useLogout } from '../api/hooks/useAuthMutations';
 
@@ -17,47 +17,64 @@ export default function Sidebar({ view, setView }) {
   const adminItems = [
     { name: 'Analytics', icon: BarChart2, id: 'Analytics' },
     { name: 'Courses', icon: BookOpen, id: 'AdminForms' },
-    { name: 'Security', icon: ShieldCheck, id: 'Security' }
+    { name: 'Resources', icon: Library, id: 'Resources' },
   ];
 
   const items = isAdmin ? adminItems : learnerItems;
 
   return (
-    <div className="hidden lg:flex w-64 bg-white border-r border-emerald-200 flex-col justify-between h-full overflow-y-auto">
-      <div className="p-6">
-        <nav className="space-y-2">
+    <div className="hidden lg:flex group/sidebar w-16 hover:w-56 bg-white border-r border-emerald-200 flex-col justify-between h-full overflow-y-auto overflow-x-hidden transition-all duration-300 ease-in-out flex-shrink-0">
+      <div className="p-3">
+        <nav className="space-y-1">
           {items.map((item) => {
             const isActive = view === item.id;
             return (
               <button
                 key={item.name}
                 onClick={() => setView(item.id)}
-                className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${
-                  isActive 
-                    ? 'bg-emerald-100 text-[#1e4c31] font-bold' 
-                    : 'text-gray-500 hover:bg-emerald-50 hover:text-gray-700'
+                title={item.name}
+                className={`w-full flex items-center gap-3 px-3 py-3 rounded-lg transition-colors ${
+                  isActive
+                    ? 'bg-emerald-100 text-[#1e4c31] font-bold'
+                    : 'text-gray-400 hover:bg-emerald-50 hover:text-[#1e4c31]'
                 }`}
               >
-                <item.icon className={`w-5 h-5 ${isActive ? 'text-emerald-700' : 'text-gray-400'}`} />
-                <span>{item.name}</span>
+                <item.icon className={`w-5 h-5 flex-shrink-0 ${isActive ? 'text-emerald-700' : ''}`} />
+                <span className="text-sm whitespace-nowrap opacity-0 group-hover/sidebar:opacity-100 transition-opacity duration-200 overflow-hidden">
+                  {item.name}
+                </span>
               </button>
-            )
+            );
           })}
         </nav>
       </div>
 
-      <div className="p-6 border-t border-emerald-200 space-y-2">
-        <button onClick={() => setView('Settings')} className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${view === 'Settings' ? 'bg-emerald-100 text-[#1e4c31] font-bold' : 'text-gray-500 hover:bg-emerald-50 hover:text-gray-700'}`}>
-          <Settings className={`w-5 h-5 ${view === 'Settings' ? 'text-emerald-700' : 'text-gray-400'}`} />
-          <span>Settings</span>
+      <div className="p-3 border-t border-emerald-200 space-y-1">
+        <button
+          onClick={() => setView('Settings')}
+          title="Settings"
+          className={`w-full flex items-center gap-3 px-3 py-3 rounded-lg transition-colors ${
+            view === 'Settings'
+              ? 'bg-emerald-100 text-[#1e4c31] font-bold'
+              : 'text-gray-400 hover:bg-emerald-50 hover:text-[#1e4c31]'
+          }`}
+        >
+          <Settings className={`w-5 h-5 flex-shrink-0 ${view === 'Settings' ? 'text-emerald-700' : ''}`} />
+          <span className="text-sm whitespace-nowrap opacity-0 group-hover/sidebar:opacity-100 transition-opacity duration-200 overflow-hidden">
+            Settings
+          </span>
         </button>
+
         <button
           onClick={handleLogout}
           disabled={isLoggingOut}
-          className="w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-black hover:bg-slate-100 transition-colors disabled:opacity-60"
+          title="Log Out"
+          className="w-full flex items-center gap-3 px-3 py-3 rounded-lg text-gray-400 hover:bg-red-50 hover:text-red-600 transition-colors disabled:opacity-60"
         >
-          <LogOut className="w-5 h-5 text-black" />
-          <span>{isLoggingOut ? 'Logging out...' : 'Log Out'}</span>
+          <LogOut className="w-5 h-5 flex-shrink-0" />
+          <span className="text-sm whitespace-nowrap opacity-0 group-hover/sidebar:opacity-100 transition-opacity duration-200 overflow-hidden">
+            {isLoggingOut ? 'Logging out...' : 'Log Out'}
+          </span>
         </button>
       </div>
     </div>

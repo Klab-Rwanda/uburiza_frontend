@@ -40,7 +40,7 @@ function CardMenu({ onEdit, onDelete, onPublish }) {
   );
 }
 
-export default function CourseCatalog({ setView, onEditCourse }) {
+export default function CourseCatalog({ setView, onEditCourse, onSelectCourse }) {
   const { userRole } = useAppContext();
   const isAdmin = userRole === 'admin';
   const deleteCourse = useDeleteCourse();
@@ -217,7 +217,7 @@ export default function CourseCatalog({ setView, onEditCourse }) {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: idx * 0.05, duration: 0.4 }}
                     className="bg-white border border-emerald-200 rounded-2xl overflow-hidden hover:shadow-xl transition-all flex flex-col group cursor-pointer"
-                    onClick={() => setView('CourseOverview')}
+                    onClick={() => onSelectCourse ? onSelectCourse(course.id) : setView('CourseOverview')}
                   >
                     <div className="relative h-48 overflow-hidden bg-emerald-100">
                       {course.thumbnail_url

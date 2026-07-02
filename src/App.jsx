@@ -11,6 +11,7 @@ import LandingPage from './views/LandingPage';
 import CourseCatalog from './views/CourseCatalog';
 import CourseOverview from './views/CourseOverview';
 import CourseMaterial from './views/CourseMaterial';
+import PaymentPage from './views/PaymentPage';
 import Login from './views/Login';
 import Signup from './views/Signup';
 import SettingsView from './views/SettingsView';
@@ -20,16 +21,35 @@ import ResetPassword from './views/ResetPassword';
 import { AppProvider } from './context/AppContext';
 import { AnimatePresence, motion } from 'framer-motion';
 
+function getInitialRoute() {
+  const params = new URLSearchParams(window.location.search);
+  const token = params.get('token');
+  const email = params.get('email');
+
+  if (token && email && window.location.pathname.includes('reset-password')) {
+    return {
+      view: 'ResetPassword',
+      resetParams: { token, email },
+    };
+  }
+
+  return {
+    view: window.location.hash.replace('#', '') || 'LandingPage',
+    resetParams: { token: '', email: '' },
+  };
+}
+
 function AppContent() {
-  const [view, setViewInternal] = useState(() => {
-    const hash = window.location.hash.replace('#', '');
-    return hash || 'LandingPage';
-  });
+  const initialRoute = getInitialRoute();
+
+  const [view, setViewInternal] = useState(() => initialRoute.view);
 
   const [pendingEmail, setPendingEmail] = useState('');
-  const [resetParams, setResetParams] = useState({ token: '', email: '' });
+  const [resetParams, setResetParams] = useState(() => initialRoute.resetParams);
   const [editCourseId, setEditCourseId] = useState(null);
   const [selectedLessonId, setSelectedLessonId] = useState(null);
+  const [selectedCourseId, setSelectedCourseId] = useState(null);
+  const [paymentCourse, setPaymentCourse] = useState(null);
 
   const setView = (newView) => {
     if (window.location.hash !== `#${newView}`) {
@@ -45,7 +65,6 @@ function AppContent() {
     if (token && email && window.location.pathname.includes('reset-password')) {
       setResetParams({ token, email });
       setViewInternal('ResetPassword');
-      window.history.replaceState({}, '', '/');
       return;
     }
 
@@ -55,17 +74,29 @@ function AppContent() {
     };
     window.addEventListener('hashchange', handleHashChange);
     handleHashChange();
-    return () => window.removeEventListener('hashchange', handleHashChange);
+
+    const handleSelectLesson = (e) => {
+      setSelectedLessonId(e.detail);
+      setViewInternal('CourseMaterial');
+    };
+    window.addEventListener('selectLesson', handleSelectLesson);
+
+    return () => {
+      window.removeEventListener('hashchange', handleHashChange);
+      window.removeEventListener('selectLesson', handleSelectLesson);
+    };
   }, []);
 
   const renderView = () => {
     switch(view) {
       case 'Dashboard':
-        return <LearnerDashboard setView={setView} />;
+        return <LearnerDashboard setView={setView} onSelectCourse={(id) => { setSelectedCourseId(id); setView('CourseOverview'); }} />;
       case 'MyCourses':
-        return <MyCourses setView={setView} />;
+        return <MyCourses setView={setView} onSelectCourse={(id) => { setSelectedCourseId(id); setView('CourseOverview'); }} />;
       case 'Resources':
         return <ResourceLibrary setView={setView} />;
+      case 'ResourceUpload':
+        return <ResourceLibrary setView={setView} uploadMode />;
       case 'Certificate':
         return <CertificateView setView={setView} />;
       case 'Analytics':
@@ -77,11 +108,13 @@ function AppContent() {
       case 'LandingPage':
         return <LandingPage setView={setView} />;
       case 'CourseCatalog':
-        return <CourseCatalog setView={setView} onEditCourse={(id) => { setEditCourseId(id); setView('AdminForms'); }} />;
+        return <CourseCatalog setView={setView} onEditCourse={(id) => { setEditCourseId(id); setView('AdminForms'); }} onSelectCourse={(id) => { setSelectedCourseId(id); setView('CourseOverview'); }} />;
       case 'CourseOverview':
-        return <CourseOverview view={view} setView={setView} onSelectLesson={(id) => { setSelectedLessonId(id); setView('CourseMaterial'); }} />;
+        return <CourseOverview view={view} setView={setView} courseId={selectedCourseId} onSelectLesson={(id) => { setSelectedLessonId(id); setView('CourseMaterial'); }} onPayCourse={(course) => { setPaymentCourse(course); setView('Payment'); }} />;
+      case 'Payment':
+        return <PaymentPage course={paymentCourse} setView={setView} onSuccess={() => { setSelectedLessonId(null); setView('CourseMaterial'); }} />;
       case 'CourseMaterial':
-        return <CourseMaterial view={view} setView={setView} lessonId={selectedLessonId} />;
+        return <CourseMaterial view={view} setView={setView} lessonId={selectedLessonId} courseId={selectedCourseId} />;
       case 'Login':
         return <Login setView={setView} setPendingEmail={setPendingEmail} />;
       case 'Signup':
@@ -97,7 +130,7 @@ function AppContent() {
     }
   };
 
-  const isFullPageView = ['LandingPage', 'CourseCatalog', 'CourseOverview', 'CourseMaterial', 'Login', 'Signup', 'VerifyEmail', 'ForgotPassword', 'ResetPassword'].includes(view);
+  const isFullPageView = ['LandingPage', 'CourseCatalog', 'CourseOverview', 'CourseMaterial', 'Payment', 'Login', 'Signup', 'VerifyEmail', 'ForgotPassword', 'ResetPassword'].includes(view);
 
   const pageVariants = {
     initial: { opacity: 0, y: 20 },
