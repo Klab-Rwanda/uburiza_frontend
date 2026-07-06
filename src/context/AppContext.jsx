@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { getStoredUser } from '../api/auth-session';
 
 const AppContext = createContext();
 
@@ -6,8 +7,14 @@ export function AppProvider({ children }) {
   const [theme, setTheme] = useState('light');
   const [dataSaver, setDataSaver] = useState(false);
   const [streak, setStreak] = useState(12);
+  const [user, setUser] = useState(getStoredUser);
+  const [userRole, setUserRole] = useState(() => {
+    const storedUser = getStoredUser();
+    return storedUser?.role?.toLowerCase() ?? 'learner';
+  });
 
-  // Apply dark mode to document body
+  const isAuthenticated = user !== null;
+
   useEffect(() => {
     if (theme === 'dark') {
       document.documentElement.classList.add('dark');
@@ -25,7 +32,20 @@ export function AppProvider({ children }) {
   };
 
   return (
-    <AppContext.Provider value={{ theme, toggleTheme, dataSaver, toggleDataSaver, streak }}>
+    <AppContext.Provider
+      value={{
+        theme,
+        toggleTheme,
+        dataSaver,
+        toggleDataSaver,
+        streak,
+        user,
+        setUser,
+        userRole,
+        setUserRole,
+        isAuthenticated,
+      }}
+    >
       {children}
     </AppContext.Provider>
   );

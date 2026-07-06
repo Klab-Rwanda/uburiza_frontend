@@ -1,44 +1,28 @@
 @import "tailwindcss";
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #FAFAFB; /* matched container background */
-  color: #1e293b; 
+  background-color: #f8fafc;
+  color: #111827;
+  line-height: 1.5;
 }
 
-/* User Provided CSS from Design Tool */
-.page {
-  /* position: absolute; - Omitted: Visily canvas coordinates break web rendering */
-  /* top: 0px; */
-  /* left: 20800px; */
-  width: 100%;
-  max-width: 1440px; 
-  /* height: 1443px; - Omitted to allow content to grow dynamically */
-  background: #FFFFFFFF; 
-  margin: 0 auto;
+/* Consistent focus ring for keyboard navigation */
+:focus-visible {
+  outline: 2px solid #1e4c31;
+  outline-offset: 2px;
 }
 
-.container-custom {
-  /* position: absolute; - Omitted: canvas coordinates */
-  /* top: 0px; */
-  /* left: 12800px; */
-  width: 100%;
-  max-width: 1440px; 
-  min-height: 100vh; /* Replaced fixed 2632px height with viewport height */
-  background: #FAFAFBFF; 
-  border-radius: 0px; 
-  margin: 0 auto;
-}
-
-@layer utilities {
-  .glass-card {
-    background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-  }
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
 }
