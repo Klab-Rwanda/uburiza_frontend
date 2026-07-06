@@ -7,6 +7,11 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['Inter', 'sans-serif'],
+        fraunces: ['Fraunces', 'serif'],
+        inter: ['Inter', 'sans-serif'],
+      },
       colors: {
         brand: {
           dark:    '#1e4c31',

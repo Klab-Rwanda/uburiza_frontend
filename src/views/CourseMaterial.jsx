@@ -372,11 +372,38 @@ export default function CourseMaterial({ view, setView, lessonId, courseId }) {
                           <p className="text-sm text-gray-700">{bm.note}</p>
                         </div>
                       ))}
-                    </div>
+                    </motion.div>
                   )}
-                </motion.div>
-              )}
-            </div>
+
+                  {activeTab === 'My Notes' && (
+                    <motion.div initial={{opacity:0}} animate={{opacity:1}} className="max-w-3xl">
+                      {bookmarks.length === 0 ? (
+                        <div className="text-center py-12 bg-slate-50 rounded-2xl border-2 border-dashed border-slate-200">
+                          <Bookmark className="w-10 h-10 text-slate-300 mx-auto mb-4" />
+                          <p className="text-slate-500 font-medium">No notes yet. Click the bookmark icon on the video to take a note at a specific timestamp.</p>
+                        </div>
+                      ) : (
+                        <div className="space-y-4">
+                          {bookmarks.map((bm, idx) => (
+                            <div key={idx} className="bg-slate-50 p-5 rounded-xl border border-slate-200 shadow-sm">
+                              <div className="flex items-center space-x-2 mb-3 cursor-pointer text-[#1D9E75] font-bold text-sm hover:underline">
+                                <PlayCircle className="w-4 h-4" />
+                                <span>{bm.time}</span>
+                              </div>
+                              <textarea 
+                                className="w-full bg-white border border-slate-300 rounded-lg p-4 text-sm text-slate-800 focus:ring-2 focus:ring-[#1D9E75] focus:outline-none transition-shadow shadow-inner"
+                                defaultValue={bm.note}
+                                rows={3}
+                              />
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </motion.div>
+                  )}
+                </div>
+              </>
+            )}
 
             {/* Prev / Next navigation */}
             <div className="flex items-center justify-between border-t border-emerald-100 pt-6 mt-2">
