@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL ?? "https://uburiza-backend.onrender.com/api",
+  baseURL: import.meta.env.VITE_API_URL ?? "http://localhost:3001/api",
   withCredentials: true,
   headers: { 'Content-Type': 'application/json' },
 });
@@ -10,6 +10,14 @@ const api = axios.create({
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('token');
   if (token) config.headers.Authorization = `Bearer ${token}`;
+
+  if (typeof FormData !== 'undefined' && config.data instanceof FormData) {
+    if (config.headers) {
+      delete config.headers['Content-Type'];
+      delete config.headers['content-type'];
+    }
+  }
+
   return config;
 });
 
@@ -17,17 +25,36 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use(
   (res) => res.data,
   (error) => {
-    if (error.response?.status === 401) {
+    const status = error.response?.status;
+    const requestUrl = error.config?.url ?? '';
+    const isAuthRequest = requestUrl.startsWith('/auth/');
+
+    if (status === 401 && !isAuthRequest) {
       localStorage.removeItem('token');
-      window.location.href = '/';
+      window.location.hash = 'Login';
     }
+
     const data = error.response?.data;
-    // Zod validation errors come back as { issues: [...] }
-    if (data?.issues) {
-      const message = data.issues.map((i) => i.message).join(', ');
-      return Promise.reject({ error: message });
+    const message =
+      data?.error ||
+      data?.message ||
+      (status === 401
+        ? 'Invalid email or password.'
+        : status === 403
+          ? 'Your account is not authorized to continue.'
+          : 'Request failed. Please try again.');
+
+    // Zod validation errors come back as { errors: [...] }
+    if (data?.errors) {
+      const message = data.errors.map((i) => i.message).join(', ');
+      return Promise.reject({ error: message, status });
     }
-    return Promise.reject(data ?? error);
+
+    return Promise.reject({
+      error: message,
+      status,
+      details: data,
+    });
   }
 );
 
