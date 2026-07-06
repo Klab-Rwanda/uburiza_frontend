@@ -291,6 +291,7 @@ export default function CourseOverview({ view, setView, onSelectLesson, courseId
                       ? 'Buy & Enroll'
                       : 'Enroll for Free'}
                   </button>
+                  <p className="text-center text-xs text-slate-500 mb-6">Create a free account to track your progress.</p>
 
                   {/* Access code option for paid courses */}
                   {isPaid && !isEnrolled && (

@@ -137,7 +137,7 @@ export default function LandingPage({ setView }) {
         {/* Featured Courses */}
         <section className="py-24 px-8 md:px-16 bg-emerald-50">
           <div className="w-full">
-            <div className="flex justify-between items-end mb-12">
+            <div className="flex justify-between items-end mb-8">
               <div>
                 <h2 className="text-3xl font-bold text-black mb-4">Featured Courses</h2>
                 <p className="text-black max-w-xl">Start learning with our most popular programs, led by industry experts across the continent.</p>
@@ -146,6 +146,23 @@ export default function LandingPage({ setView }) {
                 <span>View all courses</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
+            </div>
+
+            {/* Category Tabs */}
+            <div className="flex space-x-4 mb-12 overflow-x-auto pb-4 hide-scrollbar">
+              {categories.map(category => (
+                <button
+                  key={category}
+                  onClick={() => setSelectedCategory(category)}
+                  className={`px-6 py-2 rounded-full font-semibold whitespace-nowrap transition-colors border ${
+                    selectedCategory === category 
+                      ? 'bg-emerald-600 text-white border-emerald-600 shadow-md' 
+                      : 'bg-white text-emerald-900 border-emerald-200 hover:bg-emerald-100'
+                  }`}
+                >
+                  {category}
+                </button>
+              ))}
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -248,7 +265,7 @@ export default function LandingPage({ setView }) {
         </section>
       </main>
 
-      <Footer />
+      <Footer setView={setView} />
     </div>
   );
 }

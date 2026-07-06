@@ -143,6 +143,12 @@ function AppContent() {
         return <ForgotPassword setView={setView} />;
       case 'ResetPassword':
         return <ResetPassword setView={setView} token={resetParams.token} email={resetParams.email} />;
+      case 'PartnerWithUs':
+        return <PartnerWithUs setView={setView} />;
+      case 'TeachWithUs':
+        return <TeachWithUs setView={setView} />;
+      case 'BusinessInquiry':
+        return <BusinessInquiry setView={setView} />;
       default:
         return <LandingPage setView={setView} />;
     }
