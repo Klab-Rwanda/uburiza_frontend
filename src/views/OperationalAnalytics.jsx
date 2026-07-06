@@ -212,7 +212,7 @@ export default function OperationalAnalytics({ setView }) {
                         <MoreVertical className="w-4 h-4" />
                       </button>
                       {openMenu === e.id && (
-                        <div className="absolute right-0 mt-1 w-44 bg-white border border-gray-200 rounded-xl shadow-dropdown z-10 py-1 overflow-hidden">
+                        <div className="absolute right-0 mt-1 w-44 bg-white border border-gray-200 rounded-xl shadow-lg z-10 py-1 overflow-hidden">
                           <button onClick={() => { setOpenMenu(null); setConfirm({ id: e.id, action: 'suspend', label: 'Suspend Learner' }); }} className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">Suspend Learner</button>
                           <button onClick={() => { setOpenMenu(null); setConfirm({ id: e.id, action: 'unenroll', label: 'Unenroll Learner' }); }} className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50">Unenroll Learner</button>
                         </div>
@@ -237,7 +237,7 @@ export default function OperationalAnalytics({ setView }) {
       {/* Confirm modal */}
       {confirm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
-          <div className="bg-white rounded-xl shadow-dropdown p-6 w-full max-w-sm">
+          <div className="bg-white rounded-xl shadow-lg p-6 w-full max-w-sm">
             <h3 className="text-base font-semibold text-gray-900 mb-2">{confirm.label}</h3>
             <p className="text-sm text-gray-500 mb-6">Are you sure you want to <span className="font-medium text-gray-700">{confirm.label.toLowerCase()}</span>? This cannot be undone.</p>
             <div className="flex justify-end gap-3">
