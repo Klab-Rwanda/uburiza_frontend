@@ -60,11 +60,11 @@ export default function LandingPage({ setView }) {
               Unlock your potential with premium, African-led digital education. From AI to Entrepreneurship, we build the leaders of tomorrow.
             </p>
             <div className="flex items-center space-x-4 mb-10">
-              <button onClick={() => setView('CourseCatalog')} className="bg-emerald-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-emerald-700 transition-colors shadow-lg shadow-emerald-200">
+              <button onClick={() => setView('CourseCatalog')} className="bg-[#1e4c31] text-white px-7 py-3 rounded-lg font-semibold hover:bg-[#163824] transition-colors text-sm">
                 Explore Courses
               </button>
-              <button className="flex items-center space-x-2 text-emerald-600 font-semibold px-6 py-4 rounded-lg border border-emerald-200 hover:bg-emerald-50 transition-colors">
-                <Play className="w-5 h-5" />
+              <button className="flex items-center space-x-2 text-[#1e4c31] font-semibold px-5 py-3 rounded-lg border border-emerald-300 hover:bg-emerald-50 transition-colors text-sm">
+                <Play className="w-4 h-4" />
                 <span>How it works</span>
               </button>
             </div>
@@ -122,12 +122,12 @@ export default function LandingPage({ setView }) {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-left">
               {topCategories.map((path, idx) => (
-                <button key={idx} onClick={() => setView('CourseCatalog')} className="bg-emerald-50 rounded-2xl p-8 hover:shadow-lg transition-all cursor-pointer group border border-emerald-100 text-left">
-                  <div className="w-14 h-14 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                    <path.icon className="w-7 h-7" />
+                <button key={idx} onClick={() => setView('CourseCatalog')} className="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-md hover:border-emerald-200 transition-all cursor-pointer group text-left">
+                  <div className="w-10 h-10 rounded-lg bg-emerald-50 text-[#1e4c31] flex items-center justify-center mb-4">
+                    <path.icon className="w-5 h-5" />
                   </div>
-                  <h3 className="text-xl font-bold text-black mb-2">{path.title}</h3>
-                  <p className="text-black font-medium">{path.courses}</p>
+                  <h3 className="text-base font-semibold text-gray-900 mb-1">{path.title}</h3>
+                  <p className="text-sm text-gray-500">{path.courses}</p>
                 </button>
               ))}
             </div>
@@ -225,21 +225,20 @@ export default function LandingPage({ setView }) {
 
         {/* CTA */}
         <section className="py-16 px-8 md:px-16 w-full">
-          <div className="bg-gradient-to-r from-emerald-500 to-emerald-400 rounded-3xl p-12 md:p-20 text-center relative overflow-hidden shadow-2xl">
-            <div className="absolute top-0 right-0 -mr-32 -mt-32 w-96 h-96 bg-white opacity-10 rounded-full blur-3xl"></div>
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 relative z-10">Ready to start your digital journey?</h2>
-            <p className="text-emerald-50 text-lg mb-10 max-w-2xl mx-auto relative z-10">Join thousands of students and build the future of Africa today. No credit card required to start.</p>
-            <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4 mb-10 relative z-10">
-              <button onClick={() => setView('Signup')} className="w-full sm:w-auto bg-white text-emerald-600 px-8 py-4 rounded-lg font-bold hover:bg-emerald-50 transition-colors shadow-lg">
+          <div className="bg-[#1e4c31] rounded-2xl p-12 md:p-16 text-center">
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Ready to start your digital journey?</h2>
+            <p className="text-emerald-200 text-base mb-8 max-w-xl mx-auto">Join thousands of students and build the future of Africa today. No credit card required to start.</p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-8">
+              <button onClick={() => setView('Signup')} className="w-full sm:w-auto bg-white text-[#1e4c31] px-7 py-3 rounded-lg font-semibold hover:bg-emerald-50 transition-colors text-sm">
                 Start Learning for Free
               </button>
-              <button onClick={() => setView('CourseCatalog')} className="w-full sm:w-auto bg-white text-gray-700 px-8 py-4 rounded-lg font-bold hover:bg-gray-50 transition-colors shadow-lg">
-                Explore Resources
+              <button onClick={() => setView('CourseCatalog')} className="w-full sm:w-auto bg-transparent text-white px-7 py-3 rounded-lg font-semibold border border-white/30 hover:bg-white/10 transition-colors text-sm">
+                Explore Courses
               </button>
             </div>
-            <div className="flex flex-wrap justify-center gap-6 text-sm text-emerald-50 relative z-10">
+            <div className="flex flex-wrap justify-center gap-6 text-sm text-emerald-300">
               {['Expert Instructors', 'Verified Certificates', 'Offline Access'].map(item => (
-                <div key={item} className="flex items-center space-x-2">
+                <div key={item} className="flex items-center gap-2">
                   <CheckCircle2 className="w-4 h-4" />
                   <span>{item}</span>
                 </div>

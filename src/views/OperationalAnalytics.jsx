@@ -1,15 +1,22 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Filter, Users, BookOpen, TrendingUp, FileText, Plus, Upload, MoreVertical, Search } from 'lucide-react';
-import { AreaChart, Area, ResponsiveContainer, YAxis, XAxis } from 'recharts';
+import { AreaChart, Area, ResponsiveContainer, YAxis, XAxis, Tooltip } from 'recharts';
 import { useAdminStats, useAdminLearners } from '../api/hooks/useEnrollments';
+import { btnPrimary, btnSecondary, btnDanger, card, badgeGreen, badgeGray, badgeAmber } from '../lib/tokens';
 
 const PAGE_SIZE = 10;
 
+const statusBadge = (status) => {
+  if (status === 'active')    return badgeGreen;
+  if (status === 'completed') return badgeAmber;
+  return badgeGray;
+};
+
 export default function OperationalAnalytics({ setView }) {
-  const [search, setSearch] = useState('');
-  const [page, setPage] = useState(1);
+  const [search, setSearch]   = useState('');
+  const [page, setPage]       = useState(1);
   const [openMenu, setOpenMenu] = useState(null);
-  const [confirm, setConfirm] = useState(null); // { enrollmentId, action, label }
+  const [confirm, setConfirm]   = useState(null);
   const menuRef = useRef(null);
 
   useEffect(() => {
@@ -18,17 +25,11 @@ export default function OperationalAnalytics({ setView }) {
     return () => document.removeEventListener('mousedown', handler);
   }, []);
 
-  const handleAction = (enrollmentId, action, label) => {
-    setOpenMenu(null);
-    setConfirm({ enrollmentId, action, label });
-  };
-
   const { data: stats, isLoading: statsLoading } = useAdminStats();
   const { data: learnersRaw = [], isLoading: learnersLoading } = useAdminLearners();
 
   const chartData = stats?.monthly_chart ?? [];
 
-  // Flatten learners × enrollments into table rows
   const rows = learnersRaw.flatMap((learner) =>
     learner.enrollments?.length
       ? learner.enrollments.map((enr) => ({
@@ -41,187 +42,179 @@ export default function OperationalAnalytics({ setView }) {
       : [{ id: learner.id, user_name: learner.name, course_title: '—', enrolled_at: learner.created_at, status: 'inactive' }]
   );
 
-  const filtered = rows.filter((e) =>
+  const filtered   = rows.filter((e) =>
     e.user_name?.toLowerCase().includes(search.toLowerCase()) ||
     e.course_title?.toLowerCase().includes(search.toLowerCase())
   );
   const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
-  const paginated = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
+  const paginated  = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
   const metrics = [
-    { icon: Users, label: 'Total Learners', value: stats?.totalUsers ?? '—' },
-    { icon: BookOpen, label: 'Total Courses', value: stats?.totalCourses ?? '—' },
-    { icon: TrendingUp, label: 'Platform Revenue', value: stats?.revenue?.total != null ? `${Number(stats.revenue.total).toLocaleString()} RWF` : '—' },
-    { icon: FileText, label: 'Completed Courses', value: stats?.completedCourses ?? '—' },
+    { icon: Users,     label: 'Total Learners',    value: stats?.totalUsers ?? '—' },
+    { icon: BookOpen,  label: 'Total Courses',      value: stats?.totalCourses ?? '—' },
+    { icon: TrendingUp,label: 'Platform Revenue',   value: stats?.revenue?.total != null ? `${Number(stats.revenue.total).toLocaleString()} RWF` : '—' },
+    { icon: FileText,  label: 'Completed Courses',  value: stats?.completedCourses ?? '—' },
   ];
 
   return (
-    <div className="page p-8 mx-auto space-y-8">
+    <div className="p-6 md:p-8 space-y-6">
       {/* Header */}
-      <div className="flex justify-between items-start">
+      <div className="flex items-start justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-black mb-1">Operational Overview</h1>
-          <p className="text-sm text-black">Monitor platform growth and learner engagement in real-time.</p>
+          <h1 className="text-2xl font-bold text-gray-900 tracking-tight">Operational Overview</h1>
+          <p className="text-sm text-gray-500 mt-0.5">Monitor platform growth and learner engagement.</p>
         </div>
-        <button className="flex items-center text-sm font-medium text-[#1e4c31] bg-white border border-emerald-300 px-4 py-2 rounded-lg hover:bg-emerald-50 transition-colors">
-          <Filter className="w-4 h-4 mr-2" /> Filter Dates
+        <button className={btnSecondary}>
+          <Filter className="w-4 h-4" /> Filter Dates
         </button>
       </div>
 
-      {/* Top Metrics */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+      {/* Metrics */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {metrics.map(({ icon: Icon, label, value }) => (
-          <div key={label} className="bg-white border border-emerald-200 rounded-2xl p-6 shadow-sm">
-            <div className="mb-4">
-              <Icon className="w-5 h-5 text-emerald-700" />
+          <div key={label} className={`${card} p-5`}>
+            <div className="w-8 h-8 rounded-lg bg-emerald-50 flex items-center justify-center mb-3">
+              <Icon className="w-4 h-4 text-[#1e4c31]" />
             </div>
-            <p className="text-sm text-black font-medium mb-1">{label}</p>
-            <h3 className="text-3xl font-bold text-black">
-              {statsLoading ? <span className="text-gray-300 animate-pulse">···</span> : value}
-            </h3>
+            <p className="text-xs text-gray-500 mb-1">{label}</p>
+            <p className="text-2xl font-bold text-gray-900">
+              {statsLoading ? <span className="text-gray-200 animate-pulse">···</span> : value}
+            </p>
           </div>
         ))}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Main Chart */}
-        <div className="lg:col-span-2 bg-white border border-emerald-200 rounded-2xl p-6 shadow-sm">
-          <h2 className="text-lg font-bold text-black mb-1">Enrollment & Completions</h2>
-          <p className="text-sm text-black mb-6">Visualizing student registration vs. graduation trends</p>
-          <div className="h-72 w-full">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Chart */}
+        <div className={`${card} p-5 lg:col-span-2`}>
+          <h2 className="text-base font-semibold text-gray-900 mb-0.5">Enrollment & Completions</h2>
+          <p className="text-xs text-gray-500 mb-5">6-month enrollment vs. completion trend</p>
+          <div className="h-64 w-full">
             {chartData.length === 0 && !statsLoading ? (
-              <p className="text-sm text-gray-400 text-center pt-24">No chart data available.</p>
+              <p className="text-sm text-gray-400 text-center pt-20">No chart data available.</p>
             ) : (
               <ResponsiveContainer width="100%" height="100%">
-                <AreaChart data={chartData} margin={{ top: 10, right: 0, left: -20, bottom: 0 }}>
+                <AreaChart data={chartData} margin={{ top: 5, right: 0, left: -20, bottom: 0 }}>
                   <defs>
                     <linearGradient id="colorLearners" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#1e4c31" stopOpacity={0.1} />
+                      <stop offset="5%"  stopColor="#1e4c31" stopOpacity={0.12} />
                       <stop offset="95%" stopColor="#1e4c31" stopOpacity={0} />
                     </linearGradient>
                     <linearGradient id="colorCompletions" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#10b981" stopOpacity={0.2} />
+                      <stop offset="5%"  stopColor="#10b981" stopOpacity={0.12} />
                       <stop offset="95%" stopColor="#10b981" stopOpacity={0} />
                     </linearGradient>
                   </defs>
-                  <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: '#64748b' }} dy={10} />
-                  <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: '#64748b' }} dx={-10} />
-                  <Area type="monotone" dataKey="learners" stroke="#1e4c31" strokeWidth={3} fillOpacity={1} fill="url(#colorLearners)" />
-                  <Area type="monotone" dataKey="completions" stroke="#10b981" strokeWidth={3} fillOpacity={1} fill="url(#colorCompletions)" />
+                  <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: '#9ca3af' }} dy={8} />
+                  <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: '#9ca3af' }} dx={-8} />
+                  <Tooltip contentStyle={{ borderRadius: '8px', border: '1px solid #e5e7eb', fontSize: 12 }} />
+                  <Area type="monotone" dataKey="learners"    stroke="#1e4c31" strokeWidth={2} fillOpacity={1} fill="url(#colorLearners)" />
+                  <Area type="monotone" dataKey="completions" stroke="#10b981" strokeWidth={2} fillOpacity={1} fill="url(#colorCompletions)" />
                 </AreaChart>
               </ResponsiveContainer>
             )}
           </div>
-          <div className="flex justify-center items-center space-x-6 mt-4">
-            <div className="flex items-center text-sm font-medium text-black">
-              <span className="w-3 h-3 rounded-full bg-[#1e4c31] mr-2"></span> Learners
+          <div className="flex items-center gap-5 mt-3">
+            <div className="flex items-center gap-1.5 text-xs text-gray-500">
+              <span className="w-2.5 h-2.5 rounded-full bg-[#1e4c31]" /> Learners
             </div>
-            <div className="flex items-center text-sm font-medium text-black">
-              <span className="w-3 h-3 rounded-full bg-[#10b981] mr-2"></span> Completions
+            <div className="flex items-center gap-1.5 text-xs text-gray-500">
+              <span className="w-2.5 h-2.5 rounded-full bg-[#10b981]" /> Completions
             </div>
           </div>
         </div>
 
-        {/* Quick Actions & System Health */}
-        <div className="space-y-8">
-          <div className="bg-emerald-50 border border-emerald-100 rounded-2xl p-6">
-            <h3 className="font-bold text-black mb-4">Quick Actions</h3>
+        {/* Quick actions */}
+        <div className={`${card} p-5`}>
+          <h3 className="text-sm font-semibold text-gray-900 mb-4">Quick Actions</h3>
+          <div className="space-y-2">
+            <button onClick={() => setView('AdminForms')} className={`${btnPrimary} w-full`}>
+              <Plus className="w-4 h-4" /> Launch New Course
+            </button>
+            <button onClick={() => setView('ResourceUpload')} className={`${btnSecondary} w-full`}>
+              <Upload className="w-4 h-4" /> Resource Builder
+            </button>
+          </div>
+          <div className="mt-6 pt-5 border-t border-gray-100">
+            <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">System Health</h4>
             <div className="space-y-3">
-              <button onClick={() => setView('AdminForms')} className="w-full bg-[#1e4c31] hover:bg-emerald-900 text-white py-3 px-4 rounded-xl font-medium flex items-center justify-center transition-colors">
-                <Plus className="w-5 h-5 mr-2" /> Launch New Course
-              </button>
-              <button onClick={() => setView('ResourceUpload')} className="w-full bg-white hover:bg-emerald-50 border border-emerald-300 text-[#1e4c31] py-3 px-4 rounded-xl font-medium flex items-center justify-center transition-colors">
-                <Upload className="w-5 h-5 mr-2" /> Open Resource Builder
-              </button>
-            </div>
-            <div className="mt-8">
-              <h4 className="text-xs font-bold text-emerald-700 uppercase tracking-wider mb-4">System Health</h4>
-              <div className="space-y-4">
-                <div className="flex justify-between items-center text-sm">
-                  <span className="text-black">Server Load</span>
-                  <span className="font-semibold text-black">Normal (12%)</span>
+              {[
+                { label: 'Server Load', value: 'Normal (12%)' },
+                { label: 'API Latency', value: '42ms' },
+              ].map(({ label, value }) => (
+                <div key={label} className="flex justify-between items-center">
+                  <span className="text-sm text-gray-500">{label}</span>
+                  <span className="text-sm font-medium text-gray-700">{value}</span>
                 </div>
-                <div className="flex justify-between items-center text-sm">
-                  <span className="text-black">API Latency</span>
-                  <span className="font-semibold text-black">42ms</span>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </div>
       </div>
 
-      {/* Learner Management Table */}
-      <div className="bg-white border border-emerald-200 rounded-2xl p-6 shadow-sm">
-        <div className="flex justify-between items-center mb-6">
+      {/* Learner table */}
+      <div className={`${card} p-5`}>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-5">
           <div>
-            <h2 className="text-lg font-bold text-black mb-1">Learner Management</h2>
-            <p className="text-sm text-black">Review enrollment status and student progress across all modules.</p>
+            <h2 className="text-base font-semibold text-gray-900">Learner Management</h2>
+            <p className="text-xs text-gray-500 mt-0.5">Review enrollment status across all courses.</p>
           </div>
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center gap-2">
             <div className="relative">
-              <Search className="w-4 h-4 text-black absolute left-3 top-1/2 -translate-y-1/2" />
+              <Search className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
               <input
                 type="text"
-                placeholder="Search students..."
+                placeholder="Search learners…"
                 value={search}
                 onChange={(e) => { setSearch(e.target.value); setPage(1); }}
-                className="pl-9 pr-4 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 w-64"
+                className="pl-9 pr-4 py-2 border border-gray-200 bg-gray-50 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1e4c31] focus:bg-white w-56 transition duration-150"
               />
             </div>
-            <button className="p-2 border border-emerald-200 rounded-lg hover:bg-emerald-50 text-black">
-              <Filter className="w-4 h-4" />
-            </button>
           </div>
         </div>
 
         <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse">
+          <table className="w-full text-left">
             <thead>
-              <tr className="border-b border-emerald-200">
-                <th className="py-4 px-4 text-xs font-bold text-black uppercase tracking-wider">Student</th>
-                <th className="py-4 px-4 text-xs font-bold text-black uppercase tracking-wider">Enrolled Course</th>
-                <th className="py-4 px-4 text-xs font-bold text-black uppercase tracking-wider">Registration Date</th>
-                <th className="py-4 px-4 text-xs font-bold text-black uppercase tracking-wider">Status</th>
-                <th className="py-4 px-4 text-xs font-bold text-black uppercase tracking-wider text-right">Actions</th>
+              <tr className="border-b border-gray-200">
+                {['Student', 'Enrolled Course', 'Date', 'Status', ''].map((h) => (
+                  <th key={h} className="py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">{h}</th>
+                ))}
               </tr>
             </thead>
-            <tbody className="divide-y divide-emerald-100">
+            <tbody className="divide-y divide-gray-100">
               {statsLoading || learnersLoading ? (
-                <tr><td colSpan={5} className="py-8 text-center text-sm text-gray-400">Loading...</td></tr>
+                <tr><td colSpan={5} className="py-10 text-center text-sm text-gray-400">Loading…</td></tr>
               ) : paginated.length === 0 ? (
-                <tr><td colSpan={5} className="py-8 text-center text-sm text-gray-400">No learners found.</td></tr>
+                <tr><td colSpan={5} className="py-10 text-center text-sm text-gray-400">No learners found.</td></tr>
               ) : paginated.map((e) => (
-                <tr key={e.id} className="hover:bg-emerald-50 transition-colors">
-                  <td className="py-4 px-4">
-                    <div className="flex items-center space-x-3">
-                      <div className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center text-xs font-bold text-emerald-700">
+                <tr key={e.id} className="hover:bg-gray-50 transition-colors">
+                  <td className="py-3 px-4">
+                    <div className="flex items-center gap-3">
+                      <div className="w-7 h-7 rounded-full bg-emerald-50 border border-emerald-100 flex items-center justify-center text-xs font-semibold text-[#1e4c31]">
                         {e.user_name?.[0]?.toUpperCase() ?? '?'}
                       </div>
-                      <span className="font-semibold text-black text-sm">{e.user_name}</span>
+                      <span className="text-sm font-medium text-gray-900">{e.user_name}</span>
                     </div>
                   </td>
-                  <td className="py-4 px-4 text-sm text-black">{e.course_title}</td>
-                  <td className="py-4 px-4 text-sm text-black">
+                  <td className="py-3 px-4 text-sm text-gray-600">{e.course_title}</td>
+                  <td className="py-3 px-4 text-sm text-gray-500">
                     {e.enrolled_at ? new Date(e.enrolled_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '—'}
                   </td>
-                  <td className="py-4 px-4">
-                    <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-bold
-                      ${e.status === 'active' ? 'bg-[#1e4c31] text-white' :
-                        e.status === 'completed' ? 'bg-[#10b981] text-white' :
-                        'bg-white border border-slate-200 text-black'}`}>
+                  <td className="py-3 px-4">
+                    <span className={statusBadge(e.status)}>
                       {e.status ? e.status.charAt(0).toUpperCase() + e.status.slice(1) : '—'}
                     </span>
                   </td>
-                  <td className="py-4 px-4 text-right">
+                  <td className="py-3 px-4 text-right">
                     <div className="relative inline-block" ref={openMenu === e.id ? menuRef : null}>
-                      <button onClick={() => setOpenMenu(openMenu === e.id ? null : e.id)} className="text-black hover:text-gray-700">
-                        <MoreVertical className="w-5 h-5" />
+                      <button onClick={() => setOpenMenu(openMenu === e.id ? null : e.id)} className="p-1.5 rounded-lg text-gray-400 hover:bg-gray-100 hover:text-gray-700 transition-colors">
+                        <MoreVertical className="w-4 h-4" />
                       </button>
                       {openMenu === e.id && (
-                        <div className="absolute right-0 mt-1 w-44 bg-white border border-emerald-200 rounded-xl shadow-lg z-10 py-1">
-                          <button onClick={() => handleAction(e.id, 'suspend', 'Suspend Learner')} className="w-full text-left px-4 py-2 text-sm text-black hover:bg-emerald-50">Suspend Learner</button>
-                          <button onClick={() => handleAction(e.id, 'unenroll', 'Unenroll Learner')} className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50">Unenroll Learner</button>
+                        <div className="absolute right-0 mt-1 w-44 bg-white border border-gray-200 rounded-xl shadow-dropdown z-10 py-1 overflow-hidden">
+                          <button onClick={() => { setOpenMenu(null); setConfirm({ id: e.id, action: 'suspend', label: 'Suspend Learner' }); }} className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">Suspend Learner</button>
+                          <button onClick={() => { setOpenMenu(null); setConfirm({ id: e.id, action: 'unenroll', label: 'Unenroll Learner' }); }} className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50">Unenroll Learner</button>
                         </div>
                       )}
                     </div>
@@ -232,30 +225,26 @@ export default function OperationalAnalytics({ setView }) {
           </table>
         </div>
 
-        <div className="mt-4 flex justify-between items-center text-sm text-black">
-          <span>Showing {paginated.length} of {filtered.length} learners</span>
-          <div className="flex space-x-2">
-            <button onClick={() => setPage((p) => p - 1)} disabled={page === 1} className="px-3 py-1 border border-emerald-200 rounded hover:bg-emerald-50 disabled:opacity-50">Previous</button>
-            <button onClick={() => setPage((p) => p + 1)} disabled={page >= totalPages} className="px-3 py-1 border border-emerald-200 rounded hover:bg-emerald-50 disabled:opacity-50">Next</button>
+        <div className="mt-4 flex items-center justify-between text-sm text-gray-500">
+          <span>Showing {paginated.length} of {filtered.length}</span>
+          <div className="flex gap-2">
+            <button onClick={() => setPage((p) => p - 1)} disabled={page === 1} className="px-3 py-1.5 border border-gray-200 rounded-lg text-sm hover:bg-gray-50 disabled:opacity-40 transition-colors">Previous</button>
+            <button onClick={() => setPage((p) => p + 1)} disabled={page >= totalPages} className="px-3 py-1.5 border border-gray-200 rounded-lg text-sm hover:bg-gray-50 disabled:opacity-40 transition-colors">Next</button>
           </div>
         </div>
       </div>
-      {/* Confirmation Modal */}
+
+      {/* Confirm modal */}
       {confirm && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-          <div className="bg-white rounded-2xl shadow-xl p-6 w-full max-w-sm mx-4">
-            <h3 className="text-lg font-bold text-black mb-2">{confirm.label}</h3>
-            <p className="text-sm text-gray-600 mb-6">Are you sure you want to <span className="font-semibold text-black">{confirm.label.toLowerCase()}</span>? This action cannot be undone.</p>
-            <div className="flex justify-end space-x-3">
-              <button onClick={() => setConfirm(null)} className="px-4 py-2 text-sm font-medium border border-emerald-200 rounded-lg hover:bg-emerald-50 text-black">Cancel</button>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
+          <div className="bg-white rounded-xl shadow-dropdown p-6 w-full max-w-sm">
+            <h3 className="text-base font-semibold text-gray-900 mb-2">{confirm.label}</h3>
+            <p className="text-sm text-gray-500 mb-6">Are you sure you want to <span className="font-medium text-gray-700">{confirm.label.toLowerCase()}</span>? This cannot be undone.</p>
+            <div className="flex justify-end gap-3">
+              <button onClick={() => setConfirm(null)} className={btnSecondary}>Cancel</button>
               <button
-                onClick={() => {
-                  // TODO: call API with confirm.enrollmentId and confirm.action
-                  setConfirm(null);
-                }}
-                className={`px-4 py-2 text-sm font-medium rounded-lg text-white ${
-                  confirm.action === 'unenroll' ? 'bg-red-600 hover:bg-red-700' : 'bg-[#1e4c31] hover:bg-emerald-900'
-                }`}
+                onClick={() => setConfirm(null)}
+                className={confirm.action === 'unenroll' ? btnDanger : btnPrimary}
               >
                 Confirm
               </button>
