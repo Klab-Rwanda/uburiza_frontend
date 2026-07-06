@@ -57,7 +57,7 @@ export default function TopNavPublic({ setView }) {
               <span>{streak}</span>
             </div>
             <button className="relative text-gray-500 hover:text-gray-700 p-1.5 rounded-lg hover:bg-gray-100 transition-colors">
-              <Bell className="w-4.5 h-4.5" />
+              <Bell className="w-5 h-5" />
               <span className="absolute top-1 right-1 w-1.5 h-1.5 bg-[#1e4c31] rounded-full" />
             </button>
             <div className="relative" onMouseEnter={() => setProfileOpen(true)} onMouseLeave={() => setProfileOpen(false)}>
@@ -66,7 +66,7 @@ export default function TopNavPublic({ setView }) {
                 <ChevronDown className="w-3.5 h-3.5 text-gray-400" />
               </button>
               {profileOpen && (
-                <div className="absolute right-0 top-full mt-1 w-48 bg-white border border-gray-200 rounded-xl shadow-dropdown z-50 overflow-hidden">
+                <div className="absolute right-0 top-full mt-1 w-48 bg-white border border-gray-200 rounded-xl shadow-lg z-50 overflow-hidden">
                   <div className="px-3 py-2.5 border-b border-gray-100">
                     <p className="text-sm font-semibold text-gray-900 truncate">{user?.name || user?.username || 'User'}</p>
                     <p className="text-xs text-gray-500 truncate">{user?.email ?? (isAdmin ? 'Administrator' : 'Learner')}</p>
@@ -105,7 +105,7 @@ export default function TopNavPublic({ setView }) {
       </button>
 
       {mobileOpen && (
-        <div className="absolute top-14 left-0 right-0 bg-white border-b border-gray-200 p-4 shadow-dropdown flex flex-col gap-1 md:hidden z-50">
+        <div className="absolute top-14 left-0 right-0 bg-white border-b border-gray-200 p-4 shadow-lg flex flex-col gap-1 md:hidden z-50">
           <button onClick={() => { setView('CourseCatalog'); setMobileOpen(false); }} className="text-left text-sm font-medium text-gray-700 py-2.5 px-3 rounded-lg hover:bg-gray-50">Courses</button>
           <button onClick={() => { setView('Resources'); setMobileOpen(false); }} className="text-left text-sm font-medium text-gray-700 py-2.5 px-3 rounded-lg hover:bg-gray-50">Resources</button>
           {isLoggedIn && !isAdmin && (

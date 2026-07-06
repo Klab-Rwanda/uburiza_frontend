@@ -65,7 +65,7 @@ export default function LearnerDashboard({ setView, onSelectCourse }) {
         ].map(({ icon: Icon, label, value }) => (
           <div key={label} className={`${card} p-4 flex items-center gap-3`}>
             <div className="w-9 h-9 rounded-lg bg-emerald-50 flex items-center justify-center flex-shrink-0">
-              <Icon className="w-4.5 h-4.5 text-[#1e4c31]" />
+              <Icon className="w-5 h-5 text-[#1e4c31]" />
             </div>
             <div>
               <p className="text-xs text-gray-500">{label}</p>
