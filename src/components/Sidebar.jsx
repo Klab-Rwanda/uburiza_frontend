@@ -1,5 +1,5 @@
 import React from 'react';
-import { BookOpen, LayoutDashboard, FileText, Settings, LogOut, Library, BarChart2, X } from 'lucide-react';
+import { BookOpen, LayoutDashboard, FileText, Settings, LogOut, Library, BarChart2, KeyRound, X } from 'lucide-react';
 import { useAppContext } from '../context/AppContext';
 import { useLogout } from '../api/hooks/useAuthMutations';
 
@@ -18,6 +18,7 @@ export default function Sidebar({ view, setView, sidebarOpen, setSidebarOpen }) 
     { name: 'Analytics', icon: BarChart2, id: 'Analytics' },
     { name: 'Courses', icon: BookOpen, id: 'AdminForms' },
     { name: 'Resources', icon: Library, id: 'ResourceUpload' },
+    { name: 'Access Codes', icon: KeyRound, id: 'AccessCodes' },
   ];
 
   const items = isAdmin ? adminItems : learnerItems;

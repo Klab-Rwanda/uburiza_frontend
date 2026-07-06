@@ -2,6 +2,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import * as courseApi from '../course_api';
 import * as moduleApi from '../module_api';
 import * as lessonApi from '../lesson_api';
+import { generateAccessCodes, getCoursesWithAccessCodes, getAccessCodesByCourse, getAdminAllCourses, deleteExpiredAccessCodes } from '../enrollment_api';
 
 const COURSES_KEY = 'courses';
 
@@ -96,6 +97,53 @@ export function useDeleteLesson(courseId) {
   return useMutation({
     mutationFn: lessonApi.deleteLesson,
     onSuccess: () => queryClient.invalidateQueries({ queryKey: [COURSES_KEY, courseId] }),
+  });
+}
+
+export function useDeleteExpiredCodes(courseId) {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: () => deleteExpiredAccessCodes(courseId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['accessCodes', courseId] });
+      queryClient.invalidateQueries({ queryKey: ['accessCodeCourses'] });
+    },
+  });
+}
+
+export function useGenerateAccessCodes() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: generateAccessCodes,
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['accessCodeCourses'] }),
+  });
+}
+
+export function useCoursesWithAccessCodes() {
+  return useQuery({
+    queryKey: ['accessCodeCourses'],
+    queryFn: getCoursesWithAccessCodes,
+    select: (data) => (Array.isArray(data) ? data : data.courses ?? []),
+    enabled: !!localStorage.getItem('token'),
+    staleTime: 0,
+  });
+}
+
+export function useAdminAllCourses() {
+  return useQuery({
+    queryKey: ['adminAllCourses'],
+    queryFn: getAdminAllCourses,
+    select: (data) => (Array.isArray(data) ? data : data.courses ?? []),
+    staleTime: 0,
+  });
+}
+
+export function useAccessCodesByCourse(courseId) {
+  return useQuery({
+    queryKey: ['accessCodes', courseId],
+    queryFn: () => getAccessCodesByCourse(courseId),
+    select: (data) => (Array.isArray(data) ? data : data.codes ?? []),
+    enabled: !!courseId,
   });
 }
 

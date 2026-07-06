@@ -8,7 +8,7 @@ import {
   useCreateCourse, useUpdateCourse,
   useCreateModule, useUpdateModule, useDeleteModule,
   useCreateLesson, useUpdateLesson, useDeleteLesson,
-  useCourse, useAdminLesson,
+  useCourse, useAdminLesson, useGenerateAccessCodes,
 } from '../api/hooks/useCourse';
 
 const STEPS = ['Course Details', 'Modules', 'Lessons', 'Quiz', 'Preview', 'Publish'];
@@ -284,6 +284,115 @@ function QuizStep({ modules, courseId, createLesson, updateLesson }) {
   );
 }
 
+// ─── Access Codes Step ───────────────────────────────────────────────────────
+function AccessCodesStep({ courseId, generateCodes }) {
+  const [form, setForm] = useState({ count: 10, maxUses: 1, expiresAt: '' });
+  const [generatedCodes, setGeneratedCodes] = useState([]);
+  const [error, setError] = useState('');
+  const [copied, setCopied] = useState(false);
+
+  async function handleGenerate() {
+    setError('');
+    if (!form.count || form.count < 1 || form.count > 500) {
+      return setError('Count must be between 1 and 500.');
+    }
+    try {
+      const payload = {
+        courseId,
+        count: Number(form.count),
+        maxUses: Number(form.maxUses) || 1,
+        ...(form.expiresAt ? { expiresAt: new Date(form.expiresAt).toISOString() } : {}),
+      };
+      const res = await generateCodes.mutateAsync(payload);
+      setGeneratedCodes(res.codes ?? []);
+    } catch (err) {
+      setError(err?.error ?? 'Failed to generate codes.');
+    }
+  }
+
+  function handleCopyAll() {
+    const text = generatedCodes.map((c) => c.code).join('\n');
+    navigator.clipboard.writeText(text);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  }
+
+  return (
+    <div>
+      <div className="mb-8">
+        <h1 className="text-2xl font-bold text-black mb-1">Access Code Generator</h1>
+        <p className="text-sm text-gray-500">Generate unique codes to grant learners access to this course.</p>
+      </div>
+
+      <div className="max-w-lg space-y-5 mb-8">
+        <Field label="Number of Codes" required>
+          <input
+            type="number" min="1" max="500"
+            value={form.count}
+            onChange={(e) => setForm((f) => ({ ...f, count: e.target.value }))}
+            className={inputCls}
+            placeholder="e.g. 10"
+          />
+        </Field>
+        <Field label="Max Uses per Code">
+          <input
+            type="number" min="1"
+            value={form.maxUses}
+            onChange={(e) => setForm((f) => ({ ...f, maxUses: e.target.value }))}
+            className={inputCls}
+            placeholder="1"
+          />
+        </Field>
+        <Field label="Expiry Date (optional)">
+          <input
+            type="datetime-local"
+            value={form.expiresAt}
+            onChange={(e) => setForm((f) => ({ ...f, expiresAt: e.target.value }))}
+            className={inputCls}
+          />
+        </Field>
+
+        {error && <p className="text-sm text-red-500">{error}</p>}
+
+        <button
+          onClick={handleGenerate}
+          disabled={generateCodes.isPending}
+          className="bg-[#1e4c31] text-white px-6 py-2.5 rounded-xl text-sm font-bold hover:bg-emerald-900 disabled:opacity-60 flex items-center gap-2"
+        >
+          {generateCodes.isPending ? 'Generating...' : 'Generate Codes'}
+        </button>
+      </div>
+
+      {generatedCodes.length > 0 && (
+        <div className="max-w-2xl">
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="text-sm font-bold text-black">{generatedCodes.length} codes generated</h3>
+            <button
+              onClick={handleCopyAll}
+              className="text-xs font-bold text-[#1e4c31] border border-emerald-300 px-3 py-1.5 rounded-lg hover:bg-emerald-50 transition-colors"
+            >
+              {copied ? '✓ Copied!' : 'Copy All'}
+            </button>
+          </div>
+          <div className="border border-emerald-200 rounded-2xl overflow-hidden">
+            <div className="max-h-72 overflow-y-auto divide-y divide-emerald-100">
+              {generatedCodes.map((c, i) => (
+                <div key={i} className="flex items-center justify-between px-5 py-3 hover:bg-emerald-50">
+                  <span className="font-mono text-sm font-bold text-black tracking-wider">{c.code}</span>
+                  <div className="flex items-center gap-4 text-xs text-gray-400">
+                    <span>Max uses: {c.max_uses}</span>
+                    {c.expires_at && <span>Expires: {new Date(c.expires_at).toLocaleDateString()}</span>}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function AdminManagementForms({ setView, editCourseId, onEditDone }) {
   const [step, setStep] = useState(0);
   const [courseId, setCourseId] = useState(editCourseId ?? null);
@@ -331,6 +440,7 @@ export default function AdminManagementForms({ setView, editCourseId, onEditDone
   const createLesson = useCreateLesson(courseId);
   const updateLesson = useUpdateLesson(courseId);
   const deleteLesson = useDeleteLesson(courseId);
+  const generateCodes = useGenerateAccessCodes();
 
   const progress = Math.round(((step + 1) / STEPS.length) * 100);
   const modules = course?.modules ?? [];
@@ -866,12 +976,21 @@ export default function AdminManagementForms({ setView, editCourseId, onEditDone
               </>
             )}
 
-            {(step === 2 || step === 5) && (
+            {(step === 2) && courseId && (
+              <AccessCodesStep courseId={courseId} generateCodes={generateCodes} />
+            )}
+            {(step === 2) && !courseId && (
+              <div className="flex items-center justify-center h-64">
+                <p className="text-gray-400 text-sm">Please complete Course Details first.</p>
+              </div>
+            )}
+            {(step === 5) && (
               <div className="flex items-center justify-center h-64">
                 <p className="text-gray-400 text-sm">Step {step + 1}: {STEPS[step]} — coming soon</p>
               </div>
             )}
-          </div>
+
+          </div>{/* end w-full p-10 */}
 
           {/* Bottom Action Bar */}
           <div className="fixed bottom-0 left-64 right-0 border-t border-slate-200 bg-white p-4 px-10 flex items-center justify-between z-10" style={{ marginLeft: '20rem' }}>
@@ -885,8 +1004,8 @@ export default function AdminManagementForms({ setView, editCourseId, onEditDone
               </button>
             </div>
           </div>
-        </div>
-      </div>
+        </div>{/* end flex-1 overflow-y-auto */}
+      </div>{/* end flex-1 flex */}
     </div>
   );
 }

@@ -6,7 +6,7 @@ import {
   PlayCircle, FileText, Award, Heart, Share2, ShieldCheck,
   BookOpen, Layers,
 } from 'lucide-react';
-import { useEnrollCourse, useMyEnrollments } from '../api/hooks/useEnrollments';
+import { useEnrollCourse, useMyEnrollments, useRedeemAccessCode } from '../api/hooks/useEnrollments';
 import { useCourse } from '../api/hooks/useCourse';
 import { useAppContext } from '../context/AppContext';
 
@@ -17,6 +17,11 @@ export default function CourseOverview({ view, setView, onSelectLesson, courseId
   const { data: course, isLoading } = useCourse(courseId);
   const { data: enrollments = [] } = useMyEnrollments();
   const enrollCourse = useEnrollCourse();
+  const redeemCode = useRedeemAccessCode();
+
+  const [showCodeInput, setShowCodeInput] = useState(false);
+  const [accessCode, setAccessCode] = useState('');
+  const [codeError, setCodeError] = useState('');
 
   const modules = course?.modules ?? [];
   const totalLessons = modules.reduce((sum, m) => sum + (m.lessons?.length ?? 0), 0);
@@ -26,6 +31,18 @@ export default function CourseOverview({ view, setView, onSelectLesson, courseId
 
   const isEnrolled = enrollments.some((e) => e.course?.id === courseId || e.course_id === courseId);
   const isPaid = course && course.price != null && Number(course.price) > 0;
+
+  async function handleRedeemCode() {
+    if (!user) return setView('Login');
+    if (!accessCode.trim()) return setCodeError('Please enter an access code.');
+    setCodeError('');
+    try {
+      await redeemCode.mutateAsync({ code: accessCode.trim() });
+      setView('CourseMaterial');
+    } catch (err) {
+      setCodeError(err?.error ?? 'Invalid or expired access code.');
+    }
+  }
 
   async function handleEnroll() {
     if (!user) return setView('Login');
@@ -274,6 +291,46 @@ export default function CourseOverview({ view, setView, onSelectLesson, courseId
                       ? 'Buy & Enroll'
                       : 'Enroll for Free'}
                   </button>
+
+                  {/* Access code option for paid courses */}
+                  {isPaid && !isEnrolled && (
+                    <div className="mt-2">
+                      {!showCodeInput ? (
+                        <button
+                          onClick={() => setShowCodeInput(true)}
+                          className="w-full text-sm text-[#1e4c31] font-semibold py-2 hover:underline"
+                        >
+                          Have an access code?
+                        </button>
+                      ) : (
+                        <div className="mt-3 space-y-2">
+                          <div className="flex gap-2">
+                            <input
+                              type="text"
+                              value={accessCode}
+                              onChange={(e) => { setAccessCode(e.target.value.toUpperCase()); setCodeError(''); }}
+                              placeholder="e.g. UBZ-ABC123"
+                              className="flex-1 border border-slate-200 rounded-lg px-3 py-2.5 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                            />
+                            <button
+                              onClick={handleRedeemCode}
+                              disabled={redeemCode.isPending}
+                              className="bg-[#1e4c31] text-white px-4 py-2.5 rounded-lg text-sm font-bold hover:bg-emerald-900 disabled:opacity-60 whitespace-nowrap"
+                            >
+                              {redeemCode.isPending ? '...' : 'Apply'}
+                            </button>
+                          </div>
+                          {codeError && <p className="text-xs text-red-500">{codeError}</p>}
+                          <button
+                            onClick={() => { setShowCodeInput(false); setAccessCode(''); setCodeError(''); }}
+                            className="text-xs text-gray-400 hover:text-gray-600"
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  )}
 
                   <div className="space-y-4 mt-6">
                     <p className="text-sm font-bold text-black">This course includes:</p>

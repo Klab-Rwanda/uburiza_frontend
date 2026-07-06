@@ -44,9 +44,9 @@ api.interceptors.response.use(
           ? 'Your account is not authorized to continue.'
           : 'Request failed. Please try again.');
 
-    // Zod validation errors come back as { issues: [...] }
-    if (data?.issues) {
-      const message = data.issues.map((i) => i.message).join(', ');
+    // Zod validation errors come back as { errors: [...] }
+    if (data?.errors) {
+      const message = data.errors.map((i) => i.message).join(', ');
       return Promise.reject({ error: message, status });
     }
 

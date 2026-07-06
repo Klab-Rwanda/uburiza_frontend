@@ -17,7 +17,7 @@ export default function TopNav({ view, setView, sidebarOpen, setSidebarOpen }) {
   return (
     <header className="bg-white border-b border-emerald-200 h-16 flex items-center justify-between px-8 sticky top-0 z-10 transition-colors duration-300">
       <div className="flex items-center space-x-12">
-        <div className="flex items-center space-x-2 text-emerald-800 font-bold text-xl cursor-pointer" onClick={() => setView('Dashboard')}>
+        <div className="flex items-center space-x-2 text-emerald-800 font-bold text-xl cursor-pointer" onClick={() => setView(isAdmin ? 'Analytics' : 'Dashboard')}>
           <div className="w-8 h-8 rounded-full bg-emerald-800 flex items-center justify-center">
             <Activity className="w-5 h-5 text-white" />
           </div>

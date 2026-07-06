@@ -13,6 +13,7 @@ export const getMyEnrollments = async () => {
   }
 };
 export const enrollCourse = (data) => api.post('/enroll', data);
+export const redeemAccessCode = (data) => api.post('/redeem-code', data);
 export const markLessonComplete = async ({ lessonId }) => {
   console.log('📡 API Request: POST /api/progress', { lessonId });
   try {
@@ -26,3 +27,9 @@ export const markLessonComplete = async ({ lessonId }) => {
 };
 export const getCourseProgress = (courseId) => api.get(`/progress/${courseId}`);
 export const getAdminStats = () => api.get('/admin/analytics');
+export const getLearners = () => api.get('/admin/learners');
+export const generateAccessCodes = (data) => api.post('/admin/access-codes', data);
+export const getCoursesWithAccessCodes = () => api.get('/admin/access-codes');
+export const getAccessCodesByCourse = (courseId) => api.get(`/admin/access-codes/${courseId}`);
+export const getAdminAllCourses = () => api.get('/admin/courses');
+export const deleteExpiredAccessCodes = (courseId) => api.delete(`/admin/access-codes/${courseId}/expired`);

@@ -17,9 +17,10 @@ import Login from './views/Login';
 import Signup from './views/Signup';
 import SettingsView from './views/SettingsView';
 import VerifyEmail from './views/VerifyEmail';
+import AccessCodesView from './views/AccessCodesView';
 import ForgotPassword from './views/ForgotPassword';
 import ResetPassword from './views/ResetPassword';
-import { AppProvider } from './context/AppContext';
+import { AppProvider, useAppContext } from './context/AppContext';
 import { AnimatePresence, motion } from 'framer-motion';
 
 function getInitialRoute() {
@@ -45,7 +46,12 @@ function AppContent() {
 
   const [view, setViewInternal] = useState(() => initialRoute.view);
 
-  const [pendingEmail, setPendingEmail] = useState('');
+  const [pendingEmail, setPendingEmail] = useState(() => sessionStorage.getItem('pendingEmail') ?? '');
+
+  const setPendingEmailPersisted = (email) => {
+    sessionStorage.setItem('pendingEmail', email);
+    setPendingEmail(email);
+  };
   const [resetParams, setResetParams] = useState(() => initialRoute.resetParams);
   const [editCourseId, setEditCourseId] = useState(null);
   const [selectedLessonId, setSelectedLessonId] = useState(null);
@@ -90,7 +96,14 @@ function AppContent() {
     };
   }, []);
 
+  const { userRole } = useAppContext();
+  const isAdmin = userRole === 'admin';
+
   const renderView = () => {
+    // Redirect admin away from learner-only views
+    if (isAdmin && ['Dashboard', 'MyCourses', 'Certificate'].includes(view)) {
+      return <OperationalAnalytics setView={setView} />;
+    }
     switch(view) {
       case 'Dashboard':
         return <LearnerDashboard setView={setView} onSelectCourse={(id) => { setSelectedCourseId(id); setView('CourseOverview'); }} />;
@@ -106,6 +119,8 @@ function AppContent() {
         return <OperationalAnalytics setView={setView} />;
       case 'AdminForms':
         return <AdminManagementForms setView={setView} editCourseId={editCourseId} onEditDone={() => setEditCourseId(null)} />;
+      case 'AccessCodes':
+        return <AccessCodesView />;
       case 'Settings':
         return <SettingsView setView={setView} />;
       case 'LandingPage':
@@ -119,9 +134,9 @@ function AppContent() {
       case 'CourseMaterial':
         return <CourseMaterial view={view} setView={setView} lessonId={selectedLessonId} courseId={selectedCourseId} />;
       case 'Login':
-        return <Login setView={setView} setPendingEmail={setPendingEmail} />;
+        return <Login setView={setView} setPendingEmail={setPendingEmailPersisted} />;
       case 'Signup':
-        return <Signup setView={setView} setPendingEmail={setPendingEmail} />;
+        return <Signup setView={setView} setPendingEmail={setPendingEmailPersisted} />;
       case 'VerifyEmail':
         return <VerifyEmail setView={setView} email={pendingEmail} />;
       case 'ForgotPassword':

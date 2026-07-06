@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Filter, Users, BookOpen, TrendingUp, FileText, Plus, Upload, MoreVertical, Search } from 'lucide-react';
 import { AreaChart, Area, ResponsiveContainer, YAxis, XAxis } from 'recharts';
-import { useAdminStats } from '../api/hooks/useEnrollments';
+import { useAdminStats, useAdminLearners } from '../api/hooks/useEnrollments';
 
 const PAGE_SIZE = 10;
 
@@ -24,11 +24,24 @@ export default function OperationalAnalytics({ setView }) {
   };
 
   const { data: stats, isLoading: statsLoading } = useAdminStats();
+  const { data: learnersRaw = [], isLoading: learnersLoading } = useAdminLearners();
 
-  const enrollments = stats?.recent_enrollments ?? [];
   const chartData = stats?.monthly_chart ?? [];
 
-  const filtered = enrollments.filter((e) =>
+  // Flatten learners × enrollments into table rows
+  const rows = learnersRaw.flatMap((learner) =>
+    learner.enrollments?.length
+      ? learner.enrollments.map((enr) => ({
+          id: `${learner.id}-${enr.course?.title}`,
+          user_name: learner.name,
+          course_title: enr.course?.title ?? '—',
+          enrolled_at: enr.enrolled_at,
+          status: enr.completed_at ? 'completed' : 'active',
+        }))
+      : [{ id: learner.id, user_name: learner.name, course_title: '—', enrolled_at: learner.created_at, status: 'inactive' }]
+  );
+
+  const filtered = rows.filter((e) =>
     e.user_name?.toLowerCase().includes(search.toLowerCase()) ||
     e.course_title?.toLowerCase().includes(search.toLowerCase())
   );
@@ -174,7 +187,7 @@ export default function OperationalAnalytics({ setView }) {
               </tr>
             </thead>
             <tbody className="divide-y divide-emerald-100">
-              {statsLoading ? (
+              {statsLoading || learnersLoading ? (
                 <tr><td colSpan={5} className="py-8 text-center text-sm text-gray-400">Loading...</td></tr>
               ) : paginated.length === 0 ? (
                 <tr><td colSpan={5} className="py-8 text-center text-sm text-gray-400">No learners found.</td></tr>

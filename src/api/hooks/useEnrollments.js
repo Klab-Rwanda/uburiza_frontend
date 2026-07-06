@@ -20,6 +20,14 @@ export function useEnrollCourse() {
   });
 }
 
+export function useRedeemAccessCode() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: enrollmentApi.redeemAccessCode,
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: [KEY] }),
+  });
+}
+
 export function useCourseProgress(courseId) {
   return useQuery({
     queryKey: [PROGRESS_KEY, courseId],
@@ -41,10 +49,17 @@ export function useAdminStats() {
       total_revenue: data.revenue?.total ?? 0,
       paid_enrollments: data.revenue?.paidEnrollments ?? 0,
       pending_payments: data.revenue?.pendingPayments ?? 0,
-      recent_enrollments: data.recent_enrollments ?? [],
       monthly_chart: data.monthly_chart ?? [],
       total_lessons: data.total_lessons ?? 0,
     }),
+  });
+}
+
+export function useAdminLearners() {
+  return useQuery({
+    queryKey: ['adminLearners'],
+    queryFn: enrollmentApi.getLearners,
+    enabled: !!localStorage.getItem('token'),
   });
 }
 
