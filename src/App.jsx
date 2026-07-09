@@ -20,6 +20,9 @@ import VerifyEmail from './views/VerifyEmail';
 import AccessCodesView from './views/AccessCodesView';
 import ForgotPassword from './views/ForgotPassword';
 import ResetPassword from './views/ResetPassword';
+import PartnerWithUs from './views/PartnerWithUs';
+import TeachWithUs from './views/TeachWithUs';
+import BusinessInquiry from './views/BusinessInquiry';
 import { AppProvider, useAppContext } from './context/AppContext';
 import { AnimatePresence, motion } from 'framer-motion';
 
@@ -154,7 +157,7 @@ function AppContent() {
     }
   };
 
-  const isFullPageView = ['LandingPage', 'CourseCatalog', 'CourseOverview', 'CourseMaterial', 'Payment', 'Login', 'Signup', 'VerifyEmail', 'ForgotPassword', 'ResetPassword'].includes(view);
+  const isFullPageView = ['LandingPage', 'CourseCatalog', 'CourseOverview', 'CourseMaterial', 'Payment', 'Login', 'Signup', 'VerifyEmail', 'ForgotPassword', 'ResetPassword', 'Resources', 'PartnerWithUs', 'TeachWithUs', 'BusinessInquiry'].includes(view);
 
   const pageVariants = {
     initial: { opacity: 0, y: 20 },
